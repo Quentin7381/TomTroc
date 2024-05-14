@@ -1,4 +1,10 @@
 {
+    "autoload": {
+        "psr-4": {
+            "": "Src/",
+            "Test\\": "Test/"
+        }
+    },
     "require": {
         "php": "^8.2"
     },
