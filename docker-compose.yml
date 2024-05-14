@@ -1,0 +1,61 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    links:
+      - mariadb
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/app
+      - ./.docker/debug:/tmp/debug
+      - ./.docker/private:/private:rw
+    environment:
+      - PHP_DEBUGGER=xdebug
+      - PHP_IDE_CONFIG=serverName=invivogen.test
+      - XDEBUG_CLIENT_HOST=host.docker.internal
+      - XDEBUG_OUTPUT_DIR="/tmp/debug"
+      - PHP_DATE_TIMEZONE=Europe/Paris
+      - PHP_MAX_EXECUTION_TIME=300
+      - PHP_POST_MAX_SIZE=8M
+      - PHP_UPLOAD_MAX_FILESIZE=3M
+      - PHP_DISPLAY_ERRORS=1
+      - WEB_ALIAS_DOMAIN=invivogen.test
+      - WEB_DOCUMENT_ROOT=/app/web
+      - PHP_DISMOD=ioncube
+      - DRUPAL_ENV=dev
+
+  mariadb:
+    image: mariadb:10.5.9
+    ports:
+      - "3306:3306"
+    volumes:
+      - data:/var/lib/mysql
+      - ./.docker/mysql:/etc/mysql/conf.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=invivogen
+      - MYSQL_USER=db
+      - MYSQL_PASSWORD=db
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mariadb
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=mariadb
+      - MYSQL_USER=db
+      - MYSQL_PASSWORD=db
+      - MYSQL_ROOT_PASSWORD=root
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+volumes:
+  data:
