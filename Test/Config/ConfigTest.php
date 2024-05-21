@@ -115,4 +115,20 @@ class ConfigTest extends TestInit{
 
         $this->assertTrue(true);
     }
+
+    # Integration
+
+    ## Config/config.php
+    function test__integration_1(){
+        require_once __DIR__ . '/../../Config/config.php';
+
+        $config = Config::getInstance();
+
+        $this->assertNotEmpty($config->get('db'));
+        $this->assertEquals('mariadb', $config->get('db')['host']);
+        $this->assertEquals('3306', $config->get('db')['port']);
+        $this->assertEquals(getenv('DB_NAME'), $config->get('db')['name']);
+        $this->assertEquals(getenv('DB_USER'), $config->get('db')['user']);
+        $this->assertEquals(getenv('DB_PASSWORD'), $config->get('db')['password']);
+    }
 }

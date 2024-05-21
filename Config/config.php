@@ -1,8 +1,15 @@
 <?php
 
-define('DB_PASSWORD', getenv('DB_PASSWORD'));
-define('DB_USER', getenv('DB_USER'));
-define('DB_NAME', getenv('DB_NAME'));
+use Config\Config;
 
-define('DB_HOST', 'mariadb');
-define('DB_PORT', '3306');
+$config = Config::getInstance();
+
+$config->load([
+    'db' => [
+        'host' => 'mariadb',
+        'port' => '3306',
+        'name' => getenv('DB_NAME'),
+        'user' => getenv('DB_USER'),
+        'password' => getenv('DB_PASSWORD')
+    ]
+]);
