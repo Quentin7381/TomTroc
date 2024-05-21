@@ -159,7 +159,7 @@ class Reflection
      * Allow to bypass the Reflection object and set the target class properties directly.
      * @see _SET
      */
-    public function __set(string $name, string $value)
+    public function __set(string $name, mixed $value)
     {
         $this->_SET($name, $value);
     }
