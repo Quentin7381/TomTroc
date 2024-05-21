@@ -52,7 +52,7 @@ class ReflectionInstance
      *
      * @return mixed The return value of the target class method.
      */
-    public function __call($method, $args)
+    public function __call(string $method, array $args)
     {
         return $this->reflection->_CALL($method, $args, $this->instance);
     }
@@ -64,7 +64,7 @@ class ReflectionInstance
      *
      * @return mixed The value of the target class property.
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         return $this->reflection->_GET($name, $this->instance);
     }
@@ -75,7 +75,7 @@ class ReflectionInstance
      * @param string $name The target class property name.
      * @param mixed $value The value to set to the target class property.
      */
-    public function __set($name, $value)
+    public function __set(string $name, mixed $value)
     {
         return $this->reflection->_SET($name, $value, $this->instance);
     }

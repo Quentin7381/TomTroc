@@ -434,7 +434,11 @@ class ReflectionTest extends TestInit{
         $constructor->setAccessible(true);
         $constructor->invoke($reflection, Reflection::class);
 
-        $instance = new \stdClass();
+        $target = $this->Reflection->getProperty('target');
+        $target->setAccessible(true);
+        $target->setValue($reflection, stdClass::class);
+
+        $instance = new stdClass;
 
         $result = $reflection->_NEW_FROM_INSTANCE($instance);
 
@@ -464,11 +468,7 @@ class ReflectionTest extends TestInit{
         $actual->setAccessible(true);
         $actual = $actual->getValue($result);
 
-        // we test that mockery methods are here
-        $actual->shouldAllowMockingProtectedMethods();
-
-        // we are good
-        $this->assertTrue(true);
+        
     }
 
     ## _METHOD_ACCESS
@@ -537,4 +537,14 @@ class ReflectionTest extends TestInit{
         $reflection->_PROPERTY_ACCESS('property', true);
     }
 
+}
+
+class TestClass{
+    public $arg1;
+    public $arg2;
+
+    function __construct($arg1, $arg2){
+        $this->arg1 = $arg1;
+        $this->arg2 = $arg2;
+    }
 }

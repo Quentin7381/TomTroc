@@ -85,7 +85,7 @@ class Reflection
      *
      * @param string $target The target namespace\class
      */
-    protected function __construct($target)
+    protected function __construct(string $target)
     {
         $this->target = $target;
         self::$instances[$target] = $this;
@@ -136,7 +136,7 @@ class Reflection
      * @param string $method The method to call.
      * @param array $args The arguments to pass to the method (that can end with a ReflectionInstance object).
      */
-    public function __call($method, $args)
+    public function __call(string $method, array $args)
     {
         $lastI = count($args) - 1;
         if ($args[$lastI] instanceof ReflectionInstance) {
@@ -150,7 +150,7 @@ class Reflection
      * Allow to bypass the Reflection object and access the target class properties directly.
      * @see _GET
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         $this->_GET($name);
     }
@@ -159,7 +159,7 @@ class Reflection
      * Allow to bypass the Reflection object and set the target class properties directly.
      * @see _SET
      */
-    public function __set($name, $value)
+    public function __set(string $name, string $value)
     {
         $this->_SET($name, $value);
     }
@@ -171,7 +171,7 @@ class Reflection
      * @return object The instance of the target class.
      * @throws \ReflectionException If the target class does not exist.
      */
-    public static function _GET_INSTANCE($target)
+    public static function _GET_INSTANCE(string $target)
     {
         return self::$instances[$target] ?? new Reflection($target);
     }
@@ -187,7 +187,7 @@ class Reflection
      *
      * note: This can bypass __get method setups.
      */
-    public function _GET($name, $instance = null)
+    public function _GET(string $name, object $instance = null)
     {
         if (isset($this->property[$name])) {
             return $this->property[$name]->getValue($instance);
@@ -217,7 +217,7 @@ class Reflection
      *
      * note: This can bypass __set method setups.
      */
-    public function _SET($name, $value, $instance = null)
+    public function _SET(string $name, mixed $value, object $instance = null)
     {
         if(isset($this->property[$name])){
             $this->property[$name]->setValue($instance, $value);
@@ -239,7 +239,7 @@ class Reflection
      * @param array $args The arguments to pass to the method (that can end with a ReflectionInstance object).
      * @return mixed The return value of the method.
      */
-    public function _CALL($method, $args, $instance = null)
+    public function _CALL(string $method, array $args, object $instance = null)
     {
         if (!empty($this->method[$method])) {
             return $this->method[$method]->invokeArgs($instance, $args);
@@ -258,7 +258,7 @@ class Reflection
      * @param mixed ...$args The arguments to pass to the constructor.
      * @return object The instance of the target class.
      */
-    public function _NEW(...$args)
+    public function _NEW(mixed ...$args)
     {
         $instance = $this->class->newInstanceWithoutConstructor();
         $constructor = $this->class->getConstructor();
@@ -276,7 +276,7 @@ class Reflection
      * @param object $instance The instance of the target class.
      * @return object The instance of the target class.
      */
-    public function _NEW_FROM_INSTANCE($instance)
+    public function _NEW_FROM_INSTANCE(object $instance)
     {
         return new ReflectionInstance($this, $instance);
     }
@@ -299,12 +299,12 @@ class Reflection
      * @param string $name The method name.
      * @param bool $accessible The accessibility of the method.
      */
-    public function _METHOD_ACCESS($method, $name, $accessible = true)
+    public function _METHOD_ACCESS(string $name, bool $accessible = true)
     {
-        if(!isset($this->$method[$name])){
+        if(!isset($this->method[$name])){
             throw new \ReflectionException("Method $name does not exist in class {$this->target}");
         }
-        $this->$method[$name]->setAccessible($accessible);
+        $this->method[$name]->setAccessible($accessible);
     }
 
     /**
@@ -313,7 +313,7 @@ class Reflection
      * @param string $name The property name.
      * @param bool $accessible The accessibility of the property.
      */
-    public function _PROPERTY_ACCESS($name, $accessible = true)
+    public function _PROPERTY_ACCESS(string $name, bool $accessible = true)
     {
         if(!isset($this->property[$name])){
             throw new \ReflectionException("Property $name does not exist in class {$this->target}");
