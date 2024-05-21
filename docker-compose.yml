@@ -34,10 +34,10 @@ services:
       - data:/var/lib/mysql
       - ./.docker/mysql:/etc/mysql/conf.d
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=invivogen
-      - MYSQL_USER=db
-      - MYSQL_PASSWORD=db
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -47,9 +47,9 @@ services:
       - "8080:80"
     environment:
       - PMA_HOST=mariadb
-      - MYSQL_USER=db
-      - MYSQL_PASSWORD=db
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
 
   mailhog:
     image: mailhog/mailhog
