@@ -4,3 +4,5 @@ composer.lock
 # Phpunit
 .phpunit.cache/*
 
+# Vscode
+.vscode/*
