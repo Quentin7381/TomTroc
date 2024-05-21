@@ -288,8 +288,8 @@ class Reflection
      * @param mixed ...$args The arguments to pass to the constructor.
      * @return object The instance of the target class.
      */
-    public function _NEW_MOCK(...$args){
-        $mock = m::mock($this->target);
+    public function _NEW_MOCK(mixed ...$args){
+        $mock = m::mock($this->target, $args);
         return $this->_NEW_FROM_INSTANCE($mock);
     }
 

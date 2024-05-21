@@ -460,7 +460,31 @@ class ReflectionTest extends TestInit{
         $constructor->setAccessible(true);
         $constructor->invoke($reflection, Reflection::class);
 
-        $result = $reflection->_NEW_MOCK(Reflection::class);
+        $target = $this->Reflection->getProperty('target');
+        $target->setAccessible(true);
+        $target->setValue($reflection, TestClass::class);
+
+        $result = $reflection->_NEW_MOCK('value1', 'value2');
+
+        $ReflectionInstance = new \ReflectionClass(ReflectionInstance::class);
+
+        $instance = $ReflectionInstance->getProperty('instance');
+        $instance->setAccessible(true);
+        $instance = $instance->getValue($result);
+
+        $this->assertEquals('value1', $instance->arg1);
+        $this->assertEquals('value2', $instance->arg2);
+    }
+
+    ### The arguments are passed to the target class constructor
+    function test__NEW_MOCK__passesArgumentsToConstructor(){
+        $reflection = $this->Reflection->newInstanceWithoutConstructor();
+
+        $constructor = $this->Reflection->getMethod('__construct');
+        $constructor->setAccessible(true);
+        $constructor->invoke($reflection, Reflection::class);
+
+        $result = $reflection->_NEW_MOCK(Reflection::class, ['arg1', 'arg2']);
 
         $ReflectionInstance = new \ReflectionClass(ReflectionInstance::class);
 
