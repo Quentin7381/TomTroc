@@ -2,16 +2,18 @@
 
 namespace Config;
 
+use Exception;
+
 /**
  * Config class
  *
  * This class is a singleton class that holds configuration values.
  */
-class Config extends Singleton {
+class Config extends \Utils\Singleton {
     
     /**
      * @var array $config
-     * 
+     *
      * This array holds the configuration values.
      */
     protected $config = [];
@@ -97,7 +99,7 @@ class Config extends Singleton {
                 $this->set($key, $value);
             }
         }
-        
+
         return $this;
     }
 }
