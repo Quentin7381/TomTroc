@@ -197,6 +197,16 @@ class Reflection
     }
 
     /**
+     * Get the target namespace\class.
+     *
+     * @return string The target namespace\class.
+     */
+    public function _GET_TARGET()
+    {
+        return $this->target;
+    }
+
+    /**
      * Set the value of a property of the target class.
      * This property will be accessible by default.
      * @see _ACCESS to override this behavior
