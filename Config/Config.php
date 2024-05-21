@@ -1,13 +1,13 @@
 <?php
 
-namespace Utils;
+namespace Config;
 
 class Config extends Singleton {
     protected static $instance = null;
     protected $config = [];
 
     protected function __construct(){
-        $this->config = require __DIR__ . '/../config/config.local.php';
+        
     }
 
     public static function getInstance(){
