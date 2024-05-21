@@ -54,7 +54,7 @@ class Singleton {
      * @param array $arguments
      * @return mixed
      */
-    public static function __callStatic($name, $arguments){
+    public static function __callStatic(string $name, array $arguments){
         $instance = static::getInstance();
         return $instance->$name(...$arguments);
     }
