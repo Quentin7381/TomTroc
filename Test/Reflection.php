@@ -320,4 +320,22 @@ class Reflection
         }
         $this->property[$name]->setAccessible($accessible);
     }
+
+    public function _GET_PROPERTIES()
+    {
+        $properties = [];
+        foreach($this->property as $name => $property){
+            $properties[] = $property->getName();
+        }
+        return $properties;
+    }
+
+    public function _GET_METHODS()
+    {
+        $methods = [];
+        foreach($this->method as $name => $method){
+            $methods[] = $method->getName();
+        }
+        return $methods;
+    }
 }
