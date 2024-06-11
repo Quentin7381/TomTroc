@@ -44,6 +44,7 @@ abstract class AbstractController
     protected function __construct()
     {
         $this->config = Config::getInstance();
+        $this->router = new Router($this->baseUrl, $this);
         $this->initRoutes();
         self::$instance = $this;
     }
@@ -51,9 +52,7 @@ abstract class AbstractController
     /**
      * Initialize the routes for the controller.
      */
-    protected function initRoutes(){
-        $this->router = new Router($this->baseUrl, $this);
-    }
+    abstract protected function initRoutes();
 
     /**
      * Get the instance of the controller.

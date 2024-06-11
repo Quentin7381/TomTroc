@@ -13,6 +13,8 @@ use Mockery as m;
 
 class ReflectionTest extends TestInit{
 
+    protected $Reflection;
+
     function setUp() : void{
         parent::setUp();
 
@@ -484,15 +486,20 @@ class ReflectionTest extends TestInit{
         $constructor->setAccessible(true);
         $constructor->invoke($reflection, Reflection::class);
 
-        $result = $reflection->_NEW_MOCK(Reflection::class, ['arg1', 'arg2']);
+        $target = $this->Reflection->getProperty('target');
+        $target->setAccessible(true);
+        $target->setValue($reflection, TestClass::class);
+
+        $result = $reflection->_NEW_MOCK('value1', 'value2');
 
         $ReflectionInstance = new \ReflectionClass(ReflectionInstance::class);
 
-        $actual = $ReflectionInstance->getProperty('instance');
-        $actual->setAccessible(true);
-        $actual = $actual->getValue($result);
+        $instance = $ReflectionInstance->getProperty('instance');
+        $instance->setAccessible(true);
+        $instance = $instance->getValue($result);
 
-        
+        $this->assertEquals('value1', $instance->arg1);
+        $this->assertEquals('value2', $instance->arg2);
     }
 
     ## _METHOD_ACCESS

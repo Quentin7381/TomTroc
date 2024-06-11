@@ -3,6 +3,7 @@
 namespace Test;
 
 use Mockery as m;
+use ReflectionException;
 
 /**
  * ### Definition
@@ -139,7 +140,7 @@ class Reflection
     public function __call(string $method, array $args)
     {
         $lastI = count($args) - 1;
-        if ($args[$lastI] instanceof ReflectionInstance) {
+        if (isset($args[$lastI]) && $args[$lastI] instanceof ReflectionInstance) {
             $instance = array_pop($args);
         }
 
@@ -193,6 +194,9 @@ class Reflection
             return $this->property[$name]->getValue($instance);
         }
         
+        if($instance === null){
+            throw new \ReflectionException("Static property $name does not exist in {$this->target}, you need to pass an instance.");
+        }
         return $instance->$name;
     }
 
@@ -269,6 +273,11 @@ class Reflection
         return new ReflectionInstance($this, $instance);
     }
 
+    public function _NEW_WITHOUT_CONSTRUCTOR()
+    {
+        return new ReflectionInstance($this, $this->class->newInstanceWithoutConstructor());
+    }
+
     /**
      * Create a new ReflectionInstance object from an existing instance of the target class.
      * This will load any existing properties into the new ReflectionInstance object.
@@ -289,7 +298,14 @@ class Reflection
      * @return object The instance of the target class.
      */
     public function _NEW_MOCK(mixed ...$args){
-        $mock = m::mock($this->target, $args);
+        try{
+            $mock = m::mock($this->target, $args);
+        } catch (ReflectionException $e){
+            $mock = m::mock($this->target)->makePartial();
+        }
+
+        $mock->shouldAllowMockingProtectedMethods();
+
         return $this->_NEW_FROM_INSTANCE($mock);
     }
 

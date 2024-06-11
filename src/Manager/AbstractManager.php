@@ -1,6 +1,7 @@
 <?php
 
 namespace Manager;
+
 use Config\Config;
 use Utils\PDO;
 
@@ -9,7 +10,8 @@ use Utils\PDO;
  *
  * This class is the base class for all managers.
  */
-abstract class AbstractManager{
+abstract class AbstractManager
+{
 
     /**
      * @var Config $config
@@ -56,7 +58,7 @@ abstract class AbstractManager{
         $this->pdo = PDO::getInstance();
         self::$instance = $this;
 
-        $this->table = $this->getEntityName();
+        $this->table = strtolower($this->getEntityName());
         $this->fields = $this->getEntityFields();
         $this->prepareEntityTable();
     }
@@ -64,7 +66,7 @@ abstract class AbstractManager{
     /**
      * Get the instance of the manager.
      */
-    public function getInstance()
+    public static function getInstance()
     {
         if (self::$instance === null) {
             self::$instance = new static();
@@ -77,9 +79,12 @@ abstract class AbstractManager{
     /**
      * Get the entity name.
      */
-    public function getEntityName(){
+    public function getEntityName()
+    {
         $name = explode('\\', get_class($this));
-        return end($name);
+        $name = end($name);
+        $name = str_replace('Manager', '', $name);
+        return $name;
     }
 
     /**
@@ -89,7 +94,8 @@ abstract class AbstractManager{
      *
      * @return array An array of fields with the field name as key and the field type (for databases) as value.
      */
-    public function getEntityFields(){
+    public function getEntityFields()
+    {
         $entity = 'Entity\\' . $this->getEntityName();
         return $entity::getFields();
     }
@@ -100,8 +106,9 @@ abstract class AbstractManager{
      * Prepare the entity table in the database.
      * Will create a table with the entity name and the entity fields.
      */
-    protected function prepareEntityTable(){
-        if(!$this->tableExist()){
+    protected function prepareEntityTable()
+    {
+        if (!$this->tableExists()) {
             return $this->createTable();
         }
 
@@ -113,20 +120,25 @@ abstract class AbstractManager{
      * The table name is the entity name.
      * The table fields are the entity fields.
      */
-    protected function createTable(){
+    protected function createTable()
+    {
         $sql = "CREATE TABLE $this->table (";
         $sql .= "id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,";
         foreach ($this->fields as $field => $type) {
             if ($field == 'id') {
                 continue;
             }
-            $sql .= "$field $type,";
+            $sql .= "$field $type, ";
         }
-        $sql = rtrim($sql, ',');
+        $sql = rtrim($sql, ', ');
         $sql .= ")";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+        
+        $success = $stmt->execute();
+        if (!$success) {
+            throw new Exception("Error creating table $this->table : " . implode(', ' . PHP_EOL, $stmt->errorInfo()));
+        }
     }
 
     /**
@@ -134,7 +146,8 @@ abstract class AbstractManager{
      *
      * @return array An array of fields with the field name as key and the field type as value.
      */
-    protected function getMissingTableFields(){
+    protected function getMissingTableFields()
+    {
         $sql = "DESCRIBE $this->table";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
@@ -153,7 +166,8 @@ abstract class AbstractManager{
      *
      * @return array An array of fields with the field name as key and the field type as value.
      */
-    public function getWrongTableFields(){
+    public function getWrongTableFields()
+    {
         $sql = "DESCRIBE $this->table";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
@@ -164,9 +178,9 @@ abstract class AbstractManager{
             $fields[$row['Field']] = $row['Type'];
         }
 
-        $wrongFields = $fields;
-        foreach($this->fields as $name => $type){
-            if(isset($fields[$name]) && $fields[$name] != $type){
+        $wrongFields = [];
+        foreach ($this->fields as $name => $type) {
+            if (isset($fields[$name]) && $fields[$name] != $type) {
                 $wrongFields[$name] = $type;
             }
         }
@@ -179,7 +193,8 @@ abstract class AbstractManager{
      *
      * @return array An array of fields with the field name as key and the field type as value.
      */
-    public function getUnusedTableFields(){
+    public function getUnusedTableFields()
+    {
         $sql = "DESCRIBE $this->table";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
@@ -200,14 +215,18 @@ abstract class AbstractManager{
      *
      * @param array $field An array of fields with the field name as key and the field type as value.
      */
-    public function manageMissingTableFields(array $fields){
+    public function manageMissingTableFields(array $fields)
+    {
         $sql = "ALTER TABLE $this->table ";
         foreach ($fields as $name => $type) {
-            $sql .= "ADD $name $type,";
+            $sql .= "ADD $name $type, ";
         }
-        $sql = rtrim($sql, ',');
+        $sql = rtrim($sql, ', ');
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
+
+        if (!$stmt->execute()) {
+            throw new Exception("Error adding fields to table $this->table : " . implode(', ' . PHP_EOL, $stmt->errorInfo()));
+        }
     }
 
     /**
@@ -215,9 +234,10 @@ abstract class AbstractManager{
      *
      * @param array $field An array of fields with the field name as key and the field type as value.
      */
-    public function manageWrongTableFields(array $fields){
+    public function manageWrongTableFields(array $fields)
+    {
         throw new Exception("Missmatch between entity fields and database fields : " . implode(', ', $fields) . PHP_EOL .
-        "Please update the entity fields or the database fields.");
+            "Please update the entity fields or the database fields.");
     }
 
     /**
@@ -225,29 +245,31 @@ abstract class AbstractManager{
      *
      * @param array $field An array of fields with the field name as key and the field type as value.
      */
-    public function manageUnusedTableFields(array $fields){
+    public function manageUnusedTableFields(array $fields)
+    {
         user_error("Unused fields in the database : " . implode(', ', $fields) . PHP_EOL .
-        "Consider cleaning the database.");
+            "Consider cleaning the database.");
     }
 
     /**
      * Update the table in the database.
      * Will call the missing, wrong and unused table fields methods.
      */
-    protected function updateTable(){
+    protected function updateTable()
+    {
         $missingFields = $this->getMissingTableFields();
         $wrongFields = $this->getWrongTableFields();
         $unusedFields = $this->getUnusedTableFields();
 
-        if(!empty($missingFields)){
+        if (!empty($missingFields)) {
             $this->manageMissingTableFields($missingFields);
         }
 
-        if(!empty($wrongFields)){
+        if (!empty($wrongFields)) {
             $this->manageWrongTableFields($wrongFields);
         }
 
-        if(!empty($unusedFields)){
+        if (!empty($unusedFields)) {
             $this->manageUnusedTableFields($unusedFields);
         }
     }
@@ -257,8 +279,9 @@ abstract class AbstractManager{
      *
      * @return bool True if the table exists, false otherwise.
      */
-    protected function tableExist(){
-        $sql = "SHOW TABLES LIKE '$this->table'";
+    protected function tableExists()
+    {
+        $sql = "SHOW TABLES LIKE $this->table";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch();
@@ -272,7 +295,8 @@ abstract class AbstractManager{
      *
      * @return array An array of entities.
      */
-    public function getAll(){
+    public function getAll()
+    {
         $sql = "SELECT * FROM $this->table";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
@@ -292,7 +316,8 @@ abstract class AbstractManager{
      *
      * @return array The entity.
      */
-    public function search(array $param){
+    public function search(array $param)
+    {
         $sql = "SELECT * FROM $this->table WHERE ";
         foreach ($param as $field => $value) {
             $sql .= "$field " . $value['operator'] ?? '=' . " :$field AND ";
@@ -310,7 +335,8 @@ abstract class AbstractManager{
      *
      * @return array The entity.
      */
-    public function getById($id){
+    public function getById($id)
+    {
         $sql = "SELECT * FROM $this->table WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $id]);
@@ -322,7 +348,8 @@ abstract class AbstractManager{
      *
      * @param array $entity The entity to insert.
      */
-    public function insert($entity){
+    public function insert($entity)
+    {
         $sql = "INSERT INTO $this->table (";
         foreach ($entity as $field => $value) {
             $sql .= "$field,";
@@ -346,7 +373,8 @@ abstract class AbstractManager{
      *
      * @param array $entity The entity to update.
      */
-    public function update($entity){
+    public function update($entity)
+    {
         $sql = "UPDATE $this->table SET ";
         foreach ($entity as $field => $value) {
             $sql .= "$field = :$field,";
@@ -363,7 +391,8 @@ abstract class AbstractManager{
      *
      * @param int $id The id of the entity to delete.
      */
-    public function delete($id){
+    public function delete($id)
+    {
         $sql = "DELETE FROM $this->table WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $id]);

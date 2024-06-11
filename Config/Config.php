@@ -61,7 +61,7 @@ class Config extends \Utils\Singleton
     {
         $dotenv = Dotenv::createImmutable($file);
         if ($dotenv === false) {
-            throw new Exception("Cconfiguration file $file not found.");
+            throw new Exception("Configuration file $file not found.");
         }
         $dotenv->load();
         return $this;

@@ -13,6 +13,9 @@ use Mockery as m;
 
 class ReflectionInstanceTest extends TestInit{
 
+    protected $Reflection;
+    protected $ReflectionInstance;
+
     function setUp() : void{
         parent::setUp();
 

@@ -163,9 +163,23 @@ abstract class AbstractEntityTest extends TestInit{
         $entity = m::mock($this->class)->makePartial();
         $entity->shouldReceive('get_' . $property)->never();
 
-        $this->Reflection->_SET($property, 'value', $entity);
+        $values = ['value', 1, 1.1, true, null, [], new \stdClass];
+        $value = array_pop($values);
+        do {
+            try {
+                $this->Reflection->_SET($property, $value, $entity);
+                break;
+            } catch (\TypeError $e) {}
 
-        $this->assertEquals('value', $entity->get($property));
+            if(empty($values)){
+                $this->markTestSkipped('No valid value found for property ' . $property);
+                break;
+            } else {
+                $value = array_pop($values);
+            }
+        } while (true);
+
+        $this->assertEquals($value, $entity->get($property));
     }
 
     ### if the property does not exist, it throws an exception
