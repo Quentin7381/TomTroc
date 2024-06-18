@@ -4,6 +4,7 @@ namespace Manager;
 
 use Config\Config;
 use Utils\PDO;
+use Utils\View;
 
 /**
  * AbstractManager class

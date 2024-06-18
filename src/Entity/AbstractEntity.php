@@ -148,4 +148,11 @@ abstract class AbstractEntity {
                 return 'VARCHAR(255)';
         }
     }
+
+    public static function getManager(){
+        $className = static::class;
+        $managerName = str_replace('Entity', 'Manager', $className);
+        $managerName = $managerName . 'Manager';
+        return new $managerName();
+    }
 }
