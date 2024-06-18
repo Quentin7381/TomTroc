@@ -1,0 +1,1 @@
+<img src="<?= $entity->src ?? '' ?>" alt="<?= $entity->alt ?? '' ?>"/>

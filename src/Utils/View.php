@@ -31,7 +31,8 @@ class View
         return $this->include($templateName, $variables, $style);
     }
 
-    public function getRoot($extension){
+    public function getRoot($extension)
+    {
         switch ($extension) {
             case '.php':
                 $root = Config::getInstance()->PATH_TEMPLATES;
@@ -74,9 +75,10 @@ class View
         return $return;
     }
 
-    public function include($templateName, $variables = [], $style = null){
+    public function include($templateName, $variables = [], $style = null)
+    {
         $fileName = $this->getTemplatePath($templateName, '.php', $style);
-        if(!is_readable($fileName ?? '')){
+        if (!is_readable($fileName ?? '')) {
             user_error('File not found for template: <s trong>' . $templateName . '</strong>', E_USER_WARNING);
             return;
         }
@@ -88,7 +90,7 @@ class View
 
         ob_start();
         ?>
-        <<?= $wrapper ?> class="tpl<?= $templateName . $style ? ' ' . $style : '' ?>">
+        <<?= $wrapper ?> class="tpl-<?= $templateName . ($style ? ' ' . 'style-' . $style : '') ?>">
             <?php
             include $fileName;
             ?>
