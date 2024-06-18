@@ -2,10 +2,12 @@
 
 require_once 'vendor/autoload.php';
 
-use Entity\Component;
 use Config\Config;
+use Utils\View;
 
 $config = Config::getInstance();
 $config->load(__DIR__);
 
-echo Component::page();
+$view = View::getInstance();
+$view->buildPage();
+echo $view->html;

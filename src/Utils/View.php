@@ -3,11 +3,13 @@
 namespace Utils;
 
 use Config\Config;
+use Entity\Component;
 
 class View
 {
     protected static $instance;
     public $css = [];
+    public $html;
 
     protected function __construct()
     {
@@ -79,8 +81,8 @@ class View
     {
         $fileName = $this->getTemplatePath($templateName, '.php', $style);
         if (!is_readable($fileName ?? '')) {
-            user_error('File not found for template: <s trong>' . $templateName . '</strong>', E_USER_WARNING);
-            return;
+            user_error('File not found for template: ' . $templateName, E_USER_WARNING);
+            return "";
         }
 
         $this->css[$this->getTemplatePath($templateName, '.css', $style)] = true;
@@ -98,6 +100,18 @@ class View
         <?php
 
         return ob_get_clean();
+    }
+
+    public function buildPage($options = [])
+    {
+        $this->html = Component::page($options);
+        $this->addCss();
+    }
+
+    public function addCss()
+    {
+        $html = Component::css();
+        $this->html = str_replace('</head>', $html . '</head>', $this->html);
     }
 
 }
