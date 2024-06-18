@@ -7,7 +7,7 @@ use Config\Config;
 class View
 {
     protected static $instance;
-    protected $css = [];
+    public $css = [];
 
     protected function __construct()
     {
@@ -26,7 +26,9 @@ class View
     {
         $templateName = get_class($entity);
         $templateName = str_replace('Entity\\', '', $templateName);
-        $this->include($templateName, $variables, $style);
+        $templateName = lcfirst($templateName);
+        $variables['entity'] = $entity;
+        return $this->include($templateName, $variables, $style);
     }
 
     public function getRoot($extension){
@@ -45,44 +47,48 @@ class View
 
     public function getTemplatePath($fileName, $extension = '.php', $style = null)
     {
-        $fileName = $this->getRoot($extension) . $fileName;
+        $root = $this->getRoot($extension);
+        $styleFile = $style ? $fileName . '-' . $style . $extension : null;
+        $fileName .= $extension;
+        $return = false;
 
-        if (!empty($style)) {
-            $fileNameStyle = '-' . $style;
-            $fileNameStyle .= $extension;
+        // recursive search
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($root));
+        foreach ($iterator as $file) {
+            if ($file->isDir()) {
+                continue;
+            }
 
-            if (file_exists($fileNameStyle)) {
-                $fileName = $fileNameStyle;
-            } else {
-                user_error('Style not found: ' . $fileNameStyle . 'trying to use default style');
+            if ($styleFile && $file->getFilename() === $styleFile) {
+                return $file->getPathname();
+            }
+
+            if ($file->getFilename() === $fileName) {
+                if ($style) {
+                    $return = $file->getPathname();
+                }
+                return $file->getPathname();
             }
         }
 
-        $fileName = str_replace($extension, '', $fileName);
-        $fileName .= $extension;
-
-        if (file_exists($fileName)) {
-            return $fileName;
-        } else {
-            user_error('File not found: ' . $fileName);
-        }
+        return $return;
     }
 
     public function include($templateName, $variables = [], $style = null){
         $fileName = $this->getTemplatePath($templateName, '.php', $style);
-        if(!file_exists($fileName ?? '')){
-            user_error('File not found: ' . $fileName);
+        if(!is_readable($fileName ?? '')){
+            user_error('File not found for template: <s trong>' . $templateName . '</strong>', E_USER_WARNING);
             return;
         }
 
-        $this->css[] = $this->getTemplatePath($templateName, '.css', $style);
+        $this->css[$this->getTemplatePath($templateName, '.css', $style)] = true;
 
         extract($variables);
         $wrapper = $wrapper ?? 'div';
 
         ob_start();
         ?>
-        <<?= $wrapper ?> class="tpl<?= $className . $style ? ' ' . $style : '' ?>">
+        <<?= $wrapper ?> class="tpl<?= $templateName . $style ? ' ' . $style : '' ?>">
             <?php
             include $fileName;
             ?>
@@ -90,7 +96,6 @@ class View
         <?php
 
         return ob_get_clean();
-        
     }
 
 }
