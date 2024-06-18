@@ -45,11 +45,16 @@ class Config extends \Utils\Singleton
      */
     public function get($name)
     {
-        $value = getenv($name);
+        $value = $_ENV[$name];
         if ($value === false) {
             throw new Exception("Property $name is not set.");
         }
         return $value;
+    }
+
+    public function __get($name)
+    {
+        return $this->get($name);
     }
 
     /**
@@ -57,13 +62,15 @@ class Config extends \Utils\Singleton
      *
      * Adds a .env file to the configuration values.
      */
-    public function load(string $file)
+    public function load(string $folder)
     {
-        $dotenv = Dotenv::createImmutable($file);
-        if ($dotenv === false) {
-            throw new Exception("Configuration file $file not found.");
+        if(!is_readable($folder)){
+            throw new Exception("Configuration folder $folder not found.");
         }
+
+        $dotenv = Dotenv::createImmutable($folder);
         $dotenv->load();
+
         return $this;
     }
 }
