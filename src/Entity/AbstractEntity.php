@@ -3,6 +3,7 @@
 namespace Entity;
 use ReflectionClass;
 use ReflectionProperty;
+use Utils\View;
 
 /**
  * AbstractEntity class
@@ -154,5 +155,13 @@ abstract class AbstractEntity {
         $managerName = str_replace('Entity', 'Manager', $className);
         $managerName = $managerName . 'Manager';
         return new $managerName();
+    }
+
+    public function __toString(){
+        return $this->render();
+    }
+
+    public function render($variables = [], $style = null){
+        return View::getInstance()->render($this, $variables, $style);
     }
 }
