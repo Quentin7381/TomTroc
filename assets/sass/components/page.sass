@@ -1,21 +1,33 @@
 @import '../includes/variables'
 @import '../includes/normalize'
+@import '../includes/mixins'
 
 *
-  font-family: inter, sans-serif
+  font-family: $family-main
+  font-weight: $weight-regular
+  padding: 0
+  margin: 0
+  box-sizing: border-box
 
-body>*
-  padding: 0 calc((100vw - #{$container-max-width}) / 2)
+:root
+  font-size: $size-rem
+
+section, header, footer
+  @include container($container-xl)
+
+h1, h2, h3, h4
+  font-family: $family-second
+  font-weight: $weight-regular
+  margin-bottom: 0.5em
 
 h1
 
 h2
-
-h3
-
-h4
+  font-size: $size-xl
 
 p
+  font-weight: $weight-light
+  margin-bottom: 1em
 
 a
   underline: none
@@ -29,6 +41,12 @@ img
   height: auto
 
 button
+  background: $color-primary
+  color: $color-white
+  border: none
+  border-radius: 10px
+  padding: 1.5em 2em
+  font-weight: $weight-semibold
     
 nav
   display: flex
@@ -36,3 +54,20 @@ nav
   gap: $spacer-m
   align-items: center
   height: 100%
+
+section
+  padding-top: $spacer-xxl
+  padding-bottom: $spacer-xxl
+
+.credit
+  text-align: right
+  color: $color-gray
+  font-size: $size-xs
+  font-style: italic
+  margin: 1em
+
+.alternate-bg
+  &>:nth-child(odd)
+    background-color: $color-background-secondary
+  &>:nth-child(even)
+    background-color: $color-background-primary

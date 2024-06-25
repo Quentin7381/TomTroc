@@ -1,0 +1,22 @@
+.tpl-decouvrir {
+  padding-left: calc((100vw - 800px) / 2);
+  padding-right: calc((100vw - 800px) / 2);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+.tpl-decouvrir > * {
+  flex: 1;
+}
+.tpl-decouvrir__text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 4rem;
+  padding-left: 0;
+}
+.tpl-decouvrir__cta {
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+}

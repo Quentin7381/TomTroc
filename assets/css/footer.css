@@ -2,7 +2,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 3rem;
+  gap: 2rem;
   height: 60px;
 }
 .tpl-footer .logo_small {

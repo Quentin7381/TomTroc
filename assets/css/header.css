@@ -1,9 +1,9 @@
 .tpl-header {
   height: 80px;
-  background-color: #F5F3EF;
   display: flex;
   align-items: center;
-  gap: 5rem;
+  gap: 4rem;
+  background-color: #F5F3EF;
 }
 .tpl-header .logo {
   width: 155px;
@@ -15,5 +15,5 @@
 .tpl-header > * {
   display: flex;
   align-items: center;
-  gap: 3rem;
+  gap: 2rem;
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Entity;
+
 use ReflectionClass;
 use ReflectionProperty;
 use Utils\View;
@@ -10,7 +11,8 @@ use Utils\View;
  *
  * This class is the base class for all entities.
  */
-abstract class AbstractEntity {
+abstract class AbstractEntity
+{
 
     protected $attributes = [];
 
@@ -25,7 +27,8 @@ abstract class AbstractEntity {
      * @throws Exception if the property does not exist
      * @throws Exception if the property validation fails (@see validate_* methods)
      */
-    public function set($name, $value){
+    public function set($name, $value)
+    {
         // Check if a validation method exists for the property
         if (method_exists($this, 'validate_' . $name)) {
             try {
@@ -45,23 +48,27 @@ abstract class AbstractEntity {
             $this->$name = $value;
             return $this;
         }
-        
+
         // Throw an exception if the property does not exist
         throw new Exception("Property $name does not exist.");
     }
 
-    public function addAttribute($name, $value){
-        if(!isset($this->attributes[$name])){
+    public function addAttribute($name, ...$values)
+    {
+        if (!isset($this->attributes[$name])) {
             $this->attributes[$name] = [];
         }
 
-        $this->attributes[$name][] = $value;
+        foreach ($values as $value) {
+            $this->attributes[$name][] = $value;
+        }
     }
 
-    public function removeAttribute($name, $value){
-        if(isset($this->attributes[$name])){
+    public function removeAttribute($name, $value)
+    {
+        if (isset($this->attributes[$name])) {
             $key = array_search($value, $this->attributes[$name]);
-            if($key !== false){
+            if ($key !== false) {
                 unset($this->attributes[$name][$key]);
             }
         }
@@ -76,7 +83,8 @@ abstract class AbstractEntity {
      *
      * @throws Exception if the property does not exist
      */
-    public function get($name){
+    public function get($name)
+    {
         // Check if a custom getter method exists for the property
         if (method_exists($this, 'get_' . $name)) {
             return $this->{'get_' . $name}();
@@ -86,7 +94,7 @@ abstract class AbstractEntity {
         if (property_exists($this, $name)) {
             return $this->$name;
         }
-        
+
         throw new Exception("Property $name does not exist.");
     }
 
@@ -101,7 +109,8 @@ abstract class AbstractEntity {
      *
      * @throws Exception if the property does not exist
      */
-    public function __get($name){
+    public function __get($name)
+    {
         return $this->get($name);
     }
 
@@ -113,7 +122,8 @@ abstract class AbstractEntity {
      * @param string $name
      * @param mixed $value
      */
-    public function __set($name, $value){
+    public function __set($name, $value)
+    {
         return $this->set($name, $value);
     }
 
@@ -122,7 +132,8 @@ abstract class AbstractEntity {
      *
      * @return array
      */
-    public static function getFields(){
+    public static function getFields()
+    {
         $reflectionClass = new ReflectionClass(static::class);
         $properties = $reflectionClass->getProperties(ReflectionProperty::IS_PROTECTED);
 
@@ -130,9 +141,9 @@ abstract class AbstractEntity {
         foreach ($properties as $property) {
             $name = $property->getName();
 
-            if(method_exists(static::class, 'typeof_' . $name)){
+            if (method_exists(static::class, 'typeof_' . $name)) {
                 $type = static::{'typeof_' . $name}();
-            }else{
+            } else {
                 $type = $property->getType();
                 $type = static::getDbType($type);
             }
@@ -143,7 +154,7 @@ abstract class AbstractEntity {
         return $protectedProperties;
     }
 
-    
+
 
     /**
      * Get the database type for a given php type.
@@ -152,7 +163,8 @@ abstract class AbstractEntity {
      *
      * @return string The database type.
      */
-    public static function getDbType($type){
+    public static function getDbType($type)
+    {
         switch ($type) {
             case 'int':
                 return 'INT(6)';
@@ -169,31 +181,35 @@ abstract class AbstractEntity {
         }
     }
 
-    public static function getManager(){
+    public static function getManager()
+    {
         $className = static::class;
         $managerName = str_replace('Entity', 'Manager', $className);
         $managerName = $managerName . 'Manager';
         return new $managerName();
     }
 
-    public function __toString(){
+    public function __toString()
+    {
         return $this->render();
     }
 
-    public function render($variables = [], $style = null){
+    public function render($variables = [], $style = null)
+    {
         $variables['attributes'] = $this->mergeAttributes($this->attributes, $variables['attributes'] ?? []);
         return View::getInstance()->render($this, $variables, $style);
     }
 
-    public function mergeAttributes(...$attributes){
+    public function mergeAttributes(...$attributes)
+    {
         $return = [];
         foreach ($attributes as $attribute) {
             foreach ($attribute as $key => $values) {
-                if(!is_array($values)){
+                if (!is_array($values)) {
                     $values = [$values];
                 }
 
-                if(!isset($return[$key])){
+                if (!isset($return[$key])) {
                     $return[$key] = [];
                 }
 

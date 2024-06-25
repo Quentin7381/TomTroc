@@ -7,7 +7,7 @@
 </head>
 <body>
     <?= Entity\Component::header() ?>
-    <?= Entity\Component::body() ?>
+    <?= Entity\Component::main() ?>
     <?= Entity\Component::footer() ?>
 </body>
 </html>

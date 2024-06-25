@@ -9,3 +9,6 @@ composer.lock
 
 # Passwords
 .env
+
+# Figma tmp import
+assets/figma/*

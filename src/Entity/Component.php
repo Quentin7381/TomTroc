@@ -5,8 +5,8 @@ namespace Entity;
 class Component extends AbstractEntity {
 
     protected static $instances = [];
-    protected $data = [];
-    protected $template;
+    protected $variables = [];
+    protected $template = null;
 
     public function __construct($template = null) {
         // parent::__construct();
@@ -18,11 +18,18 @@ class Component extends AbstractEntity {
         if ($key === 'instances') {
             return static::$instances;
         }
-        return $this->data[$key] ?? null;
+        if (property_exists($this, $key)) {
+            return $this->$key;
+        }
+        return $this->variables[$key] ?? null;
     }
 
     public function set($key, $value) {
-        $this->data[$key] = $value;
+        if (property_exists($this, $key)) {
+            $this->$key = $value;
+            return $this;
+        }
+        $this->variables[$key] = $value;
     }
 
     public function render($variables = [], $style = null) {

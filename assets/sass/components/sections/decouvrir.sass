@@ -1,0 +1,26 @@
+@import '../../includes/variables'
+@import '../../includes/mixins'
+    
+.tpl-decouvrir
+    @include container($container-m)
+
+    display: grid
+    grid-template-columns: repeat(2, 1fr)
+    gap: 0
+
+    &>*
+        flex: 1
+
+    &__text
+        display: flex
+        flex-direction: column
+        justify-content: flex-end
+        align-items: flex-start
+        padding: $spacer-xxl
+        padding-left: 0
+
+    &__cta
+        margin-top: $spacer-m
+        margin-bottom: $spacer-xxl
+
+    
