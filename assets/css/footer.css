@@ -1,0 +1,14 @@
+.tpl-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 3rem;
+  height: 60px;
+}
+.tpl-footer .logo_small {
+  width: 22px;
+}
+.tpl-footer a {
+  text-decoration: none;
+  color: #292929;
+}

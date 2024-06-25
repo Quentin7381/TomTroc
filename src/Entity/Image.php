@@ -37,8 +37,10 @@ class Image extends AbstractEntity
 
     public function set_src($src){
         $src = explode('/', $src);
-        $this->name = end($src);
-        $this->extension = explode('.', $this->name)[1];
+        $name = end($src);
+        $name = explode('.', $name);
+        $this->name = $name[0];
+        $this->extension = $name[1];
         return $this;
     }
 
