@@ -1,1 +1,1 @@
-<img src="<?= $entity->src ?? '' ?>" alt="<?= $entity->alt ?? '' ?>"/>
+<img <?= Utils\View::renderAttributes($attributes) ?>/>

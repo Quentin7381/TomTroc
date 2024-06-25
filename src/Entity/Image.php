@@ -21,13 +21,13 @@ class Image extends AbstractEntity
 
     public function get_content(){
         if(empty($this->content)){
-            $this->content = file_get_contents($this->folder . $this->name);
+            $this->content = file_get_contents($this->get_src());
         }
     }
 
     public function set_content($content){
         $this->content = $content;
-        file_put_contents($this->folder . $this->name, $content);
+        file_put_contents($this->get_src(), $content);
         return $this;
     }
 
@@ -40,6 +40,13 @@ class Image extends AbstractEntity
         $this->name = end($src);
         $this->extension = explode('.', $this->name)[1];
         return $this;
+    }
+
+    public function render($variables = [], $style = null)
+    {
+        $variables['attributes']['src'] = $this->get_src();
+        $variables['attributes']['alt'] = $this->alt;
+        return parent::render($variables, $style);
     }
 
 }

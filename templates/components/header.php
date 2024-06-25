@@ -6,17 +6,12 @@ use Entity\Image;
 $logo = new Image();
 $logo->name = 'logo';
 $logo->extension = 'svg';
+$logo->alt = 'TomTroc';
 
 ?>
 
-<ul>
-    <li>
-        <?= $logo->render() ?>
-    </li>
-    <li>
-        <?= Component::menu() ?>
-    </li>
-    <li>
-        <?= Component::menuUser() ?>
-    </li>
-</ul>
+<section <?= Utils\View::renderAttributes($attributes)?>>
+    <?= $logo->render() ?>
+    <?= Component::menuMain() ?>
+    <?= Component::menuUser() ?>
+</section>

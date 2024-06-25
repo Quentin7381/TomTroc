@@ -1,5 +1,5 @@
-<ul>
-    <li><a href="">Messagerie</a></li>
-    <li><a href="">Mon compte</a></li>
-    <li><a href="">Connexion</a></li>
-</ul>
+<nav <?= Utils\View::renderAttributes($attributes) ?>>
+    <a href="">Messagerie</a>
+    <a href="">Mon compte</a>
+    <a href="">Connexion</a>
+</nav>

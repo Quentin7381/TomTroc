@@ -67,10 +67,11 @@ class View
             }
 
             if ($file->getFilename() === $fileName) {
-                if ($style) {
-                    $return = $file->getPathname();
+                if (empty($style)) {
+                    return $file->getPathname();
                 }
-                return $file->getPathname();
+
+                $return = $file->getPathname();
             }
         }
 
@@ -88,17 +89,13 @@ class View
         $this->css[$this->getTemplatePath($templateName, '.css', $style)] = true;
 
         extract($variables);
-        $wrapper = $wrapper ?? 'div';
+        $attributes['class'][] = 'tpl-' . $templateName;
+        if ($style) {
+            $attributes['class'][] = 'style-' . $style;
+        }
 
         ob_start();
-        ?>
-        <<?= $wrapper ?> class="tpl-<?= $templateName . ($style ? ' ' . 'style-' . $style : '') ?>">
-            <?php
-            include $fileName;
-            ?>
-        </<?= $wrapper ?>>
-        <?php
-
+        include $fileName;
         return ob_get_clean();
     }
 
@@ -114,4 +111,15 @@ class View
         $this->html = str_replace('</head>', $html . '</head>', $this->html);
     }
 
+    public static function renderAttributes($attributes)
+    {
+        $html = '';
+        foreach ($attributes as $key => $value) {
+            if (is_array($value)) {
+                $value = implode(' ', $value);
+            }
+            $html .= ' ' . $key . '="' . $value . '"';
+        }
+        return $html;
+    }
 }
