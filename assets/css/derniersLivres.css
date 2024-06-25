@@ -1,0 +1,18 @@
+.tpl-derniersLivres {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tpl-derniersLivres h2 {
+  margin-bottom: 4rem;
+}
+.tpl-derniersLivres__books {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+.tpl-derniersLivres__cta {
+  margin: auto 0;
+}

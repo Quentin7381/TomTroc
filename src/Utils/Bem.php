@@ -8,7 +8,10 @@ class Bem {
     protected static $currentInstance = null;
     protected $template;
 
-    public static function getInstance($template){
+    public static function getInstance($template, $style = null){
+        if(!empty($style)){
+            $template .= '-' . $style;
+        }
         if(!isset(self::$instances[$template])){
             self::$instances[$template] = new self($template);
         }
@@ -17,8 +20,8 @@ class Bem {
         return self::$instances[$template];
     }
 
-    public static function I($template){
-        return self::getInstance($template);
+    public static function I($template, $style = null){
+        return self::getInstance($template, $style);
     }
 
     public function __construct($template){
@@ -33,18 +36,12 @@ class Bem {
         return 'tpl-' . $this->template . '--' . $modifier;
     }
     
-    public static function __callStatic($method, $args){
-        if(method_exists(self::class, $method)){
-            return call_user_func_array([self::class, $method], $args);
-        }
+    public function e($element){
+        return $this->elementClass($element);
+    }
 
-        $class = $method;
-        $type = $args[0] ?? 'element';
-        if(!in_array($type, ['element', 'modifier'])){
-            throw new Exception('Invalid type');
-        }
-        $instance = self::$instances[self::$currentInstance];
-        return $instance->{$type . 'Class'}($class);
+    public function m($modifier){
+        return $this->modifierClass($modifier);
     }
 
 }

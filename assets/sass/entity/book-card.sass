@@ -1,0 +1,36 @@
+@import '../includes/variables'
+
+.tpl-book-card
+    display: flex
+    flex-direction: column
+    max-width: 200px
+    padding: $spacer-m
+
+    background: $color-white
+    
+    &>*
+        width: 100%
+
+    &__cover
+        height: 200px
+        width: 200px
+        object-fit: cover
+        margin: calc($spacer-m * -1)
+        margin-bottom: 0
+
+    &__title
+        margin-top: $spacer-s
+        margin-bottom: $spacer-xs
+
+        font-size: $size-m
+        font-family: $family-main
+        font-weight: $weight-regular
+        color: $color-text-dark
+
+    &__author
+        font-size: $size-s
+        color: $color-text-light
+
+    &__seller
+        font-size: $size-xxs
+        color: $color-text-light

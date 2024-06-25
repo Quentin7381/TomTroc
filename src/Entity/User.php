@@ -3,8 +3,7 @@
 namespace Entity;
 
 class User extends AbstractEntity{
-    protected int $id;
-    protected string $username;
+    protected string $name;
     protected string $password;
     protected string $email;
 

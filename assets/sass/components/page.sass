@@ -53,15 +53,17 @@ nav
   flex-wrap: wrap
   gap: $spacer-m
   align-items: center
-  height: 100%
 
 section
   padding-top: $spacer-xxl
   padding-bottom: $spacer-xxl
 
+  >h2
+    text-align: center
+
 .credit
   text-align: right
-  color: $color-gray
+  color: $color-text-light
   font-size: $size-xs
   font-style: italic
   margin: 1em
@@ -69,5 +71,15 @@ section
 .alternate-bg
   &>:nth-child(odd)
     background-color: $color-background-secondary
+    color: $color-text-dark
   &>:nth-child(even)
     background-color: $color-background-primary
+    color: $color-text
+
+.bg-primary
+  background-color: $color-background-primary
+  color: $color-text-dark
+
+.bg-secondary
+  background-color: $color-background-secondary
+  color: $color-text

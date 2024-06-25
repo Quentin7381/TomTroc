@@ -90,8 +90,8 @@ class View
 
         extract($variables);
         $attributes['class'][] = 'tpl-' . $templateName;
-        if ($style) {
-            $attributes['class'][] = 'style-' . $style;
+        if($style){
+            $attributes['class'][] = 'tpl-' . $templateName . '-' . $style;
         }
 
         ob_start();

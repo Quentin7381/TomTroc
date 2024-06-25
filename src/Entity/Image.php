@@ -6,8 +6,6 @@ use Config\Config;
 
 class Image extends AbstractEntity
 {
-
-    protected $id;
     protected $folder;
     protected $name;
     protected $extension;
@@ -40,7 +38,7 @@ class Image extends AbstractEntity
         $name = end($src);
         $name = explode('.', $name);
         $this->name = $name[0];
-        $this->extension = $name[1];
+        $this->extension = $name[1] ?? '';
         return $this;
     }
 

@@ -13,7 +13,7 @@ use Utils\View;
  */
 abstract class AbstractEntity
 {
-
+    protected $id;
     protected $attributes = [];
 
     /**
@@ -50,7 +50,7 @@ abstract class AbstractEntity
         }
 
         // Throw an exception if the property does not exist
-        throw new Exception("Property $name does not exist.");
+        throw new Exception("Property \"$name\" does not exist in " . static::class . ".");
     }
 
     public function addAttribute($name, ...$values)
@@ -95,7 +95,7 @@ abstract class AbstractEntity
             return $this->$name;
         }
 
-        throw new Exception("Property $name does not exist.");
+        throw new Exception("Property \"$name\" does not exist in " . static::class . ".");
     }
 
     /**
