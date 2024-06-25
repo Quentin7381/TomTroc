@@ -13,7 +13,7 @@
   font-size: $size-rem
 
 section, header, footer
-  @include container($container-xl)
+  @inclide padding-container($container-xl)
 
 h1, h2, h3, h4
   font-family: $family-second
@@ -44,9 +44,17 @@ button
   background: $color-primary
   color: $color-white
   border: none
+  
   border-radius: 10px
   padding: 1.5em 2em
+
   font-weight: $weight-semibold
+  font-size: $size-m
+
+  &.inverted
+    background: transparent
+    color: $color-primary
+    border: 2px solid $color-primary
     
 nav
   display: flex
@@ -58,7 +66,7 @@ section
   padding-top: $spacer-xxl
   padding-bottom: $spacer-xxl
 
-  >h2
+  h2
     text-align: center
 
 .credit
@@ -83,3 +91,9 @@ section
 .bg-secondary
   background-color: $color-background-secondary
   color: $color-text
+
+@each $size, $container in ('xs' $container-xs), ('s' $container-s), ('m' $container-m), ('l' $container-l), ('xl' $container-xl)
+  .container-#{$size}
+    @include container($container)
+
+

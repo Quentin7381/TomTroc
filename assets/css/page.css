@@ -17,8 +17,7 @@
 }
 
 section, header, footer {
-  padding-left: calc((100vw - 1200px) / 2);
-  padding-right: calc((100vw - 1200px) / 2);
+  @inclide padding-container($container-xl);
 }
 
 h1, h2, h3, h4 {
@@ -52,6 +51,12 @@ button {
   border-radius: 10px;
   padding: 1.5em 2em;
   font-weight: 600;
+  font-size: 1rem;
+}
+button.inverted {
+  background: transparent;
+  color: #00AC66;
+  border: 2px solid #00AC66;
 }
 
 nav {
@@ -65,7 +70,7 @@ section {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
-section > h2 {
+section h2 {
   text-align: center;
 }
 
@@ -94,4 +99,34 @@ section > h2 {
 .bg-secondary {
   background-color: #F5F3EF;
   color: #292929;
+}
+
+.container-xs {
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-s {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-m {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-l {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-xl {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
