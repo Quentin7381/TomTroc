@@ -1,3 +1,30 @@
-html{
-    /* background-color: red; */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+* {
+  font-family: inter, sans-serif;
+}
+
+body > * {
+  padding: 0 calc((100vw - 1200px) / 2);
+}
+
+a {
+  underline: none;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  height: 100%;
 }

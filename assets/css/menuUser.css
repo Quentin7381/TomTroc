@@ -1,0 +1,24 @@
+.tpl-menuUser {
+  margin-left: auto;
+}
+.tpl-menuUser a {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.tpl-menuUser img {
+  height: 1em;
+  width: auto;
+}
+.tpl-menuUser .msgCount {
+  background: #292929;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10.5px;
+  height: 15px;
+  border-radius: 5px;
+  font-size: 8.25px;
+  font-weight: 700;
+}

@@ -12,6 +12,8 @@ use Utils\View;
  */
 abstract class AbstractEntity {
 
+    protected $attributes = [];
+
     /**
      * Set a property value.
      *
@@ -46,6 +48,23 @@ abstract class AbstractEntity {
         
         // Throw an exception if the property does not exist
         throw new Exception("Property $name does not exist.");
+    }
+
+    public function addAttribute($name, $value){
+        if(!isset($this->attributes[$name])){
+            $this->attributes[$name] = [];
+        }
+
+        $this->attributes[$name][] = $value;
+    }
+
+    public function removeAttribute($name, $value){
+        if(isset($this->attributes[$name])){
+            $key = array_search($value, $this->attributes[$name]);
+            if($key !== false){
+                unset($this->attributes[$name][$key]);
+            }
+        }
     }
 
     /**
@@ -162,6 +181,26 @@ abstract class AbstractEntity {
     }
 
     public function render($variables = [], $style = null){
+        $variables['attributes'] = $this->mergeAttributes($this->attributes, $variables['attributes'] ?? []);
         return View::getInstance()->render($this, $variables, $style);
+    }
+
+    public function mergeAttributes(...$attributes){
+        $return = [];
+        foreach ($attributes as $attribute) {
+            foreach ($attribute as $key => $values) {
+                if(!is_array($values)){
+                    $values = [$values];
+                }
+
+                if(!isset($return[$key])){
+                    $return[$key] = [];
+                }
+
+                $return[$key] = array_merge($return[$key], $values);
+            }
+        }
+
+        return $return;
     }
 }

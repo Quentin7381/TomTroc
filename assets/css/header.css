@@ -1,0 +1,19 @@
+.tpl-header {
+  height: 80px;
+  background-color: #F5F3EF;
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+}
+.tpl-header .logo {
+  width: 155px;
+}
+.tpl-header a {
+  text-decoration: none;
+  color: #292929;
+}
+.tpl-header > * {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
