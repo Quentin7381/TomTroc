@@ -10,7 +10,7 @@
   height: 1em;
   width: auto;
 }
-.tpl-menuUser .msgCount {
+.tpl-menuUser__msgCount {
   background: #292929;
   color: #FFF;
   display: flex;

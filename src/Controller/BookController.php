@@ -9,12 +9,14 @@ use Entity\User;
 class BookController extends AbstractController
 {
 
+    protected static $instance;
+    protected $baseUrl = '/book';
     protected function initRoutes()
     {
 
     }
 
-    public function provider_lasts()
+    public function provide_lasts()
     {
         $generator = new \Utils\Generator();
         $generator->current_set_callback(function () {

@@ -12,7 +12,7 @@
 ?>
 
 <nav <?= Utils\View::renderAttributes($attributes) ?>>
-    <a href=""><?=$ico_message->render()?>Messagerie<span class="msgCount">1</span></a>
+    <a href=""><?=$ico_message->render()?>Messagerie<span class="<?=$bem->e('msgCount')?>"><?=$v->message_count?></span></a>
     <a href=""><?=$ico_account->render()?>Mon compte</a>
     <a href="">Connexion</a>
 </nav>

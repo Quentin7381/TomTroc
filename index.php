@@ -6,8 +6,7 @@ use Variables\Provider;
 use Config\Config;
 use Utils\View;
 
-// $provider = Provider::I();
-// var_dump($provider->getStructure());
+$provider = Provider::I();
 
 $config = Config::getInstance();
 $config->load(__DIR__);

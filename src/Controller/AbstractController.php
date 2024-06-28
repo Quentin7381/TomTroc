@@ -53,7 +53,7 @@ abstract class AbstractController
         $this->controllerName = $this->getControllerName();
         $this->initRoutes();
         $this->initProviders();
-        self::$instance = $this;
+        static::$instance = $this;
     }
 
     /**
@@ -66,10 +66,10 @@ abstract class AbstractController
      */
     public static function getInstance()
     {
-        if (self::$instance === null) {
-            self::$instance = new static();
+        if (static::$instance === null) {
+            static::$instance = new static();
         }
-        return self::$instance;
+        return static::$instance;
     }
 
     /**
@@ -98,8 +98,8 @@ abstract class AbstractController
     protected function initProviders(){
         $classMethods = get_class_methods($this);
         foreach ($classMethods as $method) {
-            if (strpos($method, 'provider_') === 0) {
-                $key = str_replace('provider_', '', $method);
+            if (strpos($method, 'provide_') === 0) {
+                $key = str_replace('provide_', '', $method);
                 $key = str_replace('_', '.', $key);
                 $key = $this->controllerName . '.' . $key;
                 $this->provider->set($key, [$this, $method]);
