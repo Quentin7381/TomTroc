@@ -45,6 +45,12 @@ class Variables
             return $this->data->get($key);
         }
 
-        throw new Exception(Exception::VARIABLE_NOT_FOUND, ['key' => implode('.', $key)]);
+        throw new Exception(Exception::VARIABLE_NOT_FOUND, ['key' => $key]);
+    }
+
+    public function __get($key)
+    {
+        $key = str_replace('_', '.', $key);
+        return $this->get($key);
     }
 }

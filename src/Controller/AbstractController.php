@@ -3,6 +3,7 @@
 namespace Controller;
 use Config\Config;
 use Router\Router;
+use Variables\Provider;
 
 /**
  * AbstractController class
@@ -37,6 +38,9 @@ abstract class AbstractController
      */
     protected $router;
 
+    protected Provider $provider;
+    protected $controllerName;
+
     /**
      * Singleton constructor.
      * Calls the initRoutes method to initialize the routes.
@@ -45,7 +49,10 @@ abstract class AbstractController
     {
         $this->config = Config::getInstance();
         $this->router = new Router($this->baseUrl, $this);
+        $this->provider = Provider::getInstance();
+        $this->controllerName = $this->getControllerName();
         $this->initRoutes();
+        $this->initProviders();
         self::$instance = $this;
     }
 
@@ -57,7 +64,7 @@ abstract class AbstractController
     /**
      * Get the instance of the controller.
      */
-    public function getInstance()
+    public static function getInstance()
     {
         if (self::$instance === null) {
             self::$instance = new static();
@@ -77,6 +84,26 @@ abstract class AbstractController
             }
             $controller = 'Controller\\' . $controller;
             $controller::getInstance();
+        }
+    }
+
+    public function getControllerName()
+    {
+        $name = get_class($this);
+        $name = str_replace('Controller\\', '', $name);
+        $name = str_replace('Controller', '', $name);
+        return strtolower($name);
+    }
+
+    protected function initProviders(){
+        $classMethods = get_class_methods($this);
+        foreach ($classMethods as $method) {
+            if (strpos($method, 'provider_') === 0) {
+                $key = str_replace('provider_', '', $method);
+                $key = str_replace('_', '.', $key);
+                $key = $this->controllerName . '.' . $key;
+                $this->provider->set($key, [$this, $method]);
+            }
         }
     }
 }

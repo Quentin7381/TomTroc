@@ -42,7 +42,7 @@ class Exception extends \Exception
 
     public function __construct($code, $data, $previous = null)
     {
-        if (method_exists($this, 'message_)' . $code)) {
+        if (method_exists($this, 'message_' . $code)) {
             $message = $this->{'message_' . $code}($data);
         } else {
             $message = self::$exceptions[$code];

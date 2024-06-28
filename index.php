@@ -1,34 +1,17 @@
 <?php
 
-require_once 'vendor/autoload.php';
+require_once 'src/initialize.php';
 
-// use Config\Config;
-// use Utils\View;
-
-// $config = Config::getInstance();
-// $config->load(__DIR__);
-
-// $view = View::getInstance();
-// $view->buildPage();
-// echo $view->html;
-
-use Variables\Variables;
 use Variables\Provider;
-use Variables\Data;
+use Config\Config;
+use Utils\View;
 
-$variables = Variables::I();
-$provider = Provider::I();
-$data = Data::I();
+// $provider = Provider::I();
+// var_dump($provider->getStructure());
 
-$provider->set('test', function(){
-    return 'Hello world';
-});
+$config = Config::getInstance();
+$config->load(__DIR__);
 
-$provider->set('test2.test3', function(){
-    return ['key' => 'Hello world 2'];
-});
-
-var_dump($data->getStructure());
-var_dump($variables->get('test'));
-var_dump($variables->get('test2.test3'));
-var_dump($data->getStructure());
+$view = View::getInstance();
+$view->buildPage();
+echo $view->html;
