@@ -4,6 +4,7 @@ namespace Utils;
 
 use Config\Config;
 use Entity\Component;
+use Variables\Variables;
 
 class View
 {
@@ -93,6 +94,8 @@ class View
         if($style){
             $attributes['class'][] = 'tpl-' . $templateName . '-' . $style;
         }
+
+        $variables = $v = Variables::I();
 
         ob_start();
         include $fileName;

@@ -6,7 +6,6 @@ use Entity\Image;
 use Variables\Variables;
 
 $bem = Bem::I($templateName);
-$v = Variables::I();
 ?>
 
 <section <?= Utils\View::renderAttributes($attributes) ?>>
