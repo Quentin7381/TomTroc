@@ -11,8 +11,8 @@ $logo->addAttribute('class', 'logo');
 
 ?>
 
-<section <?= Utils\View::renderAttributes($attributes)?>>
+<header <?= Utils\View::renderAttributes($attributes)?>>
     <?= $logo->render() ?>
     <?= Component::menuMain() ?>
     <?= Component::menuUser() ?>
-</section>
+</header>

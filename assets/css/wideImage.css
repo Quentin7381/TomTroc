@@ -1,0 +1,8 @@
+.tpl-wideImage {
+  height: 230px;
+  padding: 0;
+}
+.tpl-wideImage img {
+  object-fit: cover;
+  height: 100%;
+}

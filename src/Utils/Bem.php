@@ -24,7 +24,7 @@ class Bem {
         return self::getInstance($template, $style);
     }
 
-    public function __construct($template){
+    protected function __construct($template){
         $this->template = $template;
     }
 
