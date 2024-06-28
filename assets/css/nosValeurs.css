@@ -1,0 +1,14 @@
+.tpl-nosValeurs__subContainer {
+  position: relative;
+  padding-bottom: 40px;
+}
+.tpl-nosValeurs__credit {
+  text-align: left;
+}
+.tpl-nosValeurs__heart {
+  width: 120px;
+  height: auto;
+  position: absolute;
+  right: -60px;
+  bottom: 0;
+}

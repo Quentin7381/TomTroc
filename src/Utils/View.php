@@ -96,6 +96,7 @@ class View
         }
 
         $variables = $v = Variables::I();
+        $bem = Bem::I($templateName, $style);
 
         ob_start();
         include $fileName;
