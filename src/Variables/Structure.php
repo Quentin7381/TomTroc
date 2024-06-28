@@ -27,68 +27,13 @@ abstract class Structure
         return static::getInstance();
     }
 
-    protected function addStructure(array $keys)
+    public function set(string $key, mixed $value)
     {
-        $path = implode('.', $keys);
-
-        $structure = &$this->structure;
-        while ($keys) {
-            $k = array_shift($keys);
-            if (
-                isset($structure[$k])
-                && is_string($structure[$k])
-                && $structure[$k] !== $path
-            ) {
-                throw new Exception(Exception::STRUCTURE_PATH_CONFLICT, ['new' => $path, 'existing' => $structure[$k]]);
-            }
-
-            if (
-                empty($keys)
-                && isset($structure[$k])
-                && is_array($structure[$k])
-            ) {
-                throw new Exception(Exception::STRUCTURE_PATH_CONFLICT, ['new' => $path, 'existing' => $structure[$k]]);
-            }
-
-            $structure[$k] = empty($keys) ? $path : [];
-            $structure = &$structure[$k];
-        }
-    }
-
-    protected function removeStructure(array $keys)
-    {
-        $structure = &$this->structure;
-
-        // Get to the end
-        $remove = [];
-        while ($keys) {
-            $k = array_shift($keys);
-            if (!isset($structure[$k])) {
-                $path = implode('.', $keys);
-                throw new Exception(Exception::STRUCTURE_PATH_NOT_FOUND, ['key' => $path]);
-            }
-
-            $remove[] = $structure;
-            $structure = &$structure[$k];
-        }
-
-        while (empty($r) || is_string($r)) {
-            $r = array_pop($remove);
-            unset($k);
-        }
-    }
-
-    public function set(array $keys, mixed $value)
-    {
-        $key = implode('.', $keys);
         $this->data[$key] = $value;
-        $this->addStructure($keys);
     }
 
-    public function get(array $keys): mixed
+    public function get(string $key): mixed
     {
-        $key = implode('.', $keys);
-
         if (!isset($this->data[$key])) {
             throw new Exception(Exception::STRUCTURE_PATH_NOT_FOUND, ['key' => $key]);
         }
@@ -96,22 +41,38 @@ abstract class Structure
         return $this->data[$key] ?? null;
     }
 
-    public function has(array $key): bool
+    public function has(string $key): bool
     {
-        $key = implode('.', $key);
         return isset($this->data[$key]);
     }
 
-    public function remove(array $keys)
+    public function remove(string $key)
     {
-        $key = implode('.', $keys);
         unset($this->data[$key]);
-        $this->removeStructure($keys);
     }
 
     public function getStructure(): array
     {
-        return $this->structure;
+        $structure = [];
+        foreach ($this->data as $fullKey => $value) {
+            $keys = explode('.', $fullKey);
+            $cursor = &$structure;
+
+            while($keys) {
+                $key = array_shift($keys);
+                if (!isset($cursor[$key])) {
+                    $cursor[$key] = [];
+                }
+
+                if (empty($keys)) {
+                    $cursor[$key] = $fullKey;
+                }
+
+                $cursor = &$cursor[$key];
+            }
+        }
+
+        return $structure;
     }
 
 }

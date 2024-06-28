@@ -7,37 +7,35 @@ class Provider extends Structure
 
     protected static self $instance;
 
-    public function set(array $keys, mixed $value)
+    public function set(string $key, mixed $value)
     {
         if (!is_callable($value)) {
-            throw new Exception(Exception::PROVIDER_NOT_CALLABLE, ['key' => implode('.', $keys)]);
+            throw new Exception(Exception::PROVIDER_NOT_CALLABLE, ['key' => $key]);
         }
 
-        $key = implode('.', $keys);
-
-        if (isset($this->providers[$key])) {
+        if (isset($this->data[$key])) {
             throw new Exception(Exception::PROVIDER_ALREADY_EXISTS, ['key' => $key]);
         }
 
-        parent::set($keys, $value);
+        parent::set($key, $value);
     }
 
-    public function get(array $keys): mixed
+    public function get(string $key): mixed
     {
         try {
-            return parent::get($keys);
+            return parent::get($key);
         } catch (Exception $e) {
             if ($e->getCode() == Exception::STRUCTURE_PATH_NOT_FOUND) {
-                throw new Exception(Exception::PROVIDER_NOT_FOUND, ['key' => implode('.', $keys)], $e);
+                throw new Exception(Exception::PROVIDER_NOT_FOUND, ['key' => $key], $e);
             }
 
             throw $e;
         }
     }
 
-    public function call(array $keys, array $args = [])
+    public function call(string $key, array $args = [])
     {
-        $provider = $this->get($keys);
+        $provider = $this->get($key);
         return $provider(...$args);
     }
 

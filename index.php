@@ -20,15 +20,15 @@ $variables = Variables::I();
 $provider = Provider::I();
 $data = Data::I();
 
-$provider->set(['test'], function(){
+$provider->set('test', function(){
     return 'Hello world';
 });
 
-$provider->set(['test2', 'test3'], function(){
+$provider->set('test2.test3', function(){
     return ['key' => 'Hello world 2'];
 });
 
 var_dump($data->getStructure());
 var_dump($variables->get('test'));
-var_dump($variables->get('test2', 'test3'));
+var_dump($variables->get('test2.test3'));
 var_dump($data->getStructure());

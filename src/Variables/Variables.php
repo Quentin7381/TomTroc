@@ -7,14 +7,11 @@ class Variables
     protected static $instance;
     protected Data $data;
     protected Provider $provider;
-    protected self $previous;
-    protected array $keys = [];
 
-    protected function __construct($keys = [])
+    protected function __construct()
     {
         $this->data = Data::I();
         $this->provider = Provider::I();
-        $this->keys = $keys;
     }
 
     public static function getInstance()
@@ -37,17 +34,17 @@ class Variables
         return true;
     }
 
-    public function get(...$keys)
+    public function get($key)
     {
-        if ($this->data->has($keys)) {
-            return $this->data->get($keys);
+        if ($this->data->has($key)) {
+            return $this->data->get($key);
         }
 
-        if ($this->provider->has($keys)) {
-            $this->data->set($keys, $this->provider->call($keys));
-            return $this->data->get($keys);
+        if ($this->provider->has($key)) {
+            $this->data->set($key, $this->provider->call($key));
+            return $this->data->get($key);
         }
 
-        throw new Exception(Exception::VARIABLE_NOT_FOUND, ['key' => implode('.', $keys)]);
+        throw new Exception(Exception::VARIABLE_NOT_FOUND, ['key' => implode('.', $key)]);
     }
 }

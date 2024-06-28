@@ -14,13 +14,13 @@ class Data extends Structure
 {
 
 
-    public function get(array $keys): mixed
+    public function get(string $key): mixed
     {
         try {
-            return parent::get($keys);
+            return parent::get($key);
         } catch (Exception $e) {
             if ($e->getCode() == Exception::STRUCTURE_PATH_NOT_FOUND) {
-                throw new Exception(Exception::DATA_NOT_FOUND, ['key' => implode('.', $keys)], $e);
+                throw new Exception(Exception::DATA_NOT_FOUND, ['key' => $key], $e);
             }
             
             throw $e;

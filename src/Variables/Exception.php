@@ -14,7 +14,7 @@ class Exception extends \Exception
     const PROVIDER_NOT_CALLABLE = 202;
 
     // ----- ------ STRUCTURE EXCEPTIONS ------ ----- //
-    const STRUCTURE_PATH_CONFLICT = 300;
+    // const STRUCTURE_PATH_CONFLICT = 300; // Old
     const STRUCTURE_PATH_NOT_FOUND = 301;
 
     // ----- ------ VARIABLES EXCEPTIONS ------ ----- //
@@ -27,7 +27,7 @@ class Exception extends \Exception
         200 => 'Provider not found',
         201 => 'Provider already exists',
         202 => 'Provider is not callable',
-        300 => 'Path conflict',
+        // 300 => 'Path conflict', // Old
         301 => 'Path not found',
         400 => 'Variable not found',
     ];
@@ -69,13 +69,6 @@ class Exception extends \Exception
     protected function message_201($data)
     {
         return 'Provider already exists: ' . $data['key'];
-    }
-
-    protected function message_300($data)
-    {
-        return 'Path conflict :' . PHP_EOL .
-            ' - new : ' . $data['new'] . PHP_EOL .
-            ' - old : ' . $data['existing'];
     }
 
     protected function message_301($data)
