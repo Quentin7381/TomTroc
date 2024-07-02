@@ -154,12 +154,17 @@ abstract class AbstractManager
         $stmt->execute();
         $result = $stmt->fetchAll();
 
-        $fields = [];
+        $dbFields = [];
         foreach ($result as $row) {
-            $fields[$row['Field']] = $row['Type'];
+            $dbFields[$row['Field']] = $row['Type'];
         }
 
-        return array_diff_assoc($this->fields, $fields);
+        $missingFields = $this->fields;
+        foreach ($dbFields as $name => $type) {
+            unset($missingFields[$name]);
+        }
+
+        return $missingFields;
     }
 
     /**
@@ -174,16 +179,17 @@ abstract class AbstractManager
         $stmt->execute();
         $result = $stmt->fetchAll();
 
-        $fields = [];
+        $dbFields = [];
         foreach ($result as $row) {
-            $fields[$row['Field']] = $row['Type'];
+            $dbFields[$row['Field']] = $row['Type'];
         }
 
         $wrongFields = [];
-        foreach ($this->fields as $name => $type) {
-            if (isset($fields[$name]) && $fields[$name] != $type) {
-                $wrongFields[$name] = $type;
-            }
+        foreach ($this->fields as $name => $entityType) {
+            $dbType = $dbFields[$name] ?? null;
+            $entityType = strtolower($entityType);
+            $dbType = strtolower($dbType);
+            
         }
 
         return $wrongFields;
@@ -201,12 +207,16 @@ abstract class AbstractManager
         $stmt->execute();
         $result = $stmt->fetchAll();
 
-        $fields = [];
+        $unusedFields = [];
         foreach ($result as $row) {
-            $fields[$row['Field']] = $row['Type'];
+            $unusedFields[$row['Field']] = $row['Type'];
         }
 
-        return array_diff_assoc($fields, $this->fields);
+        foreach ($this->fields as $name => $type) {
+            unset($unusedFields[$name]);
+        }
+
+        return $unusedFields;
     }
 
     // ----- TABLE MANAGEMENT -----
@@ -218,6 +228,7 @@ abstract class AbstractManager
      */
     public function manageMissingTableFields(array $fields)
     {
+
         $sql = "ALTER TABLE $this->table ";
         foreach ($fields as $name => $type) {
             $sql .= "ADD $name $type, ";
@@ -237,7 +248,7 @@ abstract class AbstractManager
      */
     public function manageWrongTableFields(array $fields)
     {
-        throw new Exception("Missmatch between entity fields and database fields : " . implode(', ', $fields) . PHP_EOL .
+        throw new Exception("Missmatch between entity fields and database fields : " . implode(', ', array_keys($fields)) . PHP_EOL .
             "Please update the entity fields or the database fields.");
     }
 
@@ -248,7 +259,7 @@ abstract class AbstractManager
      */
     public function manageUnusedTableFields(array $fields)
     {
-        user_error("Unused fields in the database : " . implode(', ', $fields) . PHP_EOL .
+        user_error("Unused fields in the database : " . implode(', ', array_keys($fields)) . PHP_EOL .
             "Consider cleaning the database.");
     }
 
@@ -282,7 +293,7 @@ abstract class AbstractManager
      */
     protected function tableExists()
     {
-        $sql = "SHOW TABLES LIKE $this->table";
+        $sql = "SHOW TABLES LIKE \"$this->table\"";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch();
@@ -351,6 +362,8 @@ abstract class AbstractManager
      */
     public function insert($entity)
     {
+        $entity = $entity->toArray();
+
         $sql = "INSERT INTO $this->table (";
         foreach ($entity as $field => $value) {
             $sql .= "$field,";

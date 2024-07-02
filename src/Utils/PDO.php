@@ -11,9 +11,9 @@ class PDO extends \PDO{
         self::$instance = $this;
         $config = Config::getInstance();
         parent::__construct(
-            'mysql:host=' . $config->db['host'] . ';port=' . $config->db['port'] . ';dbname=' . $config->db['name'],
-            $config->db['user'],
-            $config->db['password']
+            'mysql:host=' . $config->DB_HOST . ';dbname=' . $config->DB_NAME,
+            $config->DB_USER,
+            $config->DB_PASSWORD
         );
     }
 

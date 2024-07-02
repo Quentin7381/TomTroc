@@ -15,6 +15,7 @@ abstract class AbstractEntity
 {
     protected $id;
     protected $attributes = [];
+    protected static $LOCAL_FIELDS = ['attributes', 'LOCAL_FIELDS'];
 
     /**
      * Set a property value.
@@ -151,7 +152,16 @@ abstract class AbstractEntity
             $protectedProperties[$name] = $type;
         }
 
+        foreach (static::$LOCAL_FIELDS as $field){
+            unset($protectedProperties[$field]);
+        }
+
         return $protectedProperties;
+    }
+
+    public static function typeof_id()
+    {
+        return 'int(6) unsigned';
     }
 
 
@@ -218,5 +228,19 @@ abstract class AbstractEntity
         }
 
         return $return;
+    }
+
+    public function toArray()
+    {
+        $array = [];
+        $fields = static::getFields();
+        foreach ($fields as $name => $type) {
+            $array[$name] = $this->$name;
+        }
+        foreach (self::$LOCAL_FIELDS as $field){
+            unset($array[$field]);
+        }
+
+        return $array;
     }
 }

@@ -12,3 +12,6 @@ composer.lock
 
 # Figma tmp import
 assets/figma/*
+
+# Public
+public/*

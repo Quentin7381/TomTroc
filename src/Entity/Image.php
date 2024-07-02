@@ -49,4 +49,14 @@ class Image extends AbstractEntity
         return parent::render($variables, $style);
     }
 
+    public function toArray()
+    {
+        $array = parent::toArray();
+        $ignore = ['content'];
+        foreach ($ignore as $key) {
+            unset($array[$key]);
+        }
+        return $array;
+    }
+
 }

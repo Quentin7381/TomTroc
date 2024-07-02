@@ -30,5 +30,11 @@ WORKDIR /app
 # Copy and rename the appropriate php.ini file
 RUN if [ -f /usr/local/etc/php/php.ini-development ]; then cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini; fi
 
+# Change files access rights
+RUN chown -R www-data:www-data /app
+RUN chmod -R 775 /app
+RUN mkdir -p /app/public
+RUN chmod -R 776 /app/public
+
 # Set xdebug to develop mode
 RUN echo "xdebug.mode=develop" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
