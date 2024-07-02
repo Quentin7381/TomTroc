@@ -53,6 +53,7 @@ abstract class AbstractController
         $this->controllerName = $this->getControllerName();
         $this->initRoutes();
         $this->initProviders();
+        $this->initManager();
         static::$instance = $this;
     }
 
@@ -104,6 +105,14 @@ abstract class AbstractController
                 $key = $this->controllerName . '.' . $key;
                 $this->provider->set($key, [$this, $method]);
             }
+        }
+    }
+
+    protected function initManager(){
+        $managerName = 'Manager\\' . ucfirst($this->controllerName) . 'Manager';
+        var_dump($managerName);
+        if (class_exists($managerName)) {
+            $managerName::getInstance();
         }
     }
 }

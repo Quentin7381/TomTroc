@@ -152,7 +152,7 @@ abstract class AbstractEntity
             $protectedProperties[$name] = $type;
         }
 
-        foreach (static::$LOCAL_FIELDS as $field){
+        foreach (static::$LOCAL_FIELDS as $field) {
             unset($protectedProperties[$field]);
         }
 
@@ -230,21 +230,21 @@ abstract class AbstractEntity
         return $return;
     }
 
-    public function fromArray($array)
+    public function fromDb($array)
     {
         foreach ($array as $name => $value) {
             $this->set($name, $value);
         }
     }
 
-    public function toArray()
+    public function toDb()
     {
         $array = [];
         $fields = static::getFields();
         foreach ($fields as $name => $type) {
             $array[$name] = $this->get($name);
         }
-        foreach (self::$LOCAL_FIELDS as $field){
+        foreach (self::$LOCAL_FIELDS as $field) {
             unset($array[$field]);
         }
 

@@ -64,9 +64,9 @@ class Image extends AbstractEntity
         return parent::render($variables, $style);
     }
 
-    public function toArray()
+    public function toDb()
     {
-        $array = parent::toArray();
+        $array = parent::toDb();
         $ignore = ['content'];
         foreach ($ignore as $key) {
             unset($array[$key]);

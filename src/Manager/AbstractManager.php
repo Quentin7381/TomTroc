@@ -13,6 +13,12 @@ use Utils\View;
  */
 abstract class AbstractManager
 {
+    /**
+     * @var AbstractManager $instances
+     *
+     * This object holds the instance of the manager.
+     */
+    protected static $instances = [];
 
     /**
      * @var Config $config
@@ -20,13 +26,6 @@ abstract class AbstractManager
      * This object holds the configuration.
      */
     protected $config;
-
-    /**
-     * @var AbstractManager $instance
-     *
-     * This object holds the instance of the manager.
-     */
-    protected static $instance;
 
     /**
      * @var PDO $pdo
@@ -57,7 +56,9 @@ abstract class AbstractManager
     {
         $this->config = Config::getInstance();
         $this->pdo = PDO::getInstance();
-        self::$instance = $this;
+
+        $cls = get_class($this);
+        static::$instances[$cls] = $this;
 
         $this->table = strtolower($this->getEntityName());
         $this->fields = $this->getEntityFields();
@@ -69,10 +70,11 @@ abstract class AbstractManager
      */
     public static function getInstance()
     {
-        if (self::$instance === null) {
-            self::$instance = new static();
+        $cls = get_called_class();
+        if (empty(self::$instances[$cls])) {
+            self::$instances[$cls] = new $cls();
         }
-        return self::$instance;
+        return self::$instances[$cls];
     }
 
     // ----- ENTITY MANAGEMENT -----
@@ -109,7 +111,9 @@ abstract class AbstractManager
      */
     public function prepareEntityTable()
     {
+        var_dump('----- Prepare entity table -----');
         if (!$this->tableExists()) {
+            var_dump('Table does not exist');
             return $this->createTable();
         }
 
@@ -134,9 +138,12 @@ abstract class AbstractManager
         $sql = rtrim($sql, ', ');
         $sql .= ")";
 
+        var_dump($sql);
+
         $stmt = $this->pdo->prepare($sql);
-        
+
         $success = $stmt->execute();
+        var_dump($success);
         if (!$success) {
             throw new Exception("Error creating table $this->table : " . implode(', ' . PHP_EOL, $stmt->errorInfo()));
         }
@@ -189,7 +196,7 @@ abstract class AbstractManager
             $dbType = $dbFields[$name] ?? null;
             $entityType = strtolower($entityType);
             $dbType = strtolower($dbType);
-            
+
         }
 
         return $wrongFields;
@@ -342,13 +349,13 @@ abstract class AbstractManager
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($param);
 
-        $fetch =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $fetch = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $return = [];
         $class = 'Entity\\' . $this->getEntityName();
         foreach ($fetch as $id => $item) {
             $entity = new $class();
-            $entity->fromArray($item);
+            $entity->fromDb($item);
             $return[] = $entity;
         }
 
@@ -367,7 +374,7 @@ abstract class AbstractManager
         $sql = "SELECT * FROM $this->table WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $id]);
-        $fetch =  $stmt->fetch(PDO::FETCH_ASSOC);
+        $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (empty($fetch)) {
             return null;
@@ -375,7 +382,7 @@ abstract class AbstractManager
 
         $class = 'Entity\\' . $this->getEntityName();
         $entity = new $class();
-        $entity->fromArray($fetch);
+        $entity->fromDb($fetch);
         return $entity;
     }
 
@@ -386,7 +393,7 @@ abstract class AbstractManager
      */
     public function insert($entity)
     {
-        $insert = $entity->toArray();
+        $insert = $entity->toDb();
 
         $sql = "INSERT INTO $this->table (";
         foreach ($insert as $field => $value) {
@@ -418,7 +425,7 @@ abstract class AbstractManager
      */
     public function update($entity)
     {
-        $entity = $entity->toArray();
+        $entity = $entity->toDb();
         $sql = "UPDATE $this->table SET ";
         foreach ($entity as $field => $value) {
             $sql .= "$field = :$field,";
