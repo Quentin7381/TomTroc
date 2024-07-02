@@ -11,7 +11,7 @@ $config = Config::getInstance();
 $config->load(__DIR__ . '/../');
 
 // Optionaly reset the database
-if(isset($RESET_DB) && $RESET_DB) {
+if (isset($RESET_DB) && $RESET_DB) {
     $pdo = PDO::getInstance();
     $pdo->resetDatabase();
 }
@@ -26,6 +26,5 @@ foreach (glob("src/Controller/*.php") as $filename) {
         continue;
     }
     $controller = 'Controller\\' . $controller;
-    var_dump($controller);
     $controller::getInstance();
 }

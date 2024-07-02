@@ -1,6 +1,7 @@
 <?php
 
 namespace Controller;
+
 use Config\Config;
 use Router\Router;
 use Variables\Provider;
@@ -8,8 +9,8 @@ use Variables\Provider;
 /**
  * AbstractController class
  *
-* This class is the base class for all controllers.
-*/
+ * This class is the base class for all controllers.
+ */
 
 abstract class AbstractController
 {
@@ -96,7 +97,8 @@ abstract class AbstractController
         return strtolower($name);
     }
 
-    protected function initProviders(){
+    protected function initProviders()
+    {
         $classMethods = get_class_methods($this);
         foreach ($classMethods as $method) {
             if (strpos($method, 'provide_') === 0) {
@@ -108,9 +110,9 @@ abstract class AbstractController
         }
     }
 
-    protected function initManager(){
+    protected function initManager()
+    {
         $managerName = 'Manager\\' . ucfirst($this->controllerName) . 'Manager';
-        var_dump($managerName);
         if (class_exists($managerName)) {
             $managerName::getInstance();
         }

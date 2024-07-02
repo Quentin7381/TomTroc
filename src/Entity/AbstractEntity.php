@@ -167,7 +167,7 @@ abstract class AbstractEntity
 
     public static function typeof_id()
     {
-        return 'int(6) UNIQUE AUTO_INCREMENT PRIMARY KEY';
+        return 'int(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY';
     }
 
 

@@ -111,9 +111,7 @@ abstract class AbstractManager
      */
     public function prepareEntityTable()
     {
-        var_dump('----- Prepare entity table -----');
         if (!$this->tableExists()) {
-            var_dump('Table does not exist');
             return $this->createTable();
         }
 
@@ -128,22 +126,16 @@ abstract class AbstractManager
     protected function createTable()
     {
         $sql = "CREATE TABLE $this->table (";
-        $sql .= "id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,";
         foreach ($this->fields as $field => $type) {
-            if ($field == 'id') {
-                continue;
-            }
             $sql .= "$field $type, ";
         }
         $sql = rtrim($sql, ', ');
         $sql .= ")";
 
-        var_dump($sql);
 
         $stmt = $this->pdo->prepare($sql);
 
         $success = $stmt->execute();
-        var_dump($success);
         if (!$success) {
             throw new Exception("Error creating table $this->table : " . implode(', ' . PHP_EOL, $stmt->errorInfo()));
         }
@@ -396,7 +388,7 @@ abstract class AbstractManager
     public function insert($entity)
     {
         $insert = $entity->toDb();
-        
+
         $sql = "INSERT INTO $this->table (";
         foreach ($insert as $field => $value) {
             $sql .= "$field,";
@@ -410,8 +402,6 @@ abstract class AbstractManager
         $sql .= ")";
 
         $stmt = $this->pdo->prepare($sql);
-        var_dump($sql);
-        var_dump($insert);
 
         try {
             $stmt->execute($insert);

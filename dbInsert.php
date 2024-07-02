@@ -27,7 +27,7 @@ $bookManager = BookManager::getInstance();
 $imageManager = ImageManager::getInstance();
 
 $image = new Image();
-$image->src = __DIR__ . '/assets/img/the-kinfolk.png';
+$image->src = '/assets/img/the-kinfolk.png';
 $image->alt = 'the kinfolk';
 $image->name = 'the kinfolk';
 $imageManager->insert($image);

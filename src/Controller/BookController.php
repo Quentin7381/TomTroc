@@ -38,7 +38,6 @@ class BookController extends AbstractController
             }
 
             $book = new Book();
-            var_dump($fetch);
             $book->fromDb($fetch);
             return $book;
         });
