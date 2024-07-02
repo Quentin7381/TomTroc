@@ -4,12 +4,12 @@ namespace Utils;
 
 class Generator implements \Iterator
 {
-    protected array $data = [];
+    protected $data = [];
     protected int $position = 0;
     protected $callbacks = [];
 
 
-    public function __construct(array $data = [])
+    public function __construct($data = [])
     {
         $this->data = $data;
     }

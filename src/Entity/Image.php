@@ -12,7 +12,8 @@ class Image extends AbstractEntity
     protected $content;
     protected $src;
     protected $alt;
-    protected static $LOCAL_FIELDS = ['attributes', 'LOCAL_FIELDS', 'content', 'folder', 'extension'];
+    protected static $_LOCAL_FIELDS = ['attributes', 'LOCAL_FIELDS', 'content', 'folder', 'extension', 'id'];
+    public static $_IDENTIFIER = 'name';
 
     public function __construct()
     {
@@ -55,6 +56,22 @@ class Image extends AbstractEntity
         }
 
         return $this;
+    }
+
+    public function get_id()
+    {
+        return $this->name;
+    }
+
+    public function set_id($id)
+    {
+        $this->name = $id;
+        return $this;
+    }
+
+    public static function typeof_id()
+    {
+        return 'varchar(255) PRIMARY KEY';
     }
 
     public function render($variables = [], $style = null)

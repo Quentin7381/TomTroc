@@ -371,7 +371,10 @@ abstract class AbstractManager
      */
     public function getById($id)
     {
-        $sql = "SELECT * FROM $this->table WHERE id = :id";
+        $class = 'Entity\\' . $this->getEntityName();
+
+        $identifier = $class::$_IDENTIFIER;
+        $sql = "SELECT * FROM $this->table WHERE $identifier = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $id]);
         $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -380,7 +383,6 @@ abstract class AbstractManager
             return null;
         }
 
-        $class = 'Entity\\' . $this->getEntityName();
         $entity = new $class();
         $entity->fromDb($fetch);
         return $entity;
@@ -394,7 +396,7 @@ abstract class AbstractManager
     public function insert($entity)
     {
         $insert = $entity->toDb();
-
+        
         $sql = "INSERT INTO $this->table (";
         foreach ($insert as $field => $value) {
             $sql .= "$field,";
@@ -408,6 +410,8 @@ abstract class AbstractManager
         $sql .= ")";
 
         $stmt = $this->pdo->prepare($sql);
+        var_dump($sql);
+        var_dump($insert);
 
         try {
             $stmt->execute($insert);
@@ -447,5 +451,17 @@ abstract class AbstractManager
         $sql = "DELETE FROM $this->table WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $id]);
+    }
+
+    public function hydrate($entity)
+    {
+        $id = $entity->id;
+        $dbEntity = $this->getById($id);
+
+        foreach ($entity as $field => $type) {
+            $dbEntity->$field = $entity->$field;
+        }
+
+        return $dbEntity;
     }
 }

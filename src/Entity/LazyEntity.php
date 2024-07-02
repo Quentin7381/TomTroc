@@ -5,7 +5,7 @@ namespace Entity;
 class LazyEntity {
 
     protected string $_LAZY_TYPE;
-    public int $id;
+    public int|string $id;
     protected $entity;
 
     public function __construct($type, $id){
@@ -13,18 +13,24 @@ class LazyEntity {
         $this->id = $id;
     }
 
-    public function __get($name){
+    public function getEntity(){
         if($this->entity === null){
-            $this->entity = $this->_LAZY_TYPE::getById($this->id);
+            $manager = $this->_LAZY_TYPE::getManager();
+            $this->entity = $manager->getById($this->id);
         }
-        return $this->entity->$name;
+        return $this->entity;
+    }
+
+    public function __get($name){
+        return $this->getEntity()->$name;
     }
 
     public function __set($name, $value){
-        if($this->entity === null){
-            $this->entity = $this->_LAZY_TYPE::getById($this->id);
-        }
-        $this->entity->$name = $value;
+        $this->getEntity()->$name = $value;
+    }
+
+    public function __call($method, $args){
+        return $this->getEntity()->$method(...$args);
     }
 
 

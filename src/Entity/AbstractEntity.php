@@ -15,7 +15,8 @@ abstract class AbstractEntity
 {
     protected $id;
     protected $attributes = [];
-    protected static $LOCAL_FIELDS = ['attributes', 'LOCAL_FIELDS'];
+    protected static $_LOCAL_FIELDS = ['attributes', 'LOCAL_FIELDS'];
+    public static $_IDENTIFIER = 'id';
 
     /**
      * Set a property value.
@@ -142,6 +143,11 @@ abstract class AbstractEntity
         foreach ($properties as $property) {
             $name = $property->getName();
 
+            // Skip properties starting with an underscore
+            if(strpos($name, '_') === 0){
+                continue;
+            }
+
             if (method_exists(static::class, 'typeof_' . $name)) {
                 $type = static::{'typeof_' . $name}();
             } else {
@@ -152,7 +158,7 @@ abstract class AbstractEntity
             $protectedProperties[$name] = $type;
         }
 
-        foreach (static::$LOCAL_FIELDS as $field) {
+        foreach (static::$_LOCAL_FIELDS as $field) {
             unset($protectedProperties[$field]);
         }
 
@@ -161,7 +167,7 @@ abstract class AbstractEntity
 
     public static function typeof_id()
     {
-        return 'int(6) unsigned';
+        return 'int(6) UNIQUE AUTO_INCREMENT PRIMARY KEY';
     }
 
 
@@ -196,7 +202,7 @@ abstract class AbstractEntity
         $className = static::class;
         $managerName = str_replace('Entity', 'Manager', $className);
         $managerName = $managerName . 'Manager';
-        return new $managerName();
+        return $managerName::getInstance();
     }
 
     public function __toString()
@@ -230,6 +236,12 @@ abstract class AbstractEntity
         return $return;
     }
 
+    public function insert()
+    {
+        $manager = static::getManager();
+        return $manager->insert($this);
+    }
+
     public function fromDb($array)
     {
         foreach ($array as $name => $value) {
@@ -242,9 +254,19 @@ abstract class AbstractEntity
         $array = [];
         $fields = static::getFields();
         foreach ($fields as $name => $type) {
-            $array[$name] = $this->get($name);
+            $value = $this->get($name);
+            // Entities become their id
+            if ($value instanceof AbstractEntity) {
+                if (empty($value->get('id'))) {
+                    $value = $value->insert();
+                } else {
+                    $value = $value->get('id');
+                }
+            }
+
+            $array[$name] = $value;
         }
-        foreach (self::$LOCAL_FIELDS as $field) {
+        foreach (self::$_LOCAL_FIELDS as $field) {
             unset($array[$field]);
         }
 
