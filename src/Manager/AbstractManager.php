@@ -107,7 +107,7 @@ abstract class AbstractManager
      * Prepare the entity table in the database.
      * Will create a table with the entity name and the entity fields.
      */
-    protected function prepareEntityTable()
+    public function prepareEntityTable()
     {
         if (!$this->tableExists()) {
             return $this->createTable();
@@ -328,16 +328,31 @@ abstract class AbstractManager
      *
      * @return array The entity.
      */
-    public function search(array $param)
+    public function search(array $search)
     {
+        $param = [];
         $sql = "SELECT * FROM $this->table WHERE ";
-        foreach ($param as $field => $value) {
-            $sql .= "$field " . $value['operator'] ?? '=' . " :$field AND ";
+        foreach ($search as $field => $value) {
+            $param[":$field"] = $value['value'];
+            $sql .= "$field ";
+            $sql .= $value['operator'] ?? '=';
+            $sql .= " :$field AND ";
         }
         $sql = rtrim($sql, 'AND ');
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($param);
-        return $stmt->fetchAll();
+
+        $fetch =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $return = [];
+        $class = 'Entity\\' . $this->getEntityName();
+        foreach ($fetch as $id => $item) {
+            $entity = new $class();
+            $entity->fromArray($item);
+            $return[] = $entity;
+        }
+
+        return $return;
     }
 
     /**
@@ -352,7 +367,16 @@ abstract class AbstractManager
         $sql = "SELECT * FROM $this->table WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $id]);
-        return $stmt->fetch();
+        $fetch =  $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($fetch)) {
+            return null;
+        }
+
+        $class = 'Entity\\' . $this->getEntityName();
+        $entity = new $class();
+        $entity->fromArray($fetch);
+        return $entity;
     }
 
     /**
@@ -362,22 +386,27 @@ abstract class AbstractManager
      */
     public function insert($entity)
     {
-        $entity = $entity->toArray();
+        $insert = $entity->toArray();
 
         $sql = "INSERT INTO $this->table (";
-        foreach ($entity as $field => $value) {
+        foreach ($insert as $field => $value) {
             $sql .= "$field,";
         }
         $sql = rtrim($sql, ',');
         $sql .= ") VALUES (";
-        foreach ($entity as $field => $value) {
+        foreach ($insert as $field => $value) {
             $sql .= ":$field,";
         }
         $sql = rtrim($sql, ',');
         $sql .= ")";
 
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($entity);
+
+        try {
+            $stmt->execute($insert);
+        } catch (\Exception $e) {
+            throw new Exception("Error inserting entity in table $this->table : " . $e->getMessage());
+        }
 
         return $this->pdo->lastInsertId();
     }
@@ -389,6 +418,7 @@ abstract class AbstractManager
      */
     public function update($entity)
     {
+        $entity = $entity->toArray();
         $sql = "UPDATE $this->table SET ";
         foreach ($entity as $field => $value) {
             $sql .= "$field = :$field,";

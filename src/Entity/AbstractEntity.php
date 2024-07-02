@@ -230,12 +230,19 @@ abstract class AbstractEntity
         return $return;
     }
 
+    public function fromArray($array)
+    {
+        foreach ($array as $name => $value) {
+            $this->set($name, $value);
+        }
+    }
+
     public function toArray()
     {
         $array = [];
         $fields = static::getFields();
         foreach ($fields as $name => $type) {
-            $array[$name] = $this->$name;
+            $array[$name] = $this->get($name);
         }
         foreach (self::$LOCAL_FIELDS as $field){
             unset($array[$field]);

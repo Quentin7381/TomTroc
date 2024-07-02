@@ -18,10 +18,25 @@ class PDO extends \PDO{
     }
 
     public static function getInstance(){
-        if(!self::$instance){
+        if(empty(self::$instance)){
             self::$instance = new self();
         }
         return self::$instance;
+    }
+
+    public static function resetDatabase(){
+        $config = Config::getInstance();
+        $database = $config->DB_NAME;
+        $sql = "DROP DATABASE IF EXISTS $database;";
+        $sql .= "CREATE DATABASE $database;";
+        
+        $host = $config->DB_HOST;
+        $user = $config->DB_USER;
+        $password = $config->DB_PASSWORD;
+        $pdo = new \PDO("mysql:host=$host", $user, $password);
+        $pdo->exec($sql);
+
+        $pdo = self::getInstance();
     }
 
 }

@@ -2,12 +2,18 @@
 
 namespace Test;
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Config\Config;
+use Utils\PDO;
+
 class TestInit extends \PHPUnit\Framework\TestCase
 {
 
     public function setUp() : void
     {
-        require_once __DIR__ . '/../vendor/autoload.php';
+        Config::getInstance()->load(__DIR__ . '/');
+        PDO::resetDatabase();
         ErrorCatcher::throw();
     }
 
