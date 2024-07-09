@@ -1,6 +1,7 @@
 <?php
 
-use Utils\View;
+use View\View;
+
 $css = View::getInstance()->css;
 
 foreach ($css as $style => $value) {

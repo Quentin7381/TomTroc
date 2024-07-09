@@ -1,8 +1,8 @@
 <?php
 
-namespace Entity;
+namespace View;
 
-class Component extends AbstractEntity
+class Component extends Renderable
 {
 
     protected static $instances = [];
@@ -16,28 +16,18 @@ class Component extends AbstractEntity
         self::$instances[] = $this;
     }
 
-    public function get($key) : mixed
+    public function get($key): mixed
     {
         if ($key === 'instances') {
             return static::$instances;
         }
-        if (property_exists($this, $key)) {
-            return $this->$key;
-        }
-        return $this->variables[$key] ?? null;
+        
+        return parent::get($key);
     }
 
-    public function set($key, $value)
+    public function render($variables = [], $style = null): string
     {
-        if (property_exists($this, $key)) {
-            $this->$key = $value;
-        }
-        $this->variables[$key] = $value;
-    }
-
-    public function render($variables = [], $style = null) : string
-    {
-        $view = \Utils\View::getInstance();
+        $view = \View\View::getInstance();
         return $view->include($this->template, $variables, $style);
     }
 

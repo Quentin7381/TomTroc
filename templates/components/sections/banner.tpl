@@ -1,3 +1,3 @@
-<section <?=Utils\View::renderAttributes($attributes) ?>>
+<section <?= $attributes->render() ?>>
     <?= $v->image_get('banner')->render() ?>
 </section>

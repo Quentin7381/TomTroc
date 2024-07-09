@@ -1,10 +1,11 @@
 <?php
 
-namespace Utils;
+namespace View;
 
 use Config\Config;
-use Entity\Component;
+use View\Component;
 use Variables\Variables;
+
 
 class View
 {
@@ -28,8 +29,8 @@ class View
     public function render($entity, $variables = [], $style = null)
     {
         $templateName = get_class($entity);
-        $templateName = str_replace('Entity\\', '', $templateName);
-        $templateName = lcfirst($templateName);
+        $templateName = str_replace('\\', '-', $templateName);
+        $templateName = strtolower($templateName);
         $variables['entity'] = $entity;
         return $this->include($templateName, $variables, $style);
     }
@@ -52,7 +53,7 @@ class View
     public function getTemplatePath($fileName, $extension = '.tpl', $style = null)
     {
         $root = $this->getRoot($extension);
-        $styleFile = $style ? $fileName . '-' . $style . $extension : null;
+        $styleFile = $style ? $fileName . '--' . $style . $extension : null;
         $fileName .= $extension;
         $return = false;
 
@@ -83,16 +84,24 @@ class View
     {
         $fileName = $this->getTemplatePath($templateName, '.tpl', $style);
         if (!is_readable($fileName ?? '')) {
-            user_error('File not found for template: ' . $templateName, E_USER_WARNING);
+            user_error('File not found : ' . $templateName, E_USER_WARNING);
             return "";
         }
 
         $this->css[$this->getTemplatePath($templateName, '.css', $style)] = true;
 
         extract($variables);
-        $attributes['class'][] = 'tpl-' . $templateName;
-        if($style){
-            $attributes['class'][] = 'tpl-' . $templateName . '-' . $style;
+
+        $attributes;
+        try {
+            $attributes = $entity->attributes ?? new Attributes();
+        } catch (\View\Exception $e) {
+            $attributes = new Attributes();
+        }
+
+        $attributes->add('class', 'tpl-' . $templateName);
+        if ($style) {
+            $attributes->add('class', 'tpl-' . $templateName . '--' . $style);
         }
 
         $variables = $v = Variables::I();
@@ -113,17 +122,5 @@ class View
     {
         $html = Component::css();
         $this->html = str_replace('</head>', $html . '</head>', $this->html);
-    }
-
-    public static function renderAttributes($attributes)
-    {
-        $html = '';
-        foreach ($attributes as $key => $value) {
-            if (is_array($value)) {
-                $value = implode(' ', $value);
-            }
-            $html .= ' ' . $key . '="' . $value . '"';
-        }
-        return $html;
     }
 }

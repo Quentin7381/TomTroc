@@ -1,0 +1,2 @@
+
+<img <?= $attributes->render() ?> />

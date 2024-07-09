@@ -1,9 +1,10 @@
 <?php
-use Entity\Component;
-$attributes['class'][] = 'alternate-bg';
+use View\Component;
+
+$attributes->add('class', 'alternate-bg');
 ?>
 
-<main <?= Utils\View::renderAttributes($attributes) ?>>
+<main <?= $attributes->render() ?>>
     <?= Component::decouvrir() ?>
     <?= Component::derniersLivres() ?>
     <?= Component::commentCaMarche() ?>

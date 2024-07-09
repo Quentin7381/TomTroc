@@ -4,7 +4,7 @@ require_once 'src/initialize.php';
 
 use Variables\Provider;
 use Config\Config;
-use Utils\View;
+use View\View;
 use Entity\Image;
 use Manager\ImageManager;
 

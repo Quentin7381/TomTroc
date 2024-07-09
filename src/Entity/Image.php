@@ -59,8 +59,8 @@ class Image extends AbstractEntity
 
     public function render(array $variables = [], ?string $style = null) : string
     {
-        $variables['attributes']['src'] = $this->get_src();
-        $variables['attributes']['alt'] = $this->alt;
+        $this->get('attributes')->set('src', $this->get('src'));
+        $this->get('attributes')->set('alt', $this->get('alt'));
         return parent::render($variables, $style);
     }
 

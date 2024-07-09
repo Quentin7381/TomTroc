@@ -1,1 +1,0 @@
-<img <?= Utils\View::renderAttributes($attributes) ?>/>

@@ -1,9 +1,10 @@
 <?php
-use Entity\Component;
+use View\Component;
+
 ?>
 
-<header <?= Utils\View::renderAttributes($attributes)?>>
-    <?= $v->image_get('logo')->addAttribute('class', 'logo')->render() ?>
+<header <?= $attributes->render() ?>>
+    <?= $v->image_get('logo')->addAttributes('class', 'logo')->render() ?>
     <?= Component::menuMain() ?>
     <?= Component::menuUser() ?>
 </header>
