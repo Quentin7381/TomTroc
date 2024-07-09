@@ -1,14 +1,3 @@
-<?php
-use Entity\Book;
-use Entity\User;
-use Entity\Image;
-use Utils\Bem;
-
-$vars = get_defined_vars();
-$bem = Bem::I($templateName, $style)
-
-?>
-
 <article <?= Utils\View::renderAttributes($attributes) ?>>
     <?= $entity->cover->render(['attributes' => ['class' => $bem->e('cover')]]) ?>
     <h3 class="<?= $bem->e('title') ?>"><?= $entity->title ?></h3>

@@ -41,15 +41,26 @@ class Generator implements \Iterator
         $this->callbacks['valid'] = $callback;
     }
 
+    public function current_set_post_process(callable $callback)
+    {
+        $this->callbacks['current_post_process'] = $callback;
+    }
+
     // ----- ----- ARRAY ACCESS ----- ----- //
 
     public function current() : mixed
     {
         if (isset($this->callbacks['current'])) {
-            return ($this->callbacks['current'])($this->data, $this->position);
+            $return = ($this->callbacks['current'])($this->data, $this->position);
+        } else {
+            $return = $this->data[$this->position];
         }
 
-        return $this->data[$this->position];
+        if (isset($this->callbacks['current_post_process'])) {
+            return ($this->callbacks['current_post_process'])($return);
+        }
+
+        return $return;
     }
 
     public function key() : mixed

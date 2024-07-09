@@ -6,6 +6,8 @@ use Entity\Book;
 use Entity\Image;
 use Entity\User;
 use Utils\PDO;
+use Utils\StatementGenerator;
+use Manager\BookManager;
 
 class BookController extends AbstractController
 {
@@ -22,32 +24,13 @@ class BookController extends AbstractController
         $pdo = PDO::getInstance();
         $sql = "SELECT * FROM book ORDER BY created DESC";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute();
 
-        $data = [
-            'stmt' => $stmt,
-            'fetch' => $stmt->fetch(PDO::FETCH_ASSOC)
-        ];
+        $generator = new StatementGenerator($stmt);
 
-        $generator = new \Utils\Generator($data);
-        $generator->current_set_callback(function ($data, $position) {
-            $fetch = $data['fetch'];
-
-            if ($fetch === false) {
-                return false;
-            }
-
+        $generator->current_set_post_process(function ($data) {
             $book = new Book();
-            $book->fromDb($fetch);
+            $book->fromDb($data);
             return $book;
-        });
-
-        $generator->valid_set_callback(function (&$data, $position) {
-            return $data['fetch'] !== false;
-        });
-
-        $generator->next_set_callback(function (&$data, $position) {
-            $data['fetch'] = $data['stmt']->fetch(PDO::FETCH_ASSOC);
         });
 
         return $generator;
