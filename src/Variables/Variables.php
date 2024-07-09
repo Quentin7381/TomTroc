@@ -53,4 +53,17 @@ class Variables
         $key = str_replace('_', '.', $key);
         return $this->get($key);
     }
+
+    public function __call($key, $args)
+    {
+        $key = str_replace('_', '.', $key);
+        
+        if(is_callable($this->get($key))) {
+            return $this->get($key)(...$args);
+        }
+
+        else {
+            throw new Exception(Exception::VARIABLE_NOT_CALLABLE, ['key' => $key]);
+        }
+    }
 }

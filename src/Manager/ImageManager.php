@@ -14,7 +14,7 @@ class ImageManager extends AbstractManager
     {
         $sql = 'SELECT * FROM image WHERE name = :name OR id = :id';
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['name' => $image->name, 'idz' => $image->id]);
+        $stmt->execute(['name' => $image->name, 'id' => $image->id]);
         
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -26,4 +26,20 @@ class ImageManager extends AbstractManager
         return false;
     }
 
+    public function getByName($name) : Image|bool
+    {
+        $sql = 'SELECT * FROM image WHERE name = :name';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['name' => $name]);
+        
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            $image = new Image();
+            $image->fromDb($result);
+            return $image;
+        }
+
+        return false;
+    }
 }

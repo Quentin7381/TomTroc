@@ -22,21 +22,19 @@ $provider = Provider::I();
 $config = Config::getInstance();
 $config->load(__DIR__);
 
-$userManager = UserManager::getInstance();
-$bookManager = BookManager::getInstance();
-$imageManager = ImageManager::getInstance();
+// ----- JEU DE LIVRES ----- //
 
 $image = new Image();
 $image->src = '/assets/img/the-kinfolk.png';
 $image->alt = 'the kinfolk';
 $image->name = 'the kinfolk';
-$imageManager->insert($image);
+$image->persist();
 
 $user = new User();
 $user->name = 'John Doe';
 $user->email = 'jhon.doe@mail.com';
 $user->password = 'Abcd.1234';
-$userManager->persist($user);
+$user->persist();
 
 $book = new Book();
 $book->title = 'The Kinfolk Home';
@@ -48,4 +46,16 @@ $book->seller = $user;
 for ($i = 0; $i < 10; $i++) {
     $entity = clone $book;
     $entity->persist();
+}
+
+// ----- IMAGES DU SITE ----- //
+
+$images = glob('assets/img/*');
+
+foreach ($images as $path) {
+    $image = new Image();
+    $image->src = '/assets/img/' . basename($path);
+    $image->alt = basename($path);
+    $image->name = pathinfo($path, PATHINFO_FILENAME);
+    $image->persist();
 }

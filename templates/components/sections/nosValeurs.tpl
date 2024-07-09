@@ -1,10 +1,3 @@
-<?php
-    use Entity\Image;
-    $attributes['class'][] = 'padding-container-xs';
-    $img = new Image();
-    $img->src = 'assets/img/heart.svg';
-?>
-
 <section <?= Utils\View::renderAttributes($attributes) ?>>
     <div class="<?=$bem->e('subContainer')?>">
         <h2>Nos valeurs</h2>
@@ -13,6 +6,6 @@
         <p>Nous sommes passionnés par la création d'une plateforme conviviale qui permet aux lecteurs de se connecter, de partager leurs découvertes littéraires et d'échanger des livres qui attendent patiemment sur les étagères.</p>
         </br>
         <p class="credit <?=$bem->e('credit')?>">L'équipe Tom Troc</p>
-        <?= $img->render(['attributes' => ['class' => $bem->e('heart')]]) ?>
+        <?= $v->image_get('heart')->addAttribute('class', $bem->e('heart'))->render() ?>
     </div>
 </section>

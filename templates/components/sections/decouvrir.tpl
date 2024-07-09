@@ -1,15 +1,3 @@
-<?php
-use Utils\Bem;
-
-$bem = Bem::I($templateName);
-
-$img = new Entity\Image();
-$img->src = 'assets/img/hamza-nouasria.png';
-$img->alt = 'Hamza nouasria';
-
-$vars = get_defined_vars();
-?>
-
 <section <?= Utils\View::renderAttributes($attributes) ?>>
     <div class="<?= $bem->e('text') ?> container-xs">
         <h2>Rejoignez nos lecteurs passionnés</h2>
@@ -18,7 +6,7 @@ $vars = get_defined_vars();
         <button class="<?= $bem->e('cta') ?>">Découvrir</button>
     </div>
     <div class="container-xs">
-        <?= $img->render() ?>
+        <?= $v->image_get('hamza-nouasria')->render() ?>
         <p class="credit">Hamza</p>
     </div>
 </section>

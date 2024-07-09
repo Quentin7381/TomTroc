@@ -113,8 +113,10 @@ abstract class AbstractEntity
      *
      * @param string $name
      * @param mixed $values
+     *
+     * @return self
      */
-    public function addAttribute(string $name, mixed ...$values): void
+    public function addAttribute(string $name, mixed ...$values): self
     {
         if (!isset($this->attributes[$name])) {
             $this->attributes[$name] = [];
@@ -123,6 +125,8 @@ abstract class AbstractEntity
         foreach ($values as $value) {
             $this->attributes[$name][] = $value;
         }
+
+        return $this;
     }
 
     /**

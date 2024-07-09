@@ -1,0 +1,8 @@
+.tpl-banner {
+  height: 230px;
+  padding: 0;
+}
+.tpl-banner img {
+  object-fit: cover;
+  height: 100%;
+}

@@ -7,6 +7,6 @@ $attributes['class'][] = 'alternate-bg';
     <?= Component::decouvrir() ?>
     <?= Component::derniersLivres() ?>
     <?= Component::commentCaMarche() ?>
-    <?= Component::wideImage() ?>
+    <?= Component::banner() ?>
     <?= Component::nosValeurs() ?>
 </main>
