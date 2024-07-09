@@ -1,13 +1,11 @@
 <?php
     use Entity\Image;
     $ico_message = new Image();
-    $ico_message->name = 'ico_message';
-    $ico_message->extension = 'svg';
+    $ico_message->src = 'assets/img/ico_message.svg';
     $ico_message->alt = 'Messagerie';
 
     $ico_account = new Image();
-    $ico_account->name = 'ico_account';
-    $ico_account->extension = 'svg';
+    $ico_account->src = 'assets/img/ico_account.svg';
     $ico_account->alt = 'Mon compte';
 ?>
 

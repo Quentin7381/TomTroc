@@ -8,12 +8,12 @@ use Entity\Image;
 
 class Book extends AbstractEntity
 {
-    protected string $title;
-    protected string $author;
-    protected string $description;
-    protected int $created;
-    protected string|Image|LazyEntity $cover;
-    protected int|User|LazyEntity $seller;
+    protected ?string $title = null;
+    protected ?string $author = null;
+    protected ?string $description = null;
+    protected ?int $created = null;
+    protected null|string|Image|LazyEntity $cover = null;
+    protected null|int|User|LazyEntity $seller = null;
 
     public function fromDb(array $array) : void
     {

@@ -6,12 +6,12 @@ use Config\Config;
 
 class Image extends AbstractEntity
 {
-    protected string $folder;
-    protected string $name;
-    protected string $extension;
-    protected string $content;
-    protected string $src;
-    protected string $alt;
+    protected ?string $folder = null;
+    protected ?string $name = null;
+    protected ?string $extension = null;
+    protected ?string $content = null;
+    protected ?string $src = null;
+    protected ?string $alt = null;
     protected static array $_LOCAL_FIELDS = ['attributes', 'LOCAL_FIELDS', 'content', 'folder', 'extension'];
 
     public function __construct()

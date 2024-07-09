@@ -4,8 +4,7 @@ use Entity\Component;
 use Entity\Image;
 
 $logo = new Image();
-$logo->name = 'logo';
-$logo->extension = 'svg';
+$logo->src = 'assets/img/logo.svg';
 $logo->alt = 'TomTroc';
 $logo->addAttribute('class', 'logo');
 

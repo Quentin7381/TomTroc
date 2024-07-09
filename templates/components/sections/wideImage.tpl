@@ -2,7 +2,7 @@
 use Entity\Image;
 
 $image = new Image();
-$image->src = 'assets/images/library-wide.png';
+$image->src = 'assets/img/library-wide.png';
 
 ?>
 

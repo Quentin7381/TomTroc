@@ -45,6 +45,7 @@ $book->description = 'The Kinfolk Home welcomes readers into 35 homes around the
 $book->cover = $image;
 $book->seller = $user;
 
-for($i = 0; $i < 10; $i++) {
-    $book->persist();
+for ($i = 0; $i < 10; $i++) {
+    $entity = clone $book;
+    $entity->persist();
 }

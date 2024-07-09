@@ -363,7 +363,7 @@ abstract class AbstractManager
     public function getById(string $id): ?AbstractEntity
     {
         $class = 'Entity\\' . $this->getEntityName();
-        $sql = "SELECT * FROM $this->table WHERE 'id' = :id";
+        $sql = "SELECT * FROM $this->table WHERE    id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $id]);
         $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
