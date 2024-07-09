@@ -4,6 +4,7 @@ namespace Manager;
 
 use Config\Config;
 use Utils\PDO;
+use Utils\Database;
 use Entity\AbstractEntity;
 
 /**
@@ -34,6 +35,8 @@ abstract class AbstractManager
      */
     protected $pdo;
 
+    protected $database;
+
     /**
      * @var string $table
      *
@@ -49,6 +52,8 @@ abstract class AbstractManager
      */
     protected array $fields;
 
+    // ----- INITIALIZATION -----
+
     /**
      * Singleton constructor.
      */
@@ -56,13 +61,14 @@ abstract class AbstractManager
     {
         $this->config = Config::getInstance();
         $this->pdo = PDO::getInstance();
+        $this->database = Database::getInstance();
 
         $cls = get_class($this);
         static::$instances[$cls] = $this;
 
         $this->table = strtolower($this->getEntityName());
         $this->fields = $this->getEntityFields();
-        $this->prepareEntityTable();
+        $this->database->prepareTable($this->table, $this->fields);
     }
 
     /**
@@ -101,201 +107,6 @@ abstract class AbstractManager
     {
         $entity = 'Entity\\' . $this->getEntityName();
         return $entity::getFields();
-    }
-
-    // ----- DATABASE MANAGEMENT -----
-
-    /**
-     * Prepare the entity table in the database.
-     * Will create a table with the entity name and the entity fields.
-     */
-    public function prepareEntityTable(): void
-    {
-        if (!$this->tableExists()) {
-            $this->createTable();
-        }
-        $this->updateTable();
-    }
-
-    /**
-     * Create the table in the database.
-     * The table name is the entity name.
-     * The table fields are the entity fields.
-     */
-    protected function createTable(): void
-    {
-        $sql = "CREATE TABLE $this->table (";
-        foreach ($this->fields as $field => $type) {
-            $sql .= "$field $type, ";
-        }
-        $sql = rtrim($sql, ', ');
-        $sql .= ")";
-
-
-        $stmt = $this->pdo->prepare($sql);
-
-        $success = $stmt->execute();
-        if (!$success) {
-            throw new Exception("Error creating table $this->table : " . implode(', ' . PHP_EOL, $stmt->errorInfo()));
-        }
-    }
-
-    /**
-     * Get the list of fields that are in the entity but not in the table.
-     *
-     * @return array An array of fields with the field name as key and the field type as value.
-     */
-    protected function getMissingTableFields(): array
-    {
-        $sql = "DESCRIBE $this->table";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-
-        $dbFields = [];
-        foreach ($result as $row) {
-            $dbFields[$row['Field']] = $row['Type'];
-        }
-
-        $missingFields = $this->fields;
-        foreach ($dbFields as $name => $type) {
-            unset($missingFields[$name]);
-        }
-
-        return $missingFields;
-    }
-
-    /**
-     * Get the fields that are of the wrong type in the table.
-     *
-     * @return array An array of fields with the field name as key and the field type as value.
-     */
-    public function getWrongTableFields(): array
-    {
-        $sql = "DESCRIBE $this->table";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-
-        $dbFields = [];
-        foreach ($result as $row) {
-            $dbFields[$row['Field']] = $row['Type'];
-        }
-
-        $wrongFields = [];
-        foreach ($this->fields as $name => $entityType) {
-            $dbType = $dbFields[$name] ?? null;
-            $entityType = strtolower($entityType);
-            $dbType = strtolower($dbType);
-
-        }
-
-        return $wrongFields;
-    }
-
-    /**
-     * Get the fields that are in the table but not in the entity.
-     *
-     * @return array An array of fields with the field name as key and the field type as value.
-     */
-    public function getUnusedTableFields(): array
-    {
-        $sql = "DESCRIBE $this->table";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-
-        $unusedFields = [];
-        foreach ($result as $row) {
-            $unusedFields[$row['Field']] = $row['Type'];
-        }
-
-        foreach ($this->fields as $name => $type) {
-            unset($unusedFields[$name]);
-        }
-
-        return $unusedFields;
-    }
-
-    // ----- TABLE MANAGEMENT -----
-
-    /**
-     * Manage the missing table fields.
-     *
-     * @param array $field An array of fields with the field name as key and the field type as value.
-     */
-    public function manageMissingTableFields(array $fields): void
-    {
-
-        $sql = "ALTER TABLE $this->table ";
-        foreach ($fields as $name => $type) {
-            $sql .= "ADD $name $type, ";
-        }
-        $sql = rtrim($sql, ', ');
-        $stmt = $this->pdo->prepare($sql);
-
-        if (!$stmt->execute()) {
-            throw new Exception("Error adding fields to table $this->table : " . implode(', ' . PHP_EOL, $stmt->errorInfo()));
-        }
-    }
-
-    /**
-     * Manage the wrong table fields.
-     *
-     * @param array $field An array of fields with the field name as key and the field type as value.
-     */
-    public function manageWrongTableFields(array $fields): void
-    {
-        throw new Exception("Missmatch between entity fields and database fields : " . implode(', ', array_keys($fields)) . PHP_EOL .
-            "Please update the entity fields or the database fields.");
-    }
-
-    /**
-     * Manage the unused table fields.
-     *
-     * @param array $field An array of fields with the field name as key and the field type as value.
-     */
-    public function manageUnusedTableFields(array $fields): void
-    {
-        user_error("Unused fields in the database : " . implode(', ', array_keys($fields)) . PHP_EOL .
-            "Consider cleaning the database.");
-    }
-
-    /**
-     * Update the table in the database.
-     * Will call the missing, wrong and unused table fields methods.
-     */
-    protected function updateTable(): void
-    {
-        $missingFields = $this->getMissingTableFields();
-        $wrongFields = $this->getWrongTableFields();
-        $unusedFields = $this->getUnusedTableFields();
-
-        if (!empty($missingFields)) {
-            $this->manageMissingTableFields($missingFields);
-        }
-
-        if (!empty($wrongFields)) {
-            $this->manageWrongTableFields($wrongFields);
-        }
-
-        if (!empty($unusedFields)) {
-            $this->manageUnusedTableFields($unusedFields);
-        }
-    }
-
-    /**
-     * Check if the table exists in the database.
-     *
-     * @return bool True if the table exists, false otherwise.
-     */
-    protected function tableExists(): bool
-    {
-        $sql = "SHOW TABLES LIKE \"$this->table\"";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetch();
-        return !empty($result);
     }
 
     // ----- CRUD -----
