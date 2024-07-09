@@ -3,9 +3,6 @@ use Utils\Bem;
 use Entity\Book;
 use Entity\User;
 use Entity\Image;
-use Variables\Variables;
-
-$bem = Bem::I($templateName);
 ?>
 
 <section <?= Utils\View::renderAttributes($attributes) ?>>

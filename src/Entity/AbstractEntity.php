@@ -15,7 +15,7 @@ abstract class AbstractEntity
 {
     protected $id;
     protected $attributes = [];
-    protected static $_LOCAL_FIELDS = ['attributes', 'LOCAL_FIELDS'];
+    protected static $_LOCAL_FIELDS = ['attributes'];
     public static $_IDENTIFIER = 'id';
 
     /**
@@ -53,27 +53,6 @@ abstract class AbstractEntity
 
         // Throw an exception if the property does not exist
         throw new Exception("Property \"$name\" does not exist in " . static::class . ".");
-    }
-
-    public function addAttribute($name, ...$values)
-    {
-        if (!isset($this->attributes[$name])) {
-            $this->attributes[$name] = [];
-        }
-
-        foreach ($values as $value) {
-            $this->attributes[$name][] = $value;
-        }
-    }
-
-    public function removeAttribute($name, $value)
-    {
-        if (isset($this->attributes[$name])) {
-            $key = array_search($value, $this->attributes[$name]);
-            if ($key !== false) {
-                unset($this->attributes[$name][$key]);
-            }
-        }
     }
 
     /**
@@ -130,7 +109,70 @@ abstract class AbstractEntity
     }
 
     /**
-     * Returns the entity properties as an array.
+     * Add a value to an attribute.
+     * Attributes are html attributes that will be rendered in the view.
+     *
+     * @param string $name
+     * @param mixed $values
+     */
+    public function addAttribute($name, ...$values)
+    {
+        if (!isset($this->attributes[$name])) {
+            $this->attributes[$name] = [];
+        }
+
+        foreach ($values as $value) {
+            $this->attributes[$name][] = $value;
+        }
+    }
+
+    /**
+     * Remove a value from an attribute.
+     * Attributes are html attributes that will be rendered in the view.
+     *
+     * @param string $name
+     * @param mixed $value
+     */
+    public function removeAttribute($name, $value)
+    {
+        if (isset($this->attributes[$name])) {
+            $key = array_search($value, $this->attributes[$name]);
+            if ($key !== false) {
+                unset($this->attributes[$name][$key]);
+            }
+        }
+    }
+
+    /**
+     * Merge several attributes arrays.
+     *
+     * @param array ...$attributes
+     *
+     * @return array
+     */
+    public function mergeAttributes(...$attributes)
+    {
+        $return = [];
+        foreach ($attributes as $attribute) {
+            foreach ($attribute as $key => $values) {
+                if (!is_array($values)) {
+                    $values = [$values];
+                }
+
+                if (!isset($return[$key])) {
+                    $return[$key] = [];
+                }
+
+                $return[$key] = array_merge($return[$key], $values);
+            }
+        }
+
+        return $return;
+    }
+
+    /**
+     * Get the fields of the entity.
+     * Keys are the field names and values are the database types.
      *
      * @return array
      */
@@ -165,13 +207,6 @@ abstract class AbstractEntity
         return $protectedProperties;
     }
 
-    public static function typeof_id()
-    {
-        return 'int(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY';
-    }
-
-
-
     /**
      * Get the database type for a given php type.
      *
@@ -197,6 +232,11 @@ abstract class AbstractEntity
         }
     }
 
+    /**
+     * Get the manager for the entity.
+     *
+     * @return AbstractManager
+     */
     public static function getManager()
     {
         $className = static::class;
@@ -205,43 +245,41 @@ abstract class AbstractEntity
         return $managerName::getInstance();
     }
 
-    public function __toString()
-    {
-        return $this->render();
-    }
-
+    /**
+     * Render the entity.
+     *
+     * @param array $variables
+     * @param string $style
+     *
+     * @return string
+     */
     public function render($variables = [], $style = null)
     {
         $variables['attributes'] = $this->mergeAttributes($this->attributes, $variables['attributes'] ?? []);
         return View::getInstance()->render($this, $variables, $style);
     }
 
-    public function mergeAttributes(...$attributes)
+    public function __toString()
     {
-        $return = [];
-        foreach ($attributes as $attribute) {
-            foreach ($attribute as $key => $values) {
-                if (!is_array($values)) {
-                    $values = [$values];
-                }
-
-                if (!isset($return[$key])) {
-                    $return[$key] = [];
-                }
-
-                $return[$key] = array_merge($return[$key], $values);
-            }
-        }
-
-        return $return;
+        return $this->render();
     }
 
+    /**
+     * Insert the entity in the database.
+     * Shortcut for the manager insert method.
+     *
+     * @return int The id of the inserted entity.
+     * @see AbstractManager::insert
+     */
     public function insert()
     {
         $manager = static::getManager();
         return $manager->insert($this);
     }
 
+    /**
+     * Fill the entity with an array of values.
+     */
     public function fromDb($array)
     {
         foreach ($array as $name => $value) {
@@ -249,6 +287,12 @@ abstract class AbstractEntity
         }
     }
 
+    /**
+     * Get the entity as an array for the database.
+     * Entities relations are replaced by their id.
+     * Entities relations are inserted if they do not have an id yet.
+     * Local fields are removed.
+     */
     public function toDb()
     {
         $array = [];
@@ -271,5 +315,10 @@ abstract class AbstractEntity
         }
 
         return $array;
+    }
+
+    public static function typeof_id()
+    {
+        return 'int(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY';
     }
 }
