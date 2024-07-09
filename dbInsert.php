@@ -36,7 +36,7 @@ $user = new User();
 $user->name = 'John Doe';
 $user->email = 'jhon.doe@mail.com';
 $user->password = 'Abcd.1234';
-$userManager->insert($user);
+$userManager->persist($user);
 
 $book = new Book();
 $book->title = 'The Kinfolk Home';
@@ -46,5 +46,5 @@ $book->cover = $image;
 $book->seller = $user;
 
 for($i = 0; $i < 10; $i++) {
-    $bookManager->insert($book);
+    $book->persist();
 }

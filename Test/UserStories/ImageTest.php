@@ -26,7 +26,6 @@ class ImageTest extends TestInit
     {
 
         // ----- Test ----- //
-
         $image = new Image();
         $image->name = 'test';
         $image->extension = 'png';

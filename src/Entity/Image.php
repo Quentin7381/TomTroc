@@ -6,14 +6,13 @@ use Config\Config;
 
 class Image extends AbstractEntity
 {
-    protected $folder;
-    protected $name;
-    protected $extension;
-    protected $content;
-    protected $src;
-    protected $alt;
-    protected static $_LOCAL_FIELDS = ['attributes', 'LOCAL_FIELDS', 'content', 'folder', 'extension', 'id'];
-    public static $_IDENTIFIER = 'name';
+    protected string $folder;
+    protected string $name;
+    protected string $extension;
+    protected string $content;
+    protected string $src;
+    protected string $alt;
+    protected static array $_LOCAL_FIELDS = ['attributes', 'LOCAL_FIELDS', 'content', 'folder', 'extension'];
 
     public function __construct()
     {
@@ -58,30 +57,14 @@ class Image extends AbstractEntity
         return $this;
     }
 
-    public function get_id()
-    {
-        return $this->name;
-    }
-
-    public function set_id($id)
-    {
-        $this->name = $id;
-        return $this;
-    }
-
-    public static function typeof_id()
-    {
-        return 'varchar(255) PRIMARY KEY';
-    }
-
-    public function render($variables = [], $style = null)
+    public function render(array $variables = [], ?string $style = null) : string
     {
         $variables['attributes']['src'] = $this->get_src();
         $variables['attributes']['alt'] = $this->alt;
         return parent::render($variables, $style);
     }
 
-    public function toDb()
+    public function toDb() : array
     {
         $array = parent::toDb();
         $ignore = ['content'];
@@ -93,7 +76,7 @@ class Image extends AbstractEntity
 
     public static function typeof_name()
     {
-        return 'varchar(255) NOT NULL UNIQUE';
+        return 'varchar(255) UNIQUE';
     }
 
 }

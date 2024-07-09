@@ -5,6 +5,7 @@ namespace Entity;
 use ReflectionClass;
 use ReflectionProperty;
 use Utils\View;
+use Manager\AbstractManager;
 
 /**
  * AbstractEntity class
@@ -13,10 +14,9 @@ use Utils\View;
  */
 abstract class AbstractEntity
 {
-    protected $id;
-    protected $attributes = [];
-    protected static $_LOCAL_FIELDS = ['attributes'];
-    public static $_IDENTIFIER = 'id';
+    protected ?int $id = null;
+    protected array $attributes = [];
+    protected static array $_LOCAL_FIELDS = ['attributes'];
 
     /**
      * Set a property value.
@@ -24,12 +24,10 @@ abstract class AbstractEntity
      * @param string $name
      * @param mixed $value
      *
-     * @return AbstractEntity
-     *
      * @throws Exception if the property does not exist
      * @throws Exception if the property validation fails (@see validate_* methods)
      */
-    public function set($name, $value)
+    public function set(string $name, mixed $value)
     {
         // Check if a validation method exists for the property
         if (method_exists($this, 'validate_' . $name)) {
@@ -42,13 +40,14 @@ abstract class AbstractEntity
 
         // Check if a custom setter method exists for the property
         if (method_exists($this, 'set_' . $name)) {
-            return $this->{'set_' . $name}($value);
+            $this->{'set_' . $name}($value);
+            return;
         }
 
         // Check if the property exists
         if (property_exists($this, $name)) {
             $this->$name = $value;
-            return $this;
+            return;
         }
 
         // Throw an exception if the property does not exist
@@ -64,7 +63,7 @@ abstract class AbstractEntity
      *
      * @throws Exception if the property does not exist
      */
-    public function get($name)
+    public function get(string $name): mixed
     {
         // Check if a custom getter method exists for the property
         if (method_exists($this, 'get_' . $name)) {
@@ -90,7 +89,7 @@ abstract class AbstractEntity
      *
      * @throws Exception if the property does not exist
      */
-    public function __get($name)
+    public function __get(string $name): mixed
     {
         return $this->get($name);
     }
@@ -103,9 +102,9 @@ abstract class AbstractEntity
      * @param string $name
      * @param mixed $value
      */
-    public function __set($name, $value)
+    public function __set(string $name, mixed $value): void
     {
-        return $this->set($name, $value);
+        $this->set($name, $value);
     }
 
     /**
@@ -115,7 +114,7 @@ abstract class AbstractEntity
      * @param string $name
      * @param mixed $values
      */
-    public function addAttribute($name, ...$values)
+    public function addAttribute(string $name, mixed ...$values): void
     {
         if (!isset($this->attributes[$name])) {
             $this->attributes[$name] = [];
@@ -133,7 +132,7 @@ abstract class AbstractEntity
      * @param string $name
      * @param mixed $value
      */
-    public function removeAttribute($name, $value)
+    public function removeAttribute(string $name, mixed $value): void
     {
         if (isset($this->attributes[$name])) {
             $key = array_search($value, $this->attributes[$name]);
@@ -150,7 +149,7 @@ abstract class AbstractEntity
      *
      * @return array
      */
-    public function mergeAttributes(...$attributes)
+    public function mergeAttributes(array ...$attributes): array
     {
         $return = [];
         foreach ($attributes as $attribute) {
@@ -176,7 +175,7 @@ abstract class AbstractEntity
      *
      * @return array
      */
-    public static function getFields()
+    public static function getFields(): array
     {
         $reflectionClass = new ReflectionClass(static::class);
         $properties = $reflectionClass->getProperties(ReflectionProperty::IS_PROTECTED);
@@ -186,7 +185,7 @@ abstract class AbstractEntity
             $name = $property->getName();
 
             // Skip properties starting with an underscore
-            if(strpos($name, '_') === 0){
+            if (strpos($name, '_') === 0) {
                 continue;
             }
 
@@ -214,7 +213,7 @@ abstract class AbstractEntity
      *
      * @return string The database type.
      */
-    public static function getDbType($type)
+    public static function getDbType(string $type): string
     {
         switch ($type) {
             case 'int':
@@ -237,7 +236,7 @@ abstract class AbstractEntity
      *
      * @return AbstractManager
      */
-    public static function getManager()
+    public static function getManager(): AbstractManager
     {
         $className = static::class;
         $managerName = str_replace('Entity', 'Manager', $className);
@@ -253,13 +252,13 @@ abstract class AbstractEntity
      *
      * @return string
      */
-    public function render($variables = [], $style = null)
+    public function render(array $variables = [], ?string $style = null): string
     {
         $variables['attributes'] = $this->mergeAttributes($this->attributes, $variables['attributes'] ?? []);
         return View::getInstance()->render($this, $variables, $style);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->render();
     }
@@ -271,16 +270,16 @@ abstract class AbstractEntity
      * @return int The id of the inserted entity.
      * @see AbstractManager::insert
      */
-    public function insert()
+    public function persist(): AbstractEntity
     {
         $manager = static::getManager();
-        return $manager->insert($this);
+        return $manager->persist($this);
     }
 
     /**
      * Fill the entity with an array of values.
      */
-    public function fromDb($array)
+    public function fromDb(array $array): void
     {
         foreach ($array as $name => $value) {
             $this->set($name, $value);
@@ -293,19 +292,25 @@ abstract class AbstractEntity
      * Entities relations are inserted if they do not have an id yet.
      * Local fields are removed.
      */
-    public function toDb()
+    public function toDb(): array
     {
         $array = [];
         $fields = static::getFields();
         foreach ($fields as $name => $type) {
             $value = $this->get($name);
             // Entities become their id
-            if ($value instanceof AbstractEntity) {
+            if (
+                $value instanceof AbstractEntity
+            ) {
                 if (empty($value->get('id'))) {
-                    $value = $value->insert();
+                    $value = $value->persist();
                 } else {
                     $value = $value->get('id');
                 }
+            }
+
+            if ($value instanceof LazyEntity) {
+                $value = $value->id;
             }
 
             $array[$name] = $value;
@@ -317,7 +322,26 @@ abstract class AbstractEntity
         return $array;
     }
 
-    public static function typeof_id()
+    public function toArray(): array
+    {
+        $array = [];
+        $fields = static::getFields();
+        foreach ($fields as $name => $type) {
+            $value = $this->get($name);
+            $array[$name] = $value;
+        }
+
+        return $array;
+    }
+
+    public function fromArray($array): void
+    {
+        foreach ($array as $name => $value) {
+            $this->set($name, $value);
+        }
+    }
+
+    public static function typeof_id(): string
     {
         return 'int(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY';
     }
