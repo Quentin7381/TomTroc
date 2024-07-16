@@ -1,4 +1,4 @@
-<nav <?= $attributes->render() ?>>
+<nav <?= $attributes ?>>
     <a href="">Accueil</a>
     <a href="">Nos livres à l'échange</a>
 </nav>

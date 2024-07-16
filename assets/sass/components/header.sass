@@ -2,6 +2,8 @@
 
 .tpl-header
   height: 80px
+  width: 100%
+  position: fixed
 
   display: flex
   align-items: center
@@ -20,3 +22,9 @@
     display: flex
     align-items: center
     gap: $spacer-xl
+
+  .tpl-buttonBurger
+    margin-left: auto
+
+    @media (min-width: $breakpoint-l)
+      display: none

@@ -1,0 +1,38 @@
+.tpl-menuBurger {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: max(80%, 300px);
+  padding: 2rem;
+  gap: 4rem;
+  background-color: #F5F3EF;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0);
+}
+.tpl-menuBurger__logo {
+  width: 3rem;
+  margin-right: auto;
+}
+.tpl-menuBurger__cross {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}
+.tpl-menuBurger__subMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin: 0;
+  gap: 2rem;
+  width: 100%;
+}
+.tpl-menuBurger.--hidden {
+  transform: translateX(-100%);
+}

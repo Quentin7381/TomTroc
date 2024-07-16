@@ -1,4 +1,4 @@
-<section <?= $attributes->render() ?>>
+<section <?= $attributes ?>>
     <div class="<?= $bem->e('subContainer') ?>">
         <h2>Nos valeurs</h2>
         <p>Chez Tom Troc, nous mettons l'accent sur le partage, la découverte et la communauté. Nos valeurs sont ancrées
@@ -10,6 +10,6 @@
             étagères.</p>
         </br>
         <p class="credit <?= $bem->e('credit') ?>">L'équipe Tom Troc</p>
-        <?= $v->image_get('heart')->addAttributes('class', $bem->e('heart'))->render() ?>
+        <?= $v->image_get('heart')->addAttributes('class', $bem->e('heart')) ?>
     </div>
 </section>

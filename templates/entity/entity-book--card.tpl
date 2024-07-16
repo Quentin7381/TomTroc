@@ -1,4 +1,4 @@
-<article <?= $attributes->render() ?>>
+<article <?= $attributes ?>>
     <?= $entity->cover->render(['attributes' => ['class' => $bem->e('cover')]]) ?>
     <h3 class="<?= $bem->e('title') ?>"><?= $entity->title ?></h3>
     <p class="<?= $bem->e('author') ?>"><?= $entity->author ?></p>

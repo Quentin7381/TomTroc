@@ -22,3 +22,8 @@
   font-size: 8.25px;
   font-weight: 700;
 }
+@media (max-width: 992px) {
+  .tpl-menuUser {
+    display: none;
+  }
+}

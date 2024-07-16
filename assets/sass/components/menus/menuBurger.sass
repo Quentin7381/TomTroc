@@ -1,0 +1,45 @@
+@import '../../includes/variables'
+  
+.tpl-menuBurger
+    display: flex
+    position: relative
+    flex-direction: column
+    align-items: center
+
+    z-index: 1000
+
+    position: fixed
+    left: 0
+    top: 0
+    bottom: 0
+
+    width: max(80%, 300px)
+
+    padding: $spacer-xl
+    gap: $spacer-xxl
+
+    background-color: $color-background-secondary
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px
+
+    transition: transform 0.3s ease-in-out
+    transform: translateX(0)
+
+    &__logo
+        width: $size-xxl
+        margin-right: auto
+
+    &__cross
+        position: absolute
+        top: $spacer-xl
+        right: $spacer-xl
+    
+    &__subMenu
+        display: flex
+        flex-direction: column
+        align-items: start
+        margin: 0
+        gap: $spacer-xl
+        width: 100%
+
+    &.--hidden
+        transform: translateX(-100%)

@@ -11,7 +11,6 @@ class Component extends Renderable
 
     public function __construct($template = null)
     {
-        // parent::__construct();
         $this->template = $template;
         self::$instances[] = $this;
     }
@@ -34,6 +33,9 @@ class Component extends Renderable
     public static function __callStatic($name, $arguments)
     {
         $component = new static($name);
-        return $component->render($arguments ?? []);
+        $variables = $arguments[0] ?? [];
+        $style = $arguments[1] ?? null;
+        
+        return $component->render($variables, $style);
     }
 }

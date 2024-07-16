@@ -1,4 +1,4 @@
-<section <?= $attributes->render() ?>>
+<section <?= $attributes ?>>
     <div class="container-xs">
         <h2>Comment ça marche ?</h2>
         <p>Échanger des livres avec TomTroc c'est simple et amusant ! Suivez ces étapes pour commencer :</p>

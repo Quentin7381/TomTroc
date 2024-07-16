@@ -4,7 +4,7 @@ use View\Component;
 $attributes->add('class', 'alternate-bg');
 ?>
 
-<main <?= $attributes->render() ?>>
+<main <?= $attributes ?>>
     <?= Component::decouvrir() ?>
     <?= Component::derniersLivres() ?>
     <?= Component::commentCaMarche() ?>

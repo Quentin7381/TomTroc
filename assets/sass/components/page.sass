@@ -51,10 +51,17 @@ button
   font-weight: $weight-semibold
   font-size: $size-m
 
+  cursor: pointer
+
   &.inverted
     background: transparent
     color: $color-primary
     border: 2px solid $color-primary
+
+  &.clear
+    background: transparent
+    color: $color-primary
+    border: none
     
 nav
   display: flex
@@ -92,11 +99,24 @@ section
   background-color: $color-background-secondary
   color: $color-text
 
-@each $size, $container in ('xs' $container-xs), ('s' $container-s), ('m' $container-m), ('l' $container-l), ('xl' $container-xl)
+
+.container
+  @include container(#{var(--active-container)})
+
+.padding-container
+  @include padding-container(#{var(--active-container)})
+
+:root
+  --active-container: #{$container-xxl}
+
+@each $size, $breakpoint, $container in ('xxl' $breakpoint-xxl $container-xxl), ('xl' $breakpoint-xl $container-xl), ('l' $breakpoint-l $container-l), ('m' $breakpoint-m $container-m), ('s' $breakpoint-s $container-s), ('xs' $breakpoint-xs $container-xs)
+
   .container-#{$size}
     @include container($container)
 
   .padding-container-#{$size}
     @include padding-container($container)
 
-
+  :root
+    @media (max-width: $breakpoint)
+      --active-container: #{$container}

@@ -1,3 +1,3 @@
-<section <?= $attributes->render() ?>>
-    <?= $v->image_get('banner')->render() ?>
+<section <?= $attributes ?>>
+    <?= $v->image_get('banner') ?>
 </section>

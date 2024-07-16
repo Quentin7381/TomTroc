@@ -1,0 +1,15 @@
+.tpl-buttonBurger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 22px;
+  height: 15px;
+  cursor: pointer;
+  gap: 0;
+}
+.tpl-buttonBurger__line {
+  width: 100%;
+  height: 1px;
+  background-color: #A6A6A6;
+}

@@ -11,6 +11,7 @@ class View
 {
     protected static $instance;
     public $css = [];
+    public $js = [];
     public $html;
 
     protected function __construct()
@@ -43,6 +44,9 @@ class View
                 break;
             case '.css':
                 $root = Config::getInstance()->PATH_CSS;
+                break;
+            case '.js':
+                $root = Config::getInstance()->PATH_JS;
                 break;
             default:
                 throw new Exception('Extension not allowed: ' . $extension);
@@ -89,14 +93,26 @@ class View
         }
 
         $this->css[$this->getTemplatePath($templateName, '.css', $style)] = true;
+        $this->js[$this->getTemplatePath($templateName, '.js', $style)] = true;
 
         extract($variables);
 
-        $attributes;
+        $varAttributes = $attributes ?? [];
+
         try {
             $attributes = $entity->attributes ?? new Attributes();
         } catch (\View\Exception $e) {
             $attributes = new Attributes();
+        }
+
+        foreach ($varAttributes as $key => $values) {
+            if(!is_array($values)) {
+                $values = [$values];
+            }
+
+            foreach ($values as $value) {
+                $attributes->add($key, $value);
+            }
         }
 
         $attributes->add('class', 'tpl-' . $templateName);
@@ -116,11 +132,18 @@ class View
     {
         $this->html = Component::page($options);
         $this->addCss();
+        $this->addJs();
     }
 
     public function addCss()
     {
         $html = Component::css();
         $this->html = str_replace('</head>', $html . '</head>', $this->html);
+    }
+
+    public function addJs()
+    {
+        $html = Component::js();
+        $this->html = str_replace('</body>', $html . '</body>', $this->html);
     }
 }

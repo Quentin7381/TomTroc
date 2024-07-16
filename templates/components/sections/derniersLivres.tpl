@@ -6,11 +6,11 @@ use Entity\Image;
 
 ?>
 
-<section <?= $attributes->render() ?>>
+<section <?= $attributes ?>>
     <h2>Les derniers livres ajoutés</h2>
     <div class="<?= $bem->e('books') ?>">
         <?php foreach ($v->book_lasts->getNexts(5) as $book): ?>
-                <?= $book->render([], 'card') ?>
+            <?= $book->render([], 'card') ?>
         <?php endforeach; ?>
     </div>
     <button class="<?= $bem->e('cta') ?>">Voir tous les livres</button>

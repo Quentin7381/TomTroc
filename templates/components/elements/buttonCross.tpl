@@ -1,0 +1,1 @@
+<button <?= $attributes->add('class', 'clear') ?>>╳</button>

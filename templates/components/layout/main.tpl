@@ -8,4 +8,4 @@ foreach ($attributes as $key => $value) {
 }
 ?>
 
-<?= $content->render() ?>
+<?= $content ?>
