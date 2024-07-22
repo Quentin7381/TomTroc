@@ -144,6 +144,6 @@ class View
     public function addJs()
     {
         $html = Component::js();
-        $this->html = str_replace('</body>', $html . '</body>', $this->html);
+        $this->html = str_replace('</head>', $html . '</head>', $this->html);
     }
 }

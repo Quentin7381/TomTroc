@@ -1,7 +1,7 @@
 <?php
 use View\Component;
 
-$id = uniqid('burgerMenu-');
+$id = 'burgerMenu';
 $attributes->add('data-id', $id);
 $attributes->add('class', '--hidden');
 ?>
@@ -12,6 +12,7 @@ $attributes->add('class', '--hidden');
         'data-target' => $id
     ]
 ]) ?>
+
 <nav <?= $attributes ?>>
     <?= $v->image_get('logo-small')->addAttributes('class', 'logo_small', $bem->e('logo')) ?>
     <?= Component::buttonCross([

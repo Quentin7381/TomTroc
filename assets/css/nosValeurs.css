@@ -12,3 +12,9 @@
   right: -60px;
   bottom: 0;
 }
+@media (max-width: 992px) {
+  .tpl-nosValeurs__heart {
+    position: static;
+    margin-left: 60%;
+  }
+}

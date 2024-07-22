@@ -16,3 +16,8 @@
 .tpl-derniersLivres__cta {
   margin: auto 0;
 }
+@media (max-width: 992px) {
+  .tpl-derniersLivres__books {
+    gap: 1rem;
+  }
+}

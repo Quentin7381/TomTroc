@@ -8,9 +8,6 @@
     grid-template-columns: repeat(2, 1fr)
     gap: 0
 
-    &>*
-        flex: 1
-
     &__text
         display: flex
         flex-direction: column
@@ -23,4 +20,22 @@
         margin-top: $spacer-m
         margin-bottom: $spacer-xxl
 
-    
+    @media (max-width: $breakpoint-l)
+        grid-template-columns: 1fr
+        grid-template-rows: auto auto
+
+        &__text
+            grid-row: 2
+            padding: 0
+            h2 
+                text-align: left
+
+        &__image
+            grid-row: 1
+            margin: 0 -#{$container-margin}
+            width: calc(100% + #{$container-margin} * 2)
+
+    @media (max-width: $breakpoint-s)
+        &__cta
+            width: 100%
+            margin-bottom: 0

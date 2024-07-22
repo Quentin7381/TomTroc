@@ -6,7 +6,7 @@
         <button class="<?= $bem->e('cta') ?>">Découvrir</button>
     </div>
     <div class="container-xs">
-        <?= $v->image_get('hamza-nouasria') ?>
+        <?= $v->image_get('hamza-nouasria')->addAttributes('class', $bem->e('image')) ?>
         <p class="credit">Hamza</p>
     </div>
 </section>

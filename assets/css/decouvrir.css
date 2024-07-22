@@ -5,9 +5,6 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 0;
 }
-.tpl-decouvrir > * {
-  flex: 1;
-}
 .tpl-decouvrir__text {
   display: flex;
   flex-direction: column;
@@ -19,4 +16,28 @@
 .tpl-decouvrir__cta {
   margin-top: 1rem;
   margin-bottom: 4rem;
+}
+@media (max-width: 992px) {
+  .tpl-decouvrir {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+  .tpl-decouvrir__text {
+    grid-row: 2;
+    padding: 0;
+  }
+  .tpl-decouvrir__text h2 {
+    text-align: left;
+  }
+  .tpl-decouvrir__image {
+    grid-row: 1;
+    margin: 0 -1rem;
+    width: calc(100% + 1rem * 2);
+  }
+}
+@media (max-width: 576px) {
+  .tpl-decouvrir__cta {
+    width: 100%;
+    margin-bottom: 0;
+  }
 }
