@@ -20,4 +20,7 @@
   .tpl-derniersLivres__books {
     gap: 1rem;
   }
+  .tpl-derniersLivres__cta {
+    display: none;
+  }
 }

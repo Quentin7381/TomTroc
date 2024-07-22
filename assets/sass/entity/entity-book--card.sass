@@ -3,7 +3,11 @@
 .tpl-entity-book--card
     display: flex
     flex-direction: column
-    max-width: 200px
+    --width: 200px
+    width: var(--width)
+    height: 320px
+    max-width: var(--width)
+    max-height: 320px
 
     padding: $spacer-m
 
@@ -13,8 +17,8 @@
         width: 100%
 
     &__cover
-        height: 200px
-        width: 200px
+        height: calc(var(--width))
+        width: calc(var(--width))
         object-fit: cover
         margin: -#{$spacer-m} 
         margin-bottom: 0
@@ -36,3 +40,8 @@
         font-size: $size-xxs
         color: $color-text-light
         font-style: italic
+
+    @media (max-width: $breakpoint-l)
+        --width: 160px
+        height: 260px
+            

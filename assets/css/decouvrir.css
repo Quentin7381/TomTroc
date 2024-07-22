@@ -37,7 +37,6 @@
 }
 @media (max-width: 576px) {
   .tpl-decouvrir__cta {
-    width: 100%;
     margin-bottom: 0;
   }
 }

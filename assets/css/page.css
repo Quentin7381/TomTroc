@@ -65,6 +65,11 @@ button.clear {
   color: #00AC66;
   border: none;
 }
+@media (max-width: 576px) {
+  button {
+    width: 100%;
+  }
+}
 
 nav {
   display: flex;

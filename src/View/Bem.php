@@ -10,7 +10,7 @@ class Bem {
 
     public static function getInstance($template, $style = null){
         if(!empty($style)){
-            $template .= '-' . $style;
+            $template .= '--' . $style;
         }
         if(!isset(self::$instances[$template])){
             self::$instances[$template] = new self($template);
