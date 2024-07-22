@@ -4,15 +4,13 @@
     display: flex
     flex-direction: column
     align-items: center
+    gap: $spacer-xxl
 
     &__list
         display: flex
         flex-wrap: wrap
         justify-content: center
         gap: $spacer-xl
-
-        margin-top: $spacer-xxl
-        margin-bottom: $spacer-xxl
 
         &>a
             text-decoration: none
@@ -28,3 +26,6 @@
             justify-content: center
 
             text-align: center
+
+    @media (max-width: $breakpoint-l)
+        gap: $spacer-m
