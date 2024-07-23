@@ -102,6 +102,7 @@ class Router
 
     protected function getRouteArray($route)
     {
+        $route = trim($route, '/');
         $route = explode('/', $route);
         return $route;
     }

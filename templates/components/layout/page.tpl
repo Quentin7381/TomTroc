@@ -11,7 +11,8 @@
 </head>
 
 <body>
-    <?= View\Component::header() ?>
+    <?= View\Component::header() ?> 
+    <?php var_dump($v->user_connected); ?>
     <?= $body ?>
     <?= View\Component::footer() ?>
 </body>

@@ -6,6 +6,9 @@ use Config\Config;
 use Variables\Provider;
 use Utils\PDO;
 
+// Start the session
+session_start();
+
 // Load the configuration
 $config = Config::getInstance();
 $config->load(__DIR__ . '/../');

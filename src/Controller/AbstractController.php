@@ -119,4 +119,10 @@ abstract class AbstractController
             $this->manager = $managerName::getInstance();
         }
     }
+
+    public function redirect($url)
+    {
+        header('Location: ' . $url);
+        exit;
+    }
 }

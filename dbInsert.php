@@ -62,3 +62,10 @@ $picture->name = 'banner';
 $picture->addImage('banner');
 $picture->addImage('banner--phone', 768);
 $picture->persist();
+
+// ----- UTILISATEURS DU SITE ----- //
+
+$user = new User();
+$user->name = 'John Doe';
+$user->email = 'jhon.doe@example.com';
+$user->password = 'Abcd.1234';
