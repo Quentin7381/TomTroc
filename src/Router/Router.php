@@ -90,9 +90,11 @@ class Router
         return [$routes, $args];
     }
 
-    public function route()
+    public function route(?string $url = null)
     {
-        $url = $this->getCalledRoute();
+        if (!$url) {
+            $url = $this->getCalledRoute();
+        }
         [$method, $args] = $this->getRouteMethod($url);
         call_user_func_array($method, $args);
 

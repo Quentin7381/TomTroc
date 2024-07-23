@@ -5,6 +5,7 @@ require_once 'src/initialize.php';
 use Config\Config;
 use View\View;
 use Router\Router;
+use Router\Exception as RouterException;
 
 // use Variables\Provider;
 // use Variables\Variables;
@@ -17,7 +18,13 @@ $config = Config::I();
 
 $router = Router::getInstance();
 
-$router->route();
+try {
+    $router->route();
+} catch (RouterException $e) {
+    if($e->getCode() == RouterException::ROUTE_NOT_FOUND){
+        $router->route('error/404');
+    }
+}
 
 // $view = View::getInstance();
 // $view->buildPage();

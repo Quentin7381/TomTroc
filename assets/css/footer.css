@@ -4,6 +4,7 @@
   align-items: center;
   gap: 2rem;
   height: 60px;
+  margin-top: auto;
 }
 .tpl-footer .logo_small {
   width: 22px;

@@ -6,8 +6,14 @@ class Exception extends \Exception\GenericException
 {
     const EXTENSION_NOT_ALLOWED = 100;
 
+    // ----- ------ RENDERABLE EXCEPTIONS ------ ----- //
+    const PROPERTY_NOT_FOUND = 200;
+
     protected static $excetions = [
         self::EXTENSION_NOT_ALLOWED => 'Extension not allowed',
+
+        // Renderable exceptions
+        self::PROPERTY_NOT_FOUND => 'Property not found',
     ];
 
     protected static $tips = [
@@ -17,5 +23,10 @@ class Exception extends \Exception\GenericException
     public function message_100($data)
     {
         return 'Extension not allowed: ' . $data['extension'];
+    }
+
+    public function message_200($data)
+    {
+        return 'Property not found: ' . $data['property'];
     }
 }

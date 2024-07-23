@@ -1,7 +1,7 @@
 .tpl-header {
   height: 80px;
   width: 100%;
-  position: fixed;
+  position: sticky;
   display: flex;
   align-items: center;
   gap: 4rem;

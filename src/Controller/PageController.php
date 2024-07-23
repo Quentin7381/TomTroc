@@ -10,6 +10,7 @@ class PageController extends AbstractController
     public function initRoutes()
     {
         $this->router->addRoute('', [$this, 'index']);
+        $this->router->addRoute('error/$', [$this, 'error']);
     }
 
     public function get($name)
@@ -20,5 +21,10 @@ class PageController extends AbstractController
     public function index()
     {
         echo Page::accueil();
+    }
+
+    public function error($code)
+    {
+        echo Page::error(['code' => $code]);
     }
 }
