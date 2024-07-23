@@ -5,6 +5,8 @@
     &__subContainer
         position: relative
         padding-bottom: 40px
+        max-width: 400px
+        margin: 0 auto
 
     &__credit
         text-align: left
@@ -17,6 +19,9 @@
         right: -60px
         bottom: 0
 
-        @media (max-width: $breakpoint-l)
+    @media (max-width: $breakpoint-l)
+        &__heart
             position: static
             margin-left: 60%
+        &__subContainer
+            position: static
