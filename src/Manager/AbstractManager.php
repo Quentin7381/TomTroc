@@ -214,7 +214,7 @@ abstract class AbstractManager
         try {
             $stmt->execute($insert);
         } catch (\Exception $e) {
-            throw new Exception("Error inserting entity in table $this->table : " . $e->getMessage());
+            throw new Exception(Exception::DATABASE_ERROR, ['error' => $e->getMessage()]);
         }
 
         $entity->id = $this->pdo->lastInsertId();

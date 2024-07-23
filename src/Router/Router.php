@@ -7,7 +7,8 @@ use Controller\AbstractController;
 /**
  * Class Router
  */
-class Router {
+class Router
+{
     /**
      * Holds all the routes of all the routers.
      * Key is the route, values are the controller and method.
@@ -24,78 +25,87 @@ class Router {
      */
     protected static $instance;
 
-    protected function __construct(){
+    protected function __construct()
+    {
+        // Prevents instantiation
     }
 
-    public static function getInstance(){
-        if(!self::$instance){
+    public static function getInstance()
+    {
+        if (!self::$instance) {
             self::$instance = new Router();
         }
         return self::$instance;
     }
 
-    public function getRoutes(){
+    public function getRoutes()
+    {
         return $this->routes;
     }
 
-    public function addRoute($route, $method){
-        $route = $this->getRouteArray($route);
+    public function addRoute($url, $method)
+    {
+        $route = $this->getRouteArray($url);
         $method = \Closure::fromCallable($method);
 
         $routes = &$this->routes;
-        foreach($route as $key => $r){
-            if($key === array_key_last($route)){
-                if(isset($routes[$r])){
-                    throw new Exception("Route already exists : $route");
+        foreach ($route as $key => $r) {
+            if ($key === array_key_last($route)) {
+                if (isset($routes[$r])) {
+                    throw new Exception(Exception::ROUTE_ALREADY_EXISTS, ['route' => $url]);
                 }
 
                 $routes[$r] = $method;
                 break;
             }
 
-            if(!isset($routes[$r])){
+            if (!isset($routes[$r])) {
                 $routes[$r] = [];
             }
             $routes = &$routes[$r];
         }
     }
 
-    public function getRouteMethod($url){
+    public function getRouteMethod($url)
+    {
         $route = $this->getRouteArray($url);
         $routes = &$this->routes;
 
         $args = [];
-        foreach($route as $r){
-            if(isset($routes[$r])){
+        foreach ($route as $r) {
+            if (isset($routes[$r])) {
                 $routes = &$routes[$r];
-            } else if(isset($routes['$'])){
+            } elseif (isset($routes['$'])) {
                 $routes = &$routes['$'];
                 $args[] = $r;
             } else {
-                throw new Exception("Route not found : $url");
+                throw new Exception(Exception::ROUTE_NOT_FOUND, ['route' => $url]);
             }
         }
 
-        if(is_array($routes)){
-            throw new Exception("Route not found : $url");
+        if (is_array($routes)) {
+            throw new Exception(Exception::ROUTE_NOT_FOUND, ['route' => $url]);
         }
 
         return [$routes, $args];
     }
 
-    public function route(){
+    public function route()
+    {
         $url = $this->getCalledRoute();
         [$method, $args] = $this->getRouteMethod($url);
         call_user_func_array($method, $args);
-        
+
     }
 
-    protected function getRouteArray($route){
+    protected function getRouteArray($route)
+    {
         $route = explode('/', $route);
         return $route;
     }
 
-    public function getCalledRoute(){
+    public function getCalledRoute()
+    {
         $uri = $_SERVER['REQUEST_URI'];
         $uri = explode('?', $uri);
         $uri = $uri[0];

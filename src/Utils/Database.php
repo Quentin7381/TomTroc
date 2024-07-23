@@ -106,7 +106,7 @@ class Database
 
         $success = $stmt->execute();
         if (!$success) {
-            throw new Exception("Error creating table $table : " . implode(', ' . PHP_EOL, $stmt->errorInfo()));
+            throw new Exception(Exception::DATABASE_ERROR, ['error' => implode(', ' . PHP_EOL, $stmt->errorInfo())]);
         }
     }
 
@@ -228,7 +228,7 @@ class Database
         $stmt = $this->pdo->prepare($sql);
 
         if (!$stmt->execute()) {
-            throw new Exception("Error adding fields to table $table : " . implode(', ' . PHP_EOL, $stmt->errorInfo()));
+            throw new Exception(Exception::DATABASE_ERROR, ['error' => implode(', ' . PHP_EOL, $stmt->errorInfo())]);
         }
     }
 
@@ -239,8 +239,7 @@ class Database
      */
     public function manageWrongTableFields(string $table, array $fields): void
     {
-        throw new Exception("Missmatch between entity fields and table '$table' fields : " . implode(', ', array_keys($fields)) . PHP_EOL .
-            "Please update the entity fields or the database fields.");
+        throw new Exception(Exception::DATABASE_STRUCTURE_ERROR, ['table' => $table, 'fields' => $fields]);
     }
 
     /**

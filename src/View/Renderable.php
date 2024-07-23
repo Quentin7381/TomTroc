@@ -54,7 +54,7 @@ class Renderable {
             return $this->$name;
         }
 
-        throw new Exception("Property \"$name\" does not exist in " . static::class . ".");
+        throw new Exception(Exception::PROPERTY_NOT_FOUND, ['property' => $name]);
     }
 
     public function __get(string $name): mixed
@@ -80,11 +80,7 @@ class Renderable {
     {
         // Check if a validation method exists for the property
         if (method_exists($this, 'validate_' . $name)) {
-            try {
-                $this->{'validate_' . $name}($value);
-            } catch (Exception $e) {
-                throw new Exception("Property $name validation failed", 0, $e);
-            }
+            $this->{'validate_' . $name}($value);
         }
 
         // Check if a custom setter method exists for the property
@@ -100,6 +96,6 @@ class Renderable {
         }
 
         // Throw an exception if the property does not exist
-        throw new Exception("Property \"$name\" does not exist in " . static::class . ".");
+        throw new Exception(Exception::PROPERTY_NOT_FOUND, ['property' => $name]);
     }
 }

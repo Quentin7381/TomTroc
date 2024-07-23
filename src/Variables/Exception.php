@@ -2,7 +2,7 @@
 
 namespace Variables;
 
-class Exception extends \Exception
+class Exception extends \Exception\GenericException
 {
 
     // ----- ------ DATA EXCEPTIONS ------ ----- //
@@ -42,22 +42,6 @@ class Exception extends \Exception
         400 => 'You can set a new provider for this variable through the Provider::set method',
         401 => 'Attempt to call a variable that is not callable',
     ];
-
-    public function __construct($code, $data, $previous = null)
-    {
-        if (method_exists($this, 'message_' . $code)) {
-            $message = $this->{'message_' . $code}($data);
-        } else {
-            $message = self::$exceptions[$code];
-        }
-
-        if(!empty(self::$tips[$code])){
-            $message .= PHP_EOL . self::$tips[$code];
-        }
-
-        parent::__construct($message, $code, $previous);
-        $this->data = $data;
-    }
 
     protected function message_100($data)
     {

@@ -48,7 +48,7 @@ class View
                 $root = Config::getInstance()->PATH_JS;
                 break;
             default:
-                throw new Exception('Extension not allowed: ' . $extension);
+                throw new Exception(Exception::EXTENSION_NOT_ALLOWED, ['extension' => $extension]);
         }
         return $root;
     }
