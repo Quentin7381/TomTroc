@@ -12,3 +12,12 @@
   text-decoration: none;
   color: #292929;
 }
+@media (max-width: 768px) {
+  .tpl-footer {
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    height: unset;
+  }
+}
