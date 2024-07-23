@@ -12,7 +12,7 @@ class Component extends Renderable
     public function __construct($template = null)
     {
         $this->template = $template;
-        self::$instances[] = $this;
+        static::$instances[] = $this;
     }
 
     public function get($key): mixed

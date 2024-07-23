@@ -12,7 +12,6 @@ class View
     protected static $instance;
     public $css = [];
     public $js = [];
-    public $html;
 
     protected function __construct()
     {
@@ -128,22 +127,15 @@ class View
         return ob_get_clean();
     }
 
-    public function buildPage($options = [])
+    public function addCss(&$html)
     {
-        $this->html = Component::page($options);
-        $this->addCss();
-        $this->addJs();
+        $css = Component::css();
+        $html = str_replace('</head>', $css . '</head>', $html);
     }
 
-    public function addCss()
+    public function addJs(&$html)
     {
-        $html = Component::css();
-        $this->html = str_replace('</head>', $html . '</head>', $this->html);
-    }
-
-    public function addJs()
-    {
-        $html = Component::js();
-        $this->html = str_replace('</head>', $html . '</head>', $this->html);
+        $js = Component::js();
+        $html = str_replace('</head>', $js . '</head>', $html);
     }
 }

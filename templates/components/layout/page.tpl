@@ -12,7 +12,7 @@
 
 <body>
     <?= View\Component::header() ?>
-    <?= View\Component::main() ?>
+    <?= $body ?>
     <?= View\Component::footer() ?>
 </body>
 

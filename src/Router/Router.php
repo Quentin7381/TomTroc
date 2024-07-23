@@ -17,11 +17,6 @@ class Router {
     private $routes = [];
 
     /**
-     * Holds the active route.
-     */
-    private $current;
-
-    /**
      * Holds all the routers.
      * Key is the root url, value is the router.
      *
@@ -39,8 +34,14 @@ class Router {
         return self::$instance;
     }
 
+    public function getRoutes(){
+        return $this->routes;
+    }
+
     public function addRoute($route, $method){
         $route = $this->getRouteArray($route);
+        $method = \Closure::fromCallable($method);
+
         $routes = &$this->routes;
         foreach($route as $key => $r){
             if($key === array_key_last($route)){
@@ -57,8 +58,6 @@ class Router {
             }
             $routes = &$routes[$r];
         }
-
-        var_dump($this->routes);
     }
 
     public function getRouteMethod($url){
@@ -67,7 +66,6 @@ class Router {
 
         $args = [];
         foreach($route as $r){
-            var_dump($r);
             if(isset($routes[$r])){
                 $routes = &$routes[$r];
             } else if(isset($routes['$'])){
@@ -93,7 +91,6 @@ class Router {
     }
 
     protected function getRouteArray($route){
-        $route = trim($route, '/');
         $route = explode('/', $route);
         return $route;
     }

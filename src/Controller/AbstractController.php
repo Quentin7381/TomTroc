@@ -51,7 +51,7 @@ abstract class AbstractController
     {
         $this->controllerName = $this->getControllerName();
         $this->config = Config::getInstance();
-        $this->router = new Router($this->baseUrl, $this);
+        $this->router = Router::getInstance();
         $this->provider = Provider::getInstance();
         $this->initRoutes();
         $this->initProviders();
@@ -115,10 +115,8 @@ abstract class AbstractController
     protected function initManager()
     {
         $managerName = 'Manager\\' . ucfirst($this->controllerName) . 'Manager';
-        if (!class_exists($managerName)) {
-            throw new Exception('Manager ' . $managerName . ' does not exist');
+        if (class_exists($managerName)) {
+            $this->manager = $managerName::getInstance();
         }
-
-        $this->manager = $managerName::getInstance();
     }
 }

@@ -19,17 +19,19 @@ class Exception extends \Exception
 
     // ----- ------ VARIABLES EXCEPTIONS ------ ----- //
     const VARIABLE_NOT_FOUND = 400;
+    const VARIABLE_NOT_CALLABLE = 401;
 
     public $data;
 
     protected static $exceptions = [
-        100 => 'Data not found',
-        200 => 'Provider not found',
-        201 => 'Provider already exists',
-        202 => 'Provider is not callable',
+        100 => 'Data not found.',
+        200 => 'Provider not found.',
+        201 => 'Provider already exists.',
+        202 => 'Provider is not callable.',
         // 300 => 'Path conflict', // Old
-        301 => 'Path not found',
-        400 => 'Variable not found',
+        301 => 'Path not found.',
+        400 => 'Variable not found.',
+        401 => 'Variable is not callable.',
     ];
 
     protected static $tips = [
@@ -38,6 +40,7 @@ class Exception extends \Exception
         201 => 'You can remove the existing provider through the Provider::remove method',
         202 => 'Provider must receive a callable that will return the desired value',
         400 => 'You can set a new provider for this variable through the Provider::set method',
+        401 => 'Attempt to call a variable that is not callable',
     ];
 
     public function __construct($code, $data, $previous = null)
