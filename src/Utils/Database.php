@@ -176,9 +176,17 @@ class Database
 
         $wrongFields = [];
         foreach ($fields as $name => $entityType) {
-            $dbType = $dbFields[$name] ?? null;
+            if(!isset($dbFields[$name])){
+                continue;
+            }
+            
+            $dbType = $dbFields[$name];
             $entityType = strtolower($entityType);
             $dbType = strtolower($dbType);
+
+            if ($entityType !== $dbType) {
+                $wrongFields[$name] = $dbType;
+            }
         }
 
         return $wrongFields;

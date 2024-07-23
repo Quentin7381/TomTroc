@@ -12,6 +12,9 @@ class UserController extends AbstractController
 
         $this->router->addRoute('/user/register', [$this, 'page_register']);
         $this->router->addRoute('/user/request/register', [$this, 'register']);
+
+        $this->router->addRoute('/user', [$this, 'page_profile']);
+        $this->router->addRoute('/user/profile', [$this, 'page_profile']);
     }
 
     public function page_connect(){
@@ -20,6 +23,10 @@ class UserController extends AbstractController
 
     public function page_register(){
         echo Page::userRegister();
+    }
+
+    public function page_profile(){
+        echo Page::personnalProfile();
     }
 
     public function login(){
@@ -55,5 +62,9 @@ class UserController extends AbstractController
 
     public function provide_connected(){
         return !empty($this->manager->get_connected_user());
+    }
+
+    public function provide_current(){
+        return $this->manager->get_connected_user();
     }
 }

@@ -51,11 +51,11 @@ class Router
         $routes = &$this->routes;
         foreach ($route as $key => $r) {
             if ($key === array_key_last($route)) {
-                if (isset($routes[$r])) {
+                if (isset($routes[$r]['.'])) {
                     throw new Exception(Exception::ROUTE_ALREADY_EXISTS, ['route' => $url]);
                 }
 
-                $routes[$r] = $method;
+                $routes[$r]['.'] = $method;
                 break;
             }
 
@@ -83,11 +83,13 @@ class Router
             }
         }
 
-        if (is_array($routes)) {
+
+
+        if (!isset($routes['.'])) {
             throw new Exception(Exception::ROUTE_NOT_FOUND, ['route' => $url]);
         }
 
-        return [$routes, $args];
+        return [$routes['.'], $args];
     }
 
     public function route(?string $url = null)
