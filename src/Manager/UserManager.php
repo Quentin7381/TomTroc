@@ -23,6 +23,18 @@ class UserManager extends AbstractManager{
         return true;
     }
 
+    public function register($email, $password, $name){
+        $sql = 'INSERT INTO user (email, password, name) VALUES (:email, :password, :name)';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            'email' => $email,
+            'password' => password_hash($password, PASSWORD_DEFAULT),
+            'name' => $name
+        ]);
+
+        return $this->login($email, $password);
+    }
+
     public function logout(){
         unset($_SESSION['user']);
     }
