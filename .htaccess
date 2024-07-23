@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteBase /
+# Exclude requests for actual files, directories, or symbolic links
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+# Redirect all other requests to index.php
+RewriteRule ^ index.php
