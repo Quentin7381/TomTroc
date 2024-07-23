@@ -26,5 +26,5 @@ foreach (glob("src/Controller/*.php") as $filename) {
         continue;
     }
     $controller = 'Controller\\' . $controller;
-    $controller::getInstance();
+    $c = $controller::getInstance();
 }

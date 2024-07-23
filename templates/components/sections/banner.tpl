@@ -1,3 +1,4 @@
+
 <section <?= $attributes ?>>
-    <?= $v->image_get('banner') ?>
+    <?= $v->picture_get('banner') ?>
 </section>

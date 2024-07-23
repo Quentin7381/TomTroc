@@ -21,10 +21,10 @@ abstract class AbstractController
     protected $config;
 
     /**
-     * @var AbstractController $instance
+     * @var AbstractController $instances
      * This object holds the instance of the controller.
      */
-    protected static $instance;
+    protected static $instances = [];
 
     /**
      * @var string $baseUrl
@@ -41,6 +41,7 @@ abstract class AbstractController
 
     protected Provider $provider;
     protected $controllerName;
+    protected $manager;
 
     /**
      * Singleton constructor.
@@ -48,14 +49,14 @@ abstract class AbstractController
      */
     protected function __construct()
     {
+        $this->controllerName = $this->getControllerName();
         $this->config = Config::getInstance();
         $this->router = new Router($this->baseUrl, $this);
         $this->provider = Provider::getInstance();
-        $this->controllerName = $this->getControllerName();
         $this->initRoutes();
         $this->initProviders();
         $this->initManager();
-        static::$instance = $this;
+        self::$instances[get_class($this)] = $this;
     }
 
     /**
@@ -68,10 +69,11 @@ abstract class AbstractController
      */
     public static function getInstance()
     {
-        if (static::$instance === null) {
-            static::$instance = new static();
+        if (empty(static::$instances[get_called_class()])) {
+            self::$instances[get_called_class()] = new static();
         }
-        return static::$instance;
+
+        return self::$instances[get_called_class()];
     }
 
     /**
@@ -113,8 +115,10 @@ abstract class AbstractController
     protected function initManager()
     {
         $managerName = 'Manager\\' . ucfirst($this->controllerName) . 'Manager';
-        if (class_exists($managerName)) {
-            $managerName::getInstance();
+        if (!class_exists($managerName)) {
+            throw new Exception('Manager ' . $managerName . ' does not exist');
         }
+
+        $this->manager = $managerName::getInstance();
     }
 }

@@ -56,4 +56,9 @@ class Attributes extends Renderable
 
         return $this;
     }
+
+    public function getAttribute(string $name): array
+    {
+        return $this->data[$name] ?? [];
+    }
 }

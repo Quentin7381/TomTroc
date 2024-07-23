@@ -6,16 +6,11 @@ require_once 'src/initialize.php';
 
 use Variables\Provider;
 use Config\Config;
-use View\View;
-use Utils\PDO;
 
 use Entity\Image;
 use Entity\User;
 use Entity\Book;
-
-use Manager\UserManager;
-use Manager\BookManager;
-use Manager\ImageManager;
+use Entity\Picture;
 
 $provider = Provider::I();
 
@@ -59,3 +54,11 @@ foreach ($images as $path) {
     $image->name = pathinfo($path, PATHINFO_FILENAME);
     $image->persist();
 }
+
+// ----- PICUTRES DU SITE ----- //
+
+$picture = new Picture();
+$picture->name = 'banner';
+$picture->addImage('banner');
+$picture->addImage('banner--phone', 768);
+$picture->persist();

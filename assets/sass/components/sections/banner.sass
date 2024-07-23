@@ -1,3 +1,5 @@
+@import '../../includes/variables'
+
 .tpl-banner
     height: 230px
     padding: 0
@@ -5,3 +7,7 @@
     img
         object-fit: cover
         height: 100%
+
+    @media (max-width: $breakpoint-m)
+        height: unset
+        

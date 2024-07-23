@@ -2,11 +2,12 @@
 
 namespace Controller;
 
-use Manager\ImageManager;
+use Manager\PictureManager;
 
-class ImageController extends AbstractController
+class PictureController extends AbstractController
 {
-    protected $baseUrl = '/image';
+    
+    protected $baseUrl = '/picture';
     protected function initRoutes()
     {
     }
