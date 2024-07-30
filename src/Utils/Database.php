@@ -176,16 +176,16 @@ class Database
 
         $wrongFields = [];
         foreach ($fields as $name => $entityType) {
-            if(!isset($dbFields[$name])){
+            if (!isset($dbFields[$name])) {
                 continue;
             }
-            
+
             $dbType = $dbFields[$name];
             $entityType = strtolower($entityType);
             $dbType = strtolower($dbType);
 
             if ($entityType !== $dbType) {
-                $wrongFields[$name] = $dbType;
+                // $wrongFields[$name] = $dbType;
             }
         }
 
@@ -259,5 +259,26 @@ class Database
     {
         user_error("Unused fields in table '$table' : " . implode(', ', array_keys($fields)) . PHP_EOL .
             "Consider cleaning the database.");
+    }
+
+    public function getIdentifiers(string $table): array
+    {
+        // All unique fields are considered as identifiers
+        $sql = "DESCRIBE $table";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        $identifiers = [];
+        foreach ($result as $row) {
+            if (
+                $row['Key'] === 'UNI'
+                || $row['Key'] === 'PRI'
+            ) {
+                $identifiers[] = $row['Field'];
+            }
+        }
+
+        return $identifiers;
     }
 }

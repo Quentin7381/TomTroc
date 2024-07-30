@@ -27,13 +27,6 @@ class Variables
         return self::getInstance();
     }
 
-    // ----- ----- ARRAY ACCESS ----- ----- //
-
-    public function offsetExists($offset): bool
-    {
-        return true;
-    }
-
     public function get($key)
     {
         if ($this->data->has($key)) {

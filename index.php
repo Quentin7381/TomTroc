@@ -9,10 +9,10 @@ use Router\Exception as RouterException;
 
 // use Variables\Provider;
 // use Variables\Variables;
+// use Variables\Data;
 // $provider = Provider::I();
 // $variables = Variables::I();
 // var_dump($provider->getStructure());
-// var_dump($variables->image_get);
 
 $config = Config::I();
 

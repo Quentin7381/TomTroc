@@ -44,17 +44,19 @@ class Image extends AbstractEntity
     public function set_src($src)
     {
         $this->src = $src;
-
-        $isHttp = strpos($src, 'http') === 0;
-        if (!$isHttp) {
-            $src = explode('/', $src);
-            $name = end($src);
-            $name = explode('.', $name);
-            $this->name = $name[0];
-            $this->extension = $name[1] ?? '';
-        }
-
         return $this;
+    }
+
+    public function default_name()
+    {
+        $src = $this->get('src');
+        return pathinfo($src, PATHINFO_FILENAME);
+    }
+
+    public function default_extension()
+    {
+        $src = $this->get('src');
+        return pathinfo($src, PATHINFO_EXTENSION);
     }
 
     public function render(array $variables = [], ?string $style = null) : string

@@ -239,6 +239,10 @@ abstract class AbstractManager
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($update);
 
+        $class = 'Entity\\' . $this->getEntityName();
+        $entity = new $class();
+        $entity->fromDb($update);
+
         return $entity;
     }
 
@@ -256,8 +260,11 @@ abstract class AbstractManager
 
     public function hydrate(AbstractEntity $entity): AbstractEntity
     {
-        $id = $entity->id;
-        $dbEntity = $this->getById($id);
+        $dbEntity = $this->exists($entity);
+
+        if (empty($dbEntity)) {
+            return $entity;
+        }
 
         foreach ($entity as $field => $type) {
             $dbEntity->$field = $entity->$field;
@@ -281,6 +288,9 @@ abstract class AbstractManager
                 $merge = $merge->toArray();
             }
             foreach ($merge as $field => $value) {
+                if(empty($value)) {
+                    continue;
+                }
                 $entity->$field = $value;
             }
         }
@@ -288,24 +298,49 @@ abstract class AbstractManager
         return $entity;
     }
 
-    public function exists(AbstractEntity $entity): AbstractEntity|bool
+    public function exists(AbstractEntity $entity): ?AbstractEntity
     {
-        $sql = "SELECT * FROM $this->table WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['id' => $entity->id]);
-        $fetch = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (empty($fetch)) {
-            return false;
+        $identifiers = $this->database->getIdentifiers($this->table);
+        
+        $sql = "SELECT * FROM $this->table WHERE ";
+        foreach ($identifiers as $field) {
+            $sql .= "$field = :$field OR ";
+        }
+        $sql = rtrim($sql, 'OR ');
+        $stmt = $this->pdo->prepare($sql);
+
+        $param = [];
+        foreach ($identifiers as $field) {
+            $param[":$field"] = $entity->$field;
         }
 
+        $stmt->execute($param);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if(count($result) > 1) {
+            throw new Exception(Exception::ENTITY_UNIQUE_VALUES_COLLISION, ['search' => $entity->toDb(), 'found' => $result]);
+        }
+
+        if(empty($result)) {
+            return null;
+        }
+
+        $fetch = $result[0];
+
+        $class = 'Entity\\' . $this->getEntityName();
+        $entity = new $class();
         $entity->fromDb($fetch);
+
         return $entity;
     }
 
     public function persist(AbstractEntity $entity): AbstractEntity
     {
-        if ($merge = $this->exists($entity)) {
+        $merge = $this->exists($entity);
+
+        if (!empty($merge)) {
+            
             return $this->update($this->merge($merge, $entity));
         } else {
             return $this->insert($entity);

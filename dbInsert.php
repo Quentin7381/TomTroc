@@ -1,6 +1,6 @@
 <?php
 
-$RESET_DB = true;
+$RESET_DB = false;
 
 require_once 'src/initialize.php';
 
@@ -12,10 +12,14 @@ use Entity\User;
 use Entity\Book;
 use Entity\Picture;
 
+use Utils\Database;
+
 $provider = Provider::I();
 
 $config = Config::getInstance();
 $config->load(__DIR__);
+
+// ----- TESTS ----- //
 
 // ----- JEU DE LIVRES ----- //
 
@@ -46,7 +50,6 @@ for ($i = 0; $i < 10; $i++) {
 // ----- IMAGES DU SITE ----- //
 
 $images = glob('assets/img/*');
-
 foreach ($images as $path) {
     $image = new Image();
     $image->src = '/assets/img/' . basename($path);

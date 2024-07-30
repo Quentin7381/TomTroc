@@ -9,21 +9,21 @@ use Entity\Picture;
 class PictureManager extends AbstractManager
 {
 
-    public function exists($picture) : bool|Picture
-    {
-        $sql = 'SELECT * FROM picture WHERE name = :name OR id = :id';
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['name' => $picture->name, 'id' => $picture->id]);
+    // public function exists($picture) : bool|Picture
+    // {
+    //     $sql = 'SELECT * FROM picture WHERE name = :name OR id = :id';
+    //     $stmt = $this->pdo->prepare($sql);
+    //     $stmt->execute(['name' => $picture->name, 'id' => $picture->id]);
         
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    //     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result) {
-            $picture->fromDb($result);
-            return $picture;
-        }
+    //     if ($result) {
+    //         $picture->fromDb($result);
+    //         return $picture;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     public function getByName($name) : Picture|bool
     {

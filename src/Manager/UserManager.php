@@ -19,7 +19,10 @@ class UserManager extends AbstractManager{
             return false;
         }
 
-        $_SESSION['user'] = $result;
+        $user = new \Entity\User();
+        $user->fromDb($result);
+
+        $_SESSION['user'] = $user;
         return true;
     }
 

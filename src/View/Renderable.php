@@ -46,12 +46,12 @@ class Renderable {
     {
         // Check if a custom getter method exists for the property
         if (method_exists($this, 'get_' . $name)) {
-            return $this->{'get_' . $name}();
+            return $this->{'get_' . $name}() ?? null;
         }
 
         // Check if the property exists
         if (property_exists($this, $name)) {
-            return $this->$name;
+            return $this->$name ?? null;
         }
 
         throw new Exception(Exception::PROPERTY_NOT_FOUND, ['property' => $name]);

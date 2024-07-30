@@ -45,6 +45,7 @@ class Picture extends AbstractEntity
             $images[$breakpoint] = $image->name;
         }
         $data['images'] = json_encode($images);
+
         return $data;
     }
 

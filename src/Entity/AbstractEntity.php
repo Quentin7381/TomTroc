@@ -28,22 +28,32 @@ abstract class AbstractEntity extends Renderable
         return $this->attributes;
     }
 
-    public function addAttributes($type, ...$values) : self
+    public function addAttributes($type, ...$values): self
     {
         $this->get_attributes()->add($type, ...$values);
         return $this;
     }
 
-    public function removeAttributes($type, ...$values) : self
+    public function removeAttributes($type, ...$values): self
     {
         $this->get_attributes()->remove($type, ...$values);
         return $this;
     }
 
-    public function setAttributes($type, ...$values) : self
+    public function setAttributes($type, ...$values): self
     {
         $this->get_attributes()->set($type, ...$values);
         return $this;
+    }
+
+    public function get(string $key): mixed
+    {
+        $value = parent::get($key);
+        if ($value === null && method_exists($this, 'default_' . $key)) {
+            $value = $this->{'default_' . $key}();
+        }
+
+        return $value;
     }
 
     /**
@@ -135,6 +145,19 @@ abstract class AbstractEntity extends Renderable
     }
 
     /**
+     * Update the entity in the database.
+     * Shortcut for the manager update method.
+     *
+     * @return int The id of the updated entity.
+     * @see AbstractManager::update
+     */
+    public function hydrate(): AbstractEntity
+    {
+        $manager = static::getManager();
+        return $manager->hydrate($this);
+    }
+
+    /**
      * Fill the entity with an array of values.
      */
     public function fromDb(array $array): void
@@ -156,15 +179,16 @@ abstract class AbstractEntity extends Renderable
         $fields = static::getFields();
         foreach ($fields as $name => $type) {
             $value = $this->get($name);
+
             // Entities become their id
             if (
                 $value instanceof AbstractEntity
             ) {
                 if (empty($value->get('id'))) {
                     $value = $value->persist();
-                } else {
-                    $value = $value->get('id');
                 }
+
+                $value = $value->get('id');
             }
 
             if ($value instanceof LazyEntity) {
@@ -173,6 +197,7 @@ abstract class AbstractEntity extends Renderable
 
             $array[$name] = $value;
         }
+
         foreach (self::$_LOCAL_FIELDS as $field) {
             unset($array[$field]);
         }

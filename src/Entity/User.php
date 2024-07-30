@@ -7,6 +7,14 @@ class User extends AbstractEntity
     protected string $name;
     protected string $password;
     protected string $email;
+    protected string|Image|LazyEntity $photo;
+    protected int $created_at;
+
+    function fromDb(array $data): void
+    {
+        parent::fromDb($data);
+        $this->photo = new LazyEntity(Image::class, $data['photo']);
+    }
 
     function validate_password($password)
     {
@@ -30,7 +38,8 @@ class User extends AbstractEntity
 
         if (!preg_match('/[0-9]/', $password)) {
             throw new Exception(Exception::INVALID_PROPERTY_VALUE, [
-                'rule' => 'Password must contain at least one number.'
+                'rule' => 'Password must contain at least one number.',
+                'property' => 'user password'
             ]);
         }
 
@@ -72,5 +81,44 @@ class User extends AbstractEntity
     function set_password($password)
     {
         $this->password = password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    static function typeof_photo()
+    {
+        return 'varchar(255) NOT NULL';
+    }
+
+    public function default_photo()
+    {
+        $photo = new Image();
+        $photo->name = 'default-user-photo';
+        $photo->hydrate();
+        return $photo;
+    }
+
+    public function default_created_at()
+    {
+        return time();
+    }
+
+    public function get_account_age(){
+        $now = time();
+        $units = [
+            'year' => 60 * 60 * 24 * 365,
+            'month' => 60 * 60 * 24 * 30,
+            'day' => 60 * 60 * 24,
+            'hour' => 60 * 60,
+            'minute' => 60,
+            'second' => 1
+        ];
+
+        $diff = $now - $this->created_at;
+        
+        foreach ($units as $unit => $value) {
+            if ($diff > $value) {
+                $result = floor($diff / $value);
+                return $result . ' ' . $unit . ($result > 1 ? 's' : '');
+            }
+        }
     }
 }
