@@ -47,10 +47,24 @@ class UserManager extends AbstractManager{
     }
 
     public function get_library_size($user){
-        $sql = 'SELECT COUNT(*) FROM book WHERE author = :author';
+        $sql = 'SELECT COUNT(*) FROM book WHERE seller = :seller';
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute(['author' => $user->id]);
+        $stmt->execute(['seller' => $user->id]);
         return $stmt->fetchColumn();
+    }
+
+    public function get_books($user){
+        $sql = 'SELECT * FROM book WHERE seller = :seller';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['seller' => $user->id]);
+        $results = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach ($results as $key => $result){
+            $results[$key] = new \Entity\Book();
+            $results[$key]->fromDb($result);
+        }
+
+        return $results;
     }
 
 }

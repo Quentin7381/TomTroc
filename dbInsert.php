@@ -2,7 +2,7 @@
 
 $RESET_DB = false;
 
-require_once 'src/initialize.php';
+require 'src/initialize.php';
 
 use Variables\Provider;
 use Config\Config;

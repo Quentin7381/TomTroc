@@ -1,0 +1,43 @@
+.tpl-entity-book--row {
+  font-size: 0.75rem;
+}
+.tpl-entity-book--row__cover {
+  width: 78px;
+  height: 78px;
+  object-fit: cover;
+}
+.tpl-entity-book--row__description p {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  max-width: 20ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: auto 0;
+  font-style: italic;
+}
+.tpl-entity-book--row__available > * {
+  border-radius: 1em;
+  color: #FFF;
+  padding: 0.25rem 1rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+.tpl-entity-book--row__available .available {
+  background: #6DC5A1;
+}
+.tpl-entity-book--row__available .unavailable {
+  background: #C56D6D;
+}
+.tpl-entity-book--row__action .container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  height: 100%;
+}
+.tpl-entity-book--row__action .edit {
+  color: #292929;
+}
+.tpl-entity-book--row__action .delete {
+  color: #C56D6D;
+}

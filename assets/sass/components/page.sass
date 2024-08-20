@@ -146,3 +146,32 @@ form
     background-color: $color-background-input
     border: none
     padding: $spacer-m
+
+table
+  width: 100%
+  border-collapse: collapse
+
+  thead tr
+    border-bottom: 1px solid $color-text-light
+
+  th
+    font-size: $size-xs
+    font-weight: semibold
+    text-align: left
+    text-transform: uppercase
+    padding: $spacer-s $spacer-m
+
+  td
+    padding: $spacer-l $spacer-m
+
+  th, td
+    &:first-child, &:last-child
+      padding-left: $spacer-xxl
+      padding-right: $spacer-xxl
+
+  tr
+    &:nth-of-type(odd)
+      background-color: $color-background-lightest
+    &:nth-of-type(even)
+      background-color: $color-background-input
+      

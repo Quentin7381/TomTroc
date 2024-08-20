@@ -154,4 +154,9 @@ class User extends AbstractEntity
         $manager = UserManager::getInstance();
         return $manager->get_library_size($this);
     }
+
+    public function get_books(){
+        $manager = UserManager::getInstance();
+        return $manager->get_books($this);
+    }
 }

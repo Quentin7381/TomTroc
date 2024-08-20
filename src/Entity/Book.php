@@ -12,6 +12,7 @@ class Book extends AbstractEntity
     protected ?string $author = null;
     protected ?string $description = null;
     protected ?int $created = null;
+    protected bool $available = false;
     protected null|string|Image|LazyEntity $cover = null;
     protected null|int|User|LazyEntity $seller = null;
 
