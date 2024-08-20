@@ -46,4 +46,11 @@ class UserManager extends AbstractManager{
         return $_SESSION['user'] ?? null;
     }
 
+    public function get_library_size($user){
+        $sql = 'SELECT COUNT(*) FROM book WHERE author = :author';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['author' => $user->id]);
+        return $stmt->fetchColumn();
+    }
+
 }

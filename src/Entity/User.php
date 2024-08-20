@@ -2,6 +2,8 @@
 
 namespace Entity;
 
+use Manager\UserManager;
+
 class User extends AbstractEntity
 {
     protected string $name;
@@ -96,29 +98,60 @@ class User extends AbstractEntity
         return $photo;
     }
 
+    public function set_photo(string|Image|LazyEntity $photo)
+    {
+        if (is_string($photo)) {
+            $this->photo = new LazyEntity(Image::class, $photo);
+        } else {
+            $this->photo = $photo;
+        }
+    }
+
     public function default_created_at()
     {
         return time();
     }
 
+    /**
+     * Get the value of created_at
+     *
+     * The value is returned in seconds, minutes, hours, days, months or years
+     * Choosen unit is the biggest possible, and the value is rounded down
+     * Plural is added to the unit if the value is greater than 1
+     *
+     * @return string like "2 years", "3 months", "1 day"
+     */
     public function get_account_age(){
         $now = time();
         $units = [
-            'year' => 60 * 60 * 24 * 365,
-            'month' => 60 * 60 * 24 * 30,
-            'day' => 60 * 60 * 24,
-            'hour' => 60 * 60,
+            'an' => 60 * 60 * 24 * 365,
+            'mois' => 60 * 60 * 24 * 30,
+            'jour' => 60 * 60 * 24,
+            'heure' => 60 * 60,
             'minute' => 60,
-            'second' => 1
+            'seconde' => 1
         ];
 
         $diff = $now - $this->created_at;
         
         foreach ($units as $unit => $value) {
             if ($diff > $value) {
+                // Calculate the number of units
                 $result = floor($diff / $value);
-                return $result . ' ' . $unit . ($result > 1 ? 's' : '');
+
+                // Add plural if needed
+                $result = $result . ' ' . $unit . ($result > 1 ? 's' : '');
+
+                // Avoid multiple s for months
+                $result = str_replace('ss', 's', $result);
+
+                return $result;
             }
         }
+    }
+
+    public function get_library_size(){
+        $manager = UserManager::getInstance();
+        return $manager->get_library_size($this);
     }
 }

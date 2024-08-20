@@ -5,7 +5,6 @@ namespace Entity;
 use ReflectionClass;
 use ReflectionProperty;
 use Manager\AbstractManager;
-use View\View;
 use View\Attributes;
 use View\Renderable;
 
