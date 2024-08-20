@@ -18,7 +18,7 @@ body
   display: flex
   flex-direction: column
 
-section, header, footer
+section, header, footer, main
   @include padding-container($container-xl)
 
 h1, h2, h3, h4
@@ -78,7 +78,7 @@ nav
   gap: $spacer-m
   align-items: center
 
-section
+section, main
   padding-top: $spacer-xxl
   padding-bottom: $spacer-xxl
 
@@ -129,3 +129,20 @@ section
   :root
     @media (max-width: $breakpoint)
       --active-container: #{$container}
+
+
+form
+  display: flex
+  flex-direction: column
+  gap: $spacer-s
+  font-size: $size-s
+
+  label
+    color: $color-text-light
+
+  input
+    margin-bottom: $spacer-m
+    border-radius: 6px
+    background-color: $color-background-input
+    border: none
+    padding: $spacer-m

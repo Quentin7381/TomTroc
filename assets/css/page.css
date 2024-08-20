@@ -23,7 +23,7 @@ body {
   flex-direction: column;
 }
 
-section, header, footer {
+section, header, footer, main {
   padding-left: max((100% - 1140px) / 2, 1rem);
   padding-right: max((100% - 1140px) / 2, 1rem);
 }
@@ -85,11 +85,11 @@ nav {
   align-items: center;
 }
 
-section {
+section, main {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
-section h2 {
+section h2, main h2 {
   text-align: center;
 }
 
@@ -235,4 +235,21 @@ section h2 {
   :root {
     --active-container: 100%;
   }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+form label {
+  color: #A6A6A6;
+}
+form input {
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  background-color: #EDF2F6;
+  border: none;
+  padding: 1rem;
 }

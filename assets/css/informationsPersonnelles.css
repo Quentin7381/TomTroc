@@ -1,0 +1,14 @@
+.tpl-informationsPersonnelles__container {
+  max-width: 322px;
+  margin: 0 auto;
+}
+.tpl-informationsPersonnelles h2 {
+  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+.tpl-informationsPersonnelles button {
+  width: fit-content;
+  background: #FAF9F7 !important;
+}

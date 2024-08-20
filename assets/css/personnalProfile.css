@@ -1,0 +1,13 @@
+.tpl-personnalProfile {
+  background-color: #FAF9F7;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.tpl-personnalProfile h1 {
+  grid-column: 1/3;
+}
+.tpl-personnalProfile section {
+  background-color: #FFF;
+  border-radius: 20px;
+}
