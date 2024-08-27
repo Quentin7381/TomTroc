@@ -42,4 +42,11 @@ class Book extends AbstractEntity
     {
         return 'int(11) NOT NULL';
     }
+
+    public function toDb(): array
+    {
+        $array = parent::toDb();
+        $array['available'] = $this->available ? 1 : 0;
+        return $array;
+    }
 }

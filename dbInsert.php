@@ -44,6 +44,7 @@ $book->seller = $user;
 
 for ($i = 0; $i < 10; $i++) {
     $entity = clone $book;
+    $entity->available = $i % 2 === 0;
     $entity->persist();
 }
 

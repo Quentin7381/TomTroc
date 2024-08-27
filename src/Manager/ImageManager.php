@@ -42,4 +42,11 @@ class ImageManager extends AbstractManager
 
         return false;
     }
+
+    public function delete($image) : void
+    {
+        $image = $this->getById($image);
+        parent::delete($image->id);
+        @unlink($image->src);
+    }
 }

@@ -26,7 +26,8 @@ class PageController extends AbstractController
 
     public function error($code)
     {
-        echo Page::error(['code' => $code]);
+        $message = $_GET['message'] ?? null;
+        echo Page::error(['code' => $code, 'message' => $message]);
     }
 
     public function fillDb()

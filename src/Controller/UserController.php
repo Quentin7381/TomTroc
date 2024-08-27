@@ -15,6 +15,8 @@ class UserController extends AbstractController
 
         $this->router->addRoute('/user', [$this, 'page_profile']);
         $this->router->addRoute('/user/profile', [$this, 'page_profile']);
+        $this->router->addRoute('/user/update/photo', [$this, 'update_photo']);
+        $this->router->addRoute('/user/edit/$id', [$this, 'edit']);
     }
 
     public function page_connect(){
@@ -66,5 +68,32 @@ class UserController extends AbstractController
 
     public function provide_current(){
         return $this->manager->get_connected_user();
+    }
+
+    public function update_photo(){
+        if (!isset($_FILES['photo'])){
+            $this->redirect('/error/422?message=No photo provided');
+            return;
+        }
+
+        try {
+            $this->manager->update_photo($this->manager->get_connected_user(), $_FILES['photo']);
+        } catch (\Manager\Exception $e){
+            if ($e->getCode() === \Manager\Exception::USER_INVALID_IMAGE_EXTENSION){
+                $this->redirect('/error/422?message=Invalid image extension');
+            }
+        }
+        
+        $this->redirect('/user/profile');
+    }
+
+    public function edit($id){
+        if (!isset($_POST['name'])){
+            echo Page::error(['code' => 422]);
+            return;
+        }
+
+        $this->manager->edit($id, $_POST);
+        $this->redirect('/user/profile');
     }
 }

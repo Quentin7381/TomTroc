@@ -156,6 +156,12 @@ abstract class AbstractEntity extends Renderable
         return $manager->hydrate($this);
     }
 
+    public function delete(): void
+    {
+        $manager = static::getManager();
+        $manager->delete($this->id);
+    }
+
     /**
      * Fill the entity with an array of values.
      */

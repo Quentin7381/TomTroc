@@ -72,6 +72,12 @@ button.clear {
   color: #00AC66;
   border: none;
 }
+button.error {
+  background-color: #C56D6D;
+}
+button.success {
+  background-color: #6DC5A1;
+}
 @media (max-width: 576px) {
   button {
     width: 100%;

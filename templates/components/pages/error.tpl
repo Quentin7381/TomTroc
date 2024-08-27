@@ -1,7 +1,6 @@
 <main <?=$attributes?>>
     <h1>
         <?php
-
         if($code == 404) {
             echo 'Page not found';
         } elseif($code == 403) {
@@ -15,4 +14,7 @@
         }
         ?>
     </h1>
+    <p>
+        <?=$message?>
+    </p>
 </main>

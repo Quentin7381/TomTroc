@@ -6,6 +6,7 @@ class Exception extends \Exception\GenericException
 {
     const DATABASE_ERROR = 100;
     const ENTITY_UNIQUE_VALUES_COLLISION = 101;
+    const USER_INVALID_IMAGE_EXTENSION = 201;
 
     protected static $excetions = [
         self::DATABASE_ERROR => 'Database error',
@@ -24,5 +25,10 @@ class Exception extends \Exception\GenericException
     public function message_101($data)
     {
         return 'Entity unique values collision: ' . PHP_EOL . json_encode($data, JSON_PRETTY_PRINT);
+    }
+
+    public function message_201($data)
+    {
+        return 'Invalid image extension: ' . $data['extension'] . PHP_EOL . 'Allowed extensions are ' . implode(', ', $data['allowed']);
     }
 }

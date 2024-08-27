@@ -1,0 +1,49 @@
+.tpl-coverPopup__box {
+  background-color: #FFF;
+  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+}
+.tpl-coverPopup__shadow {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.tpl-coverPopup__fileInput {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+.tpl-coverPopup__action {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.tpl-coverPopup__action button {
+  padding: 0.5rem 1rem;
+}
+.tpl-coverPopup__preview {
+  margin: auto;
+  width: 135px;
+  height: 135px;
+  border-radius: 70px;
+  object-fit: cover;
+}
+.tpl-coverPopup__preview.--hidden {
+  display: none;
+}
+.tpl-coverPopup.--hidden {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}

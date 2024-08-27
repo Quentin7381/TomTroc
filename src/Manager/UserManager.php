@@ -67,4 +67,23 @@ class UserManager extends AbstractManager{
         return $results;
     }
 
+    public function update_photo($user, $photo){
+        $extension = pathinfo($photo['name'], PATHINFO_EXTENSION);
+        $allowed = ['jpg', 'jpeg', 'png'];
+        if (!in_array($extension, $allowed)){
+            throw new Exception(Exception::USER_INVALID_IMAGE_EXTENSION, [
+                'allowed' => $allowed,
+                'extension' => $extension
+            ]);
+        }
+
+        $user->photo->delete();
+        $user->photo = new \Entity\Image();
+        $user->photo->name = uniqid() . '.' . $extension;
+        $user->photo->src = '/public/img/users/' . $user->photo->name;
+        $user->photo->persist();
+
+        $path = str_replace('/public', 'public', $user->photo->src);
+        move_uploaded_file($photo['tmp_name'], $path);
+    }
 }
