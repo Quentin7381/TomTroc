@@ -12,12 +12,6 @@ class User extends AbstractEntity
     protected string|Image|LazyEntity $photo;
     protected int $created_at;
 
-    function fromDb(array $data): void
-    {
-        parent::fromDb($data);
-        $this->photo = new LazyEntity(Image::class, $data['photo']);
-    }
-
     function validate_password($password)
     {
         if (strlen($password) < 8) {
@@ -85,6 +79,11 @@ class User extends AbstractEntity
         $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
+    function set_password_hash($password)
+    {
+        $this->password = $password;
+    }
+
     static function typeof_photo()
     {
         return 'varchar(255) NOT NULL';
@@ -93,7 +92,7 @@ class User extends AbstractEntity
     public function default_photo()
     {
         $photo = new Image();
-        $photo->name = 'default-user-photo';
+        $photo->src = '/assets/img/default-user-photo.png';
         $photo->hydrate();
         return $photo;
     }

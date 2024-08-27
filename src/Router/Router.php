@@ -43,6 +43,22 @@ class Router
         return $this->routes;
     }
 
+    public function getFullRoutes($routes = null, $prefix = '')
+    {
+        $routes = $routes ?? $this->routes;
+
+        $fullRoutes = [];
+        foreach ($routes as $route => $value) {
+            if ($route === '.') {
+                $fullRoutes[] = $prefix;
+            } else {
+                $fullRoutes = array_merge($fullRoutes, $this->getFullRoutes($value, $prefix . '/' . $route));
+            }
+        }
+
+        return $fullRoutes;
+    }
+
     public function addRoute($url, $method)
     {
         $route = $this->getRouteArray($url);
@@ -68,28 +84,30 @@ class Router
 
     public function getRouteMethod($url)
     {
-        $route = $this->getRouteArray($url);
-        $routes = &$this->routes;
+        $needle = $this->getRouteArray($url);
+        $haysac = &$this->routes;
 
         $args = [];
-        foreach ($route as $r) {
-            if (isset($routes[$r])) {
-                $routes = &$routes[$r];
-            } elseif (isset($routes['$'])) {
-                $routes = &$routes['$'];
-                $args[] = $r;
+        foreach ($needle as $n) {
+            // Debug
+            // var_dump('--- ITERATION ---');
+            // var_dump($n);
+            // var_dump(array_keys($haysac));
+            if (isset($haysac[$n])) {
+                $haysac = &$haysac[$n];
+            } elseif (isset($haysac['$'])) {
+                $haysac = &$haysac['$'];
+                $args[] = $n;
             } else {
                 throw new Exception(Exception::ROUTE_NOT_FOUND, ['route' => $url]);
             }
         }
 
-
-
-        if (!isset($routes['.'])) {
+        if (!isset($haysac['.'])) {
             throw new Exception(Exception::ROUTE_NOT_FOUND, ['route' => $url]);
         }
 
-        return [$routes['.'], $args];
+        return [$haysac['.'], $args];
     }
 
     public function route(?string $url = null)

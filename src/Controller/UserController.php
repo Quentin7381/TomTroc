@@ -16,7 +16,7 @@ class UserController extends AbstractController
         $this->router->addRoute('/user', [$this, 'page_profile']);
         $this->router->addRoute('/user/profile', [$this, 'page_profile']);
         $this->router->addRoute('/user/update/photo', [$this, 'update_photo']);
-        $this->router->addRoute('/user/edit/$id', [$this, 'edit']);
+        $this->router->addRoute('/user/edit/$', [$this, 'edit']);
     }
 
     public function page_connect(){
@@ -88,12 +88,21 @@ class UserController extends AbstractController
     }
 
     public function edit($id){
-        if (!isset($_POST['name'])){
-            echo Page::error(['code' => 422]);
-            return;
+
+        try {
+            $this->manager->edit($id, $_POST);
+        } catch (\Manager\Exception $e){
+            if ($e->getCode() === \Manager\Exception::USER_NOT_FOUND){
+                $this->redirect('/error/404?message=No user with this id');
+            }
         }
 
-        $this->manager->edit($id, $_POST);
+        $this->manager->updateSession(
+            $this->manager->getById($id)
+        );
+
+        var_dump($_SESSION['user']);
+
         $this->redirect('/user/profile');
     }
 }

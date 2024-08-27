@@ -15,8 +15,11 @@ use Router\Exception as RouterException;
 // var_dump($provider->getStructure());
 
 $config = Config::I();
-
 $router = Router::getInstance();
+
+// Router debug
+// var_dump($router->getFullRoutes());
+// var_dump($router->getCalledRoute());
 
 try {
     $router->route();

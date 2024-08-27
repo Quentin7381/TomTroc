@@ -7,10 +7,13 @@ class Exception extends \Exception\GenericException
     const DATABASE_ERROR = 100;
     const ENTITY_UNIQUE_VALUES_COLLISION = 101;
     const USER_INVALID_IMAGE_EXTENSION = 201;
+    const USER_NOT_FOUND = 202;
 
-    protected static $excetions = [
+    protected static $exceptions = [
         self::DATABASE_ERROR => 'Database error',
         self::ENTITY_UNIQUE_VALUES_COLLISION => 'Entity unique values collision',
+        self::USER_INVALID_IMAGE_EXTENSION => 'Invalid image extension',
+        self::USER_NOT_FOUND => 'User not found',
     ];
 
     protected static $tips = [

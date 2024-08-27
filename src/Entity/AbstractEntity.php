@@ -71,9 +71,23 @@ abstract class AbstractEntity extends Renderable
         return $managerName::getInstance();
     }
 
+    public function toArray(): array
+    {
+        $manager = static::get_manager();
+        $fields = $manager->getEntityFields();
+
+        $array = [];
+        foreach ($fields as $name => $type) {
+            $value = $this->get($name);
+            $array[$name] = $value;
+        }
+
+        return $array;
+    }
+
     // ----- SHORTCUTS ----- //
 
-    public function __call(string $name, array $arguments) : mixed
+    public function __call(string $name, array $arguments): mixed
     {
         if (
             !in_array($name, [
@@ -83,6 +97,9 @@ abstract class AbstractEntity extends Renderable
                 'exists',
                 'fromDb',
                 'toDb',
+                'insert',
+                'update',
+                'hydrate',
             ])
         ) {
             throw new \Exception("Method $name does not exist in " . static::class);
@@ -90,7 +107,7 @@ abstract class AbstractEntity extends Renderable
 
         $manager = static::get_manager();
 
-        if(!method_exists($manager, $name)){
+        if (!method_exists($manager, $name)) {
             throw new \Exception("Method $name does not exist in " . get_class($manager) . " nor in " . static::class);
         }
 

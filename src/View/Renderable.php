@@ -26,9 +26,7 @@ class Renderable {
     public function toArray(): array
     {
         $array = [];
-        $fields = static::getFields();
-        foreach ($fields as $name => $type) {
-            $value = $this->get($name);
+        foreach (get_object_vars($this) as $name => $value) {
             $array[$name] = $value;
         }
 
@@ -38,6 +36,9 @@ class Renderable {
     public function fromArray($array): void
     {
         foreach ($array as $name => $value) {
+            if(empty($value)){
+                continue;
+            }
             $this->set($name, $value);
         }
     }

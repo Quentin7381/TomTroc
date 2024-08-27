@@ -38,6 +38,4 @@ class LazyEntity
     {
         return $this->getEntity()->$method(...$args);
     }
-
-
 }
