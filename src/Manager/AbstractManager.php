@@ -6,6 +6,9 @@ use Config\Config;
 use Utils\PDO;
 use Utils\Database;
 use Entity\AbstractEntity;
+use ReflectionClass;
+use ReflectionProperty;
+
 
 /**
  * AbstractManager class
@@ -94,19 +97,6 @@ abstract class AbstractManager
         $name = end($name);
         $name = str_replace('Manager', '', $name);
         return $name;
-    }
-
-    /**
-     * Get the entity fields.
-     * The entity fields are the protected properties of the entity.
-     * Any private properties are not returned.
-     *
-     * @return array An array of fields with the field name as key and the field type (for databases) as value.
-     */
-    public function getEntityFields(): array
-    {
-        $entity = 'Entity\\' . $this->getEntityName();
-        return $entity::getFields();
     }
 
     // ----- CRUD -----
@@ -345,5 +335,129 @@ abstract class AbstractManager
         } else {
             return $this->insert($entity);
         }
+    }
+
+    public function getDbType(string $type): string
+    {
+        $nullable = strpos($type, '?') !== false;
+
+        // Si la propriete est nullable, on prend le type
+        $type = str_replace('?', '', $type);
+
+        // Si la propriete est multitype, on prend le premier type
+        $type = explode('|', $type);
+        $type = $type[0];
+
+        $types = [
+            'int' => 'INT',
+            'string' => 'VARCHAR(255)',
+            'bool' => 'TINYINT(1)',
+            'float' => 'FLOAT',
+            'array' => 'TEXT',
+            'object' => 'TEXT',
+            'null' => 'TEXT',
+        ];
+
+        $type = $types[$type] ?? 'VARCHAR(255)';
+
+        if (!$nullable) {
+            $type .= ' REQUIRED';
+        }
+
+        return $type;
+    }
+
+    public function fromDb(array $array) : AbstractEntity
+    {
+        $class = 'Entity\\' . $this->getEntityName();
+        $entity = new $class();
+        
+        foreach($array as $field => $value) {
+            $entity->$field = $value;
+        }
+
+        return $entity;
+    }
+
+    public function toDb(AbstractEntity $entity) : array
+    {
+        $entityClass = get_class($entity);
+
+        $array = [];
+        $fields = $entityClass::getFields();
+        foreach ($fields as $name => $type) {
+            $value = $entity->get($name);
+
+            // Entities become their id
+            if (
+                $value instanceof AbstractEntity
+            ) {
+                if (empty($value->get('id'))) {
+                    $value = $value->persist();
+                }
+
+                $value = $value->get('id');
+            }
+
+            if ($value instanceof LazyEntity) {
+                $value = $value->id;
+            }
+
+            $array[$name] = $value;
+        }
+
+        foreach ($entityClass::get_local_fields() as $field) {
+            unset($array[$field]);
+        }
+
+        return $array;
+    }
+
+    public function getEntityClass(): string
+    {
+        return 'Entity\\' . $this->getEntityName();
+    }
+
+    /**
+     * Get the fields of the entity.
+     * Keys are the field names and values are the database types.
+     *
+     * @return array
+     */
+    public function getEntityFields(): array
+    {
+        $entityClass = $this->getEntityClass();
+        $reflectionClass = new ReflectionClass($entityClass);
+        $properties = $reflectionClass->getProperties(ReflectionProperty::IS_PROTECTED);
+
+        $protectedProperties = [];
+        foreach ($properties as $property) {
+            $name = $property->getName();
+
+            // Skip properties starting with an underscore
+            if (strpos($name, '_') === 0) {
+                continue;
+            }
+
+            if (method_exists(static::class, 'typeof_' . $name)) {
+                $type = static::{'typeof_' . $name}();
+            } else {
+                $type = $property->getType();
+                $type = static::getDbType($type);
+            }
+
+            $protectedProperties[$name] = $type;
+        }
+
+        foreach ($entityClass::get_local_fields() as $field) {
+            unset($protectedProperties[$field]);
+        }
+
+        return $protectedProperties;
+    }
+
+    public static function typeof_id(): string
+    {
+        return 'int(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY';
     }
 }

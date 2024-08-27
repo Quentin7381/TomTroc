@@ -18,7 +18,7 @@ class LazyEntity
     public function getEntity()
     {
         if ($this->entity === null) {
-            $manager = $this->_LAZY_TYPE::getManager();
+            $manager = $this->_LAZY_TYPE::get_manager();
             $this->entity = $manager->getById($this->id);
         }
         return $this->entity;

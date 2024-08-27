@@ -1,9 +1,6 @@
 <?php
 
 namespace Entity;
-
-use ReflectionClass;
-use ReflectionProperty;
 use Manager\AbstractManager;
 use View\Attributes;
 use View\Renderable;
@@ -17,7 +14,12 @@ abstract class AbstractEntity extends Renderable
 {
     protected ?int $id = null;
     protected Attributes $attributes;
-    protected static array $_LOCAL_FIELDS = ['attributes'];
+    protected static array $_LOCAL_FIELDS = ['attributes', 'manager'];
+
+    public static function get_local_fields(): array
+    {
+        return static::$_LOCAL_FIELDS;
+    }
 
     public function get_attributes()
     {
@@ -56,162 +58,48 @@ abstract class AbstractEntity extends Renderable
     }
 
     /**
-     * Get the fields of the entity.
-     * Keys are the field names and values are the database types.
-     *
-     * @return array
-     */
-    public static function getFields(): array
-    {
-        $reflectionClass = new ReflectionClass(static::class);
-        $properties = $reflectionClass->getProperties(ReflectionProperty::IS_PROTECTED);
-
-        $protectedProperties = [];
-        foreach ($properties as $property) {
-            $name = $property->getName();
-
-            // Skip properties starting with an underscore
-            if (strpos($name, '_') === 0) {
-                continue;
-            }
-
-            if (method_exists(static::class, 'typeof_' . $name)) {
-                $type = static::{'typeof_' . $name}();
-            } else {
-                $type = $property->getType();
-                $type = static::getDbType($type);
-            }
-
-            $protectedProperties[$name] = $type;
-        }
-
-        foreach (static::$_LOCAL_FIELDS as $field) {
-            unset($protectedProperties[$field]);
-        }
-
-        return $protectedProperties;
-    }
-
-    /**
-     * Get the database type for a given php type.
-     *
-     * @param string $type The type of the property.
-     *
-     * @return string The database type.
-     */
-    public static function getDbType(string $type): string
-    {
-        switch ($type) {
-            case 'int':
-                return 'INT(6)';
-            case 'string':
-                return 'VARCHAR(255)';
-            case 'bool':
-                return 'TINYINT(1)';
-            case 'float':
-                return 'FLOAT';
-            case 'DateTime':
-                return 'DATETIME';
-            default:
-                return 'VARCHAR(255)';
-        }
-    }
-
-    /**
      * Get the manager for the entity.
      *
      * @return AbstractManager
      */
-    public static function getManager(): AbstractManager
+    public static function get_manager(): AbstractManager
     {
         $className = static::class;
         $managerName = str_replace('Entity', 'Manager', $className);
         $managerName = $managerName . 'Manager';
+
         return $managerName::getInstance();
-    }
-
-    /**
-     * Insert the entity in the database.
-     * Shortcut for the manager insert method.
-     *
-     * @return int The id of the inserted entity.
-     * @see AbstractManager::insert
-     */
-    public function persist(): AbstractEntity
-    {
-        $manager = static::getManager();
-        return $manager->persist($this);
-    }
-
-    /**
-     * Update the entity in the database.
-     * Shortcut for the manager update method.
-     *
-     * @return int The id of the updated entity.
-     * @see AbstractManager::update
-     */
-    public function hydrate(): AbstractEntity
-    {
-        $manager = static::getManager();
-        return $manager->hydrate($this);
     }
 
     public function delete(): void
     {
-        $manager = static::getManager();
+        $manager = static::get_manager();
         $manager->delete($this->id);
     }
 
-    /**
-     * Fill the entity with an array of values.
-     */
-    public function fromDb(array $array): void
+    // ----- SHORTCUTS ----- //
+
+    public function __call(string $name, array $arguments) : mixed
     {
-        foreach ($array as $name => $value) {
-            $this->set($name, $value);
+        if (
+            !in_array($name, [
+                'persist',
+                'delete',
+                'merge',
+                'exists',
+                'fromDb',
+                'toDb',
+            ])
+        ) {
+            throw new \Exception("Method $name does not exist in " . static::class);
+        }
+
+        $manager = static::get_manager();
+        try {
+            return $manager->$name($this, ...$arguments);
+        } catch (\Throwable $e) {
+            return $manager->$name(...$arguments);
         }
     }
 
-    /**
-     * Get the entity as an array for the database.
-     * Entities relations are replaced by their id.
-     * Entities relations are inserted if they do not have an id yet.
-     * Local fields are removed.
-     */
-    public function toDb(): array
-    {
-        $array = [];
-        $fields = static::getFields();
-        foreach ($fields as $name => $type) {
-            $value = $this->get($name);
-
-            // Entities become their id
-            if (
-                $value instanceof AbstractEntity
-            ) {
-                if (empty($value->get('id'))) {
-                    $value = $value->persist();
-                }
-
-                $value = $value->get('id');
-            }
-
-            if ($value instanceof LazyEntity) {
-                $value = $value->id;
-            }
-
-            $array[$name] = $value;
-        }
-
-        foreach (self::$_LOCAL_FIELDS as $field) {
-            unset($array[$field]);
-        }
-
-        return $array;
-    }
-
-    public static function typeof_id(): string
-    {
-        return 'int(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY';
-    }
 }
