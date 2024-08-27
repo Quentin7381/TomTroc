@@ -27,8 +27,14 @@ class UserController extends AbstractController
         echo Page::userRegister();
     }
 
-    public function page_profile(){
-        echo Page::personnalProfile();
+    public function page_profile($id = null){
+        if(!$id){
+            $id = $this->manager->get_connected_user()->id;
+        }
+
+        $editable = $this->manager->get_connected_user()->id === $id;
+
+        echo Page::personnalProfile(['editable' => $editable]);
     }
 
     public function login(){

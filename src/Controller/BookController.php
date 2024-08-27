@@ -3,11 +3,9 @@
 namespace Controller;
 
 use Entity\Book;
-use Entity\Image;
-use Entity\User;
 use Utils\PDO;
 use Utils\StatementGenerator;
-use Manager\BookManager;
+use View\Page;
 
 class BookController extends AbstractController
 {
@@ -16,7 +14,7 @@ class BookController extends AbstractController
     protected $baseUrl = '/book';
     protected function initRoutes()
     {
-
+        $this->router->addRoute('/book/add', [$this, 'page_add']);
     }
 
     public function provide_lasts()
@@ -34,5 +32,12 @@ class BookController extends AbstractController
         });
 
         return $generator;
+    }
+
+    public function page_add()
+    {
+        $userManager = \Manager\UserManager::getInstance();
+        $user = $userManager->get_connected_user();
+        echo Page::bookEdit(['user' => $user]);
     }
 }

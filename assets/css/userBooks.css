@@ -56,27 +56,23 @@ img {
 }
 
 button, .button {
-  --color-bg: #00AC66;
-  --color: #FFF;
-  display: inline-block;
-  background: var(--color-bg);
-  color: var(--color);
+  background: #00AC66;
+  color: #FFF;
   border: none;
   border-radius: 10px;
   padding: 1.5em 2em;
   font-weight: 600;
   font-size: 1rem;
-  text-decoration: none;
   cursor: pointer;
 }
 button.inverted, .button.inverted {
-  background: var(--color);
-  color: var(--color-bg);
-  border: 2px solid var(--color-bg);
+  background: transparent;
+  color: #00AC66;
+  border: 2px solid #00AC66;
 }
 button.clear, .button.clear {
   background: transparent;
-  color: var(--color-bg);
+  color: #00AC66;
   border: none;
 }
 button.error, .button.error {
@@ -262,19 +258,12 @@ form {
 form label {
   color: #A6A6A6;
 }
-form input, form textarea, form select {
+form input {
   margin-bottom: 1rem;
   border-radius: 6px;
   background-color: #EDF2F6;
   border: none;
   padding: 1rem;
-}
-form fieldset {
-  border: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }
 
 table {
@@ -303,4 +292,10 @@ table tr:nth-of-type(odd) {
 }
 table tr:nth-of-type(even) {
   background-color: #EDF2F6;
+}
+
+.tpl-userBooks__add {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }

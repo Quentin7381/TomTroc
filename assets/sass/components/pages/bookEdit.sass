@@ -1,0 +1,42 @@
+@import '../../includes/variables'
+    
+.tpl-bookEdit
+    background-color: $color-background-primary
+
+    h1
+        margin-bottom: $spacer-l
+
+    section
+        background-color: $color-background-lightest
+        padding: $spacer-xl
+        border-radius: 20px
+
+    form
+        display: grid
+        grid-template-columns: 1fr 1fr
+        gap: $spacer-xxl
+        background-color: $color-background-lightest
+
+        button[type="submit"]
+            max-width: 322px
+
+    &__photo,
+    &__addPhoto
+        --color-bg: #{$color-text-light} !important
+        aspect-ratio: 1/1
+
+        &.--hidden
+            display: none
+    
+    &__addPhoto
+        display: flex !important
+        justify-content: center
+        align-items: center
+
+    &__back
+        display: inline-block
+        margin-bottom: $spacer-l
+
+        a
+            text-decoration: none
+            font-size: $size-s

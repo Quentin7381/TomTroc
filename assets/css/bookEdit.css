@@ -1,0 +1,40 @@
+.tpl-bookEdit {
+  background-color: #FAF9F7;
+}
+.tpl-bookEdit h1 {
+  margin-bottom: 1.5rem;
+}
+.tpl-bookEdit section {
+  background-color: #FFF;
+  padding: 2rem;
+  border-radius: 20px;
+}
+.tpl-bookEdit form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  background-color: #FFF;
+}
+.tpl-bookEdit form button[type=submit] {
+  max-width: 322px;
+}
+.tpl-bookEdit__photo, .tpl-bookEdit__addPhoto {
+  --color-bg: #A6A6A6 !important;
+  aspect-ratio: 1/1;
+}
+.tpl-bookEdit__photo.--hidden, .tpl-bookEdit__addPhoto.--hidden {
+  display: none;
+}
+.tpl-bookEdit__addPhoto {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+.tpl-bookEdit__back {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+.tpl-bookEdit__back a {
+  text-decoration: none;
+  font-size: 0.875rem;
+}
