@@ -71,12 +71,6 @@ abstract class AbstractEntity extends Renderable
         return $managerName::getInstance();
     }
 
-    public function delete(): void
-    {
-        $manager = static::get_manager();
-        $manager->delete($this->id);
-    }
-
     // ----- SHORTCUTS ----- //
 
     public function __call(string $name, array $arguments) : mixed
@@ -95,9 +89,14 @@ abstract class AbstractEntity extends Renderable
         }
 
         $manager = static::get_manager();
+
+        if(!method_exists($manager, $name)){
+            throw new \Exception("Method $name does not exist in " . get_class($manager) . " nor in " . static::class);
+        }
+
         try {
             return $manager->$name($this, ...$arguments);
-        } catch (\Throwable $e) {
+        } catch (\InvalidArgumentException $e) {
             return $manager->$name(...$arguments);
         }
     }

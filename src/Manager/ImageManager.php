@@ -26,7 +26,7 @@ class ImageManager extends AbstractManager
     //     return false;
     // }
 
-    public function getByName($name) : Image|bool
+    public function getByName(string $name) : Image|bool
     {
         $sql = 'SELECT * FROM image WHERE name = :name';
         $stmt = $this->pdo->prepare($sql);
@@ -43,11 +43,11 @@ class ImageManager extends AbstractManager
         return false;
     }
 
-    public function delete($image) : void
+    public function delete(AbstractEntity $entity) : void
     {
-        $image = $this->getById($image);
-        parent::delete($image->id);
-        @unlink($image->src);
+        
+        parent::delete($entity);
+        @unlink($entity->src);
     }
 
     public function toDb(AbstractEntity $entity) : array

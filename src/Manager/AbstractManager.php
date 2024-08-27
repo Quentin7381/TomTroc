@@ -241,8 +241,9 @@ abstract class AbstractManager
      *
      * @param int $id The id of the entity to delete.
      */
-    public function delete(string $id): void
+    public function delete(AbstractEntity $entity): void
     {
+        $id = $entity->id;
         $sql = "DELETE FROM $this->table WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $id]);
@@ -330,7 +331,6 @@ abstract class AbstractManager
         $merge = $this->exists($entity);
 
         if (!empty($merge)) {
-            
             return $this->update($this->merge($merge, $entity));
         } else {
             return $this->insert($entity);
@@ -386,7 +386,7 @@ abstract class AbstractManager
         $entityClass = get_class($entity);
 
         $array = [];
-        $fields = $entityClass::getFields();
+        $fields = static::getEntityFields();
         foreach ($fields as $name => $type) {
             $value = $entity->get($name);
 

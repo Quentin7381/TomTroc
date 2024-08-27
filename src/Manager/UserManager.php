@@ -77,6 +77,8 @@ class UserManager extends AbstractManager{
             ]);
         }
 
+        var_dump($user->photo);
+
         $user->photo->delete();
         $user->photo = new \Entity\Image();
         $user->photo->name = uniqid() . '.' . $extension;
