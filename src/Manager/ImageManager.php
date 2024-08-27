@@ -49,4 +49,21 @@ class ImageManager extends AbstractManager
         parent::delete($image->id);
         @unlink($image->src);
     }
+
+    public function toDb(AbstractEntity $entity) : array
+    {
+        $array = parent::toDb($entity);
+        $ignore = ['content'];
+        foreach ($ignore as $key) {
+            unset($array[$key]);
+        }
+        return $array;
+    }
+
+
+
+    public static function typeof_name()
+    {
+        return 'varchar(255) UNIQUE';
+    }
 }

@@ -367,10 +367,12 @@ abstract class AbstractManager
         return $type;
     }
 
-    public function fromDb(array $array) : AbstractEntity
+    public function fromDb(?AbstractEntity $entity, array $array) : AbstractEntity
     {
-        $class = 'Entity\\' . $this->getEntityName();
-        $entity = new $class();
+        if(empty($entity)) {
+            $entityClass = 'Entity\\' . $this->getEntityName();
+            $entity = new $entityClass();
+        }
         
         foreach($array as $field => $value) {
             $entity->$field = $value;

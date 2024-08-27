@@ -27,6 +27,8 @@ class Exception extends \Exception\GenericException
 
     public function message_200($data)
     {
-        return 'Property not found: ' . $data['property'];
+        $message = 'Property not found !' . PHP_EOL;
+        $message .= print_r($data, true);
+        return $message;
     }
 }

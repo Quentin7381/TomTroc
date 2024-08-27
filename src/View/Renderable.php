@@ -96,6 +96,6 @@ class Renderable {
         }
 
         // Throw an exception if the property does not exist
-        throw new Exception(Exception::PROPERTY_NOT_FOUND, ['property' => $name]);
+        throw new Exception(Exception::PROPERTY_NOT_FOUND, ['property' => $name, 'class' => static::class]);
     }
 }

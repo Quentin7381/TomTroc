@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Entity\AbstractEntity;
 use Manager\ImageManager;
 
 class ImageController extends AbstractController

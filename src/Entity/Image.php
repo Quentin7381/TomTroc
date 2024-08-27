@@ -65,20 +65,4 @@ class Image extends AbstractEntity
         $this->get('attributes')->set('alt', $this->get('alt'));
         return parent::render($variables, $style);
     }
-
-    public function toDb() : array
-    {
-        $array = parent::toDb();
-        $ignore = ['content'];
-        foreach ($ignore as $key) {
-            unset($array[$key]);
-        }
-        return $array;
-    }
-
-    public static function typeof_name()
-    {
-        return 'varchar(255) UNIQUE';
-    }
-
 }
