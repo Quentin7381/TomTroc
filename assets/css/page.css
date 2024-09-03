@@ -259,7 +259,7 @@ form {
   gap: 0.5rem;
   font-size: 0.875rem;
 }
-form label {
+form label, form .label {
   color: #A6A6A6;
 }
 form input, form textarea, form select {
@@ -278,6 +278,11 @@ form fieldset {
 }
 form textarea {
   resize: vertical;
+}
+
+.bookCover {
+  aspect-ratio: 1/1;
+  object-fit: cover;
 }
 
 table {

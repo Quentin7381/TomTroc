@@ -90,9 +90,9 @@ class View
             user_error('File not found : ' . $templateName, E_USER_WARNING);
             return "";
         }
-
-        $this->css[$this->getTemplatePath($templateName, '.css', $style)] = true;
-        $this->js[$this->getTemplatePath($templateName, '.js', $style)] = true;
+        
+        $this->addCss($templateName, $style);
+        $this->addJs($templateName, $style);
 
         extract($variables);
 
@@ -105,7 +105,7 @@ class View
         }
 
         foreach ($varAttributes as $key => $values) {
-            if(!is_array($values)) {
+            if (!is_array($values)) {
                 $values = [$values];
             }
 
@@ -127,15 +127,25 @@ class View
         return ob_get_clean();
     }
 
-    public function addCss(&$html)
+    public function embedCss(&$html)
     {
         $css = Component::css();
         $html = str_replace('</head>', $css . '</head>', $html);
     }
 
-    public function addJs(&$html)
+    public function embedJs(&$html)
     {
         $js = Component::js();
         $html = str_replace('</head>', $js . '</head>', $html);
+    }
+
+    public function addCss($templateName, $style = null)
+    {
+        $this->css[$this->getTemplatePath($templateName, '.css', $style)] = true;
+    }
+
+    public function addJs($templateName, $style = null)
+    {
+        $this->js[$this->getTemplatePath($templateName, '.js', $style)] = true;
     }
 }

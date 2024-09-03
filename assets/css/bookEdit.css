@@ -18,17 +18,15 @@
 .tpl-bookEdit form button[type=submit] {
   max-width: 322px;
 }
-.tpl-bookEdit__photo, .tpl-bookEdit__addPhoto {
+.tpl-bookEdit__photo, .tpl-bookEdit__preview {
   --color-bg: #A6A6A6 !important;
   aspect-ratio: 1/1;
 }
-.tpl-bookEdit__photo.--hidden, .tpl-bookEdit__addPhoto.--hidden {
+.tpl-bookEdit__photo.--hidden, .tpl-bookEdit__preview.--hidden {
   display: none;
 }
 .tpl-bookEdit__addPhoto {
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
+  cursor: pointer;
 }
 .tpl-bookEdit__back {
   display: inline-block;
