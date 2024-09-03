@@ -406,6 +406,10 @@ abstract class AbstractManager
                 $value = $value->id;
             }
 
+            if(is_bool($value)) {
+                $value = $value ? 1 : 0;
+            }
+
             $array[$name] = $value;
         }
 

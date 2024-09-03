@@ -4,7 +4,7 @@ $title = $book->title ?? '';
 $author = $book->author ?? '';
 $description = $book->description ?? '';
 $available = $book->available ?? '';
-$photo = $book->photo ?? null;
+$photo = $book->cover ?? null;
 $action = $isAdding ? '/book/add/submit' : '/book/edit/' . $book->id . '/submit';
 
 $previewId = uniqid('preview-');
@@ -20,7 +20,7 @@ $view->addJs('imagePreview');
             <fieldset>
                 <p class="label">Photo</p>
                 <?php if ($photo): ?>
-                    <?php $photo->addAttribute('class', 'bookCover'); ?>
+                    <?php $photo->addAttributes('class', 'bookCover'); ?>
                     <?= $photo ?>
                 <?php else: ?>
                     <img src="" alt="" data-image-preview="<?= $previewId ?>"
@@ -33,17 +33,17 @@ $view->addJs('imagePreview');
                         "Ajouter une photo"
                         ?>
                 </label>
-                <input type="file" name="photo" id="photo" hidden data-image-preview-input="<?= $previewId ?>" <?= $isAdding ? 'required' : ''?>>
+                <input type="file" name="photo" id="photo" hidden data-image-preview-input="<?= $previewId ?>" <?= $isAdding ? "required" : "" ?>>
             </fieldset>
             <fieldset>
                 <label for="title">Titre</label>
-                <input type="text" name="title" id="title" value="<?= $title ?>" <?= $isAdding ? 'required' : ''?>>
+                <input type="text" name="title" id="title" value="<?= $title ?>" required>
                 <label for="author">Auteur</label>
-                <input type="text" name="author" id="author" value="<?= $author ?>" <?= $isAdding ? 'required' : ''?>>
+                <input type="text" name="author" id="author" value="<?= $author ?>" required>
                 <label for="description">Commentaire</label>
-                <textarea name="description" id="description" <?= $isAdding ? 'required' : ''?>><?= $description ?></textarea>
+                <textarea name="description" id="description" required><?= $description ?></textarea>
                 <label for="available">Disponibilité</label>
-                <select name="available" id="available" <?= $isAdding ? 'required' : ''?>>
+                <select name="available" id="available" required>
                     <option value="1" <?= $available ? "selected" : "" ?>>Disponible</option>
                     <option value="0" <?= $available ? "" : "selected" ?>>Indisponible</option>
                 </select>

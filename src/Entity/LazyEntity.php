@@ -38,4 +38,9 @@ class LazyEntity
     {
         return $this->getEntity()->$method(...$args);
     }
+
+    public function __toString()
+    {
+        return $this->getEntity()->__toString();
+    }
 }
