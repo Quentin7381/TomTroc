@@ -276,6 +276,9 @@ form fieldset {
   flex-direction: column;
   gap: 0.5rem;
 }
+form textarea {
+  resize: vertical;
+}
 
 table {
   width: 100%;
