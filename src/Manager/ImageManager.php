@@ -43,10 +43,10 @@ class ImageManager extends AbstractManager
         return false;
     }
 
-    public function delete(AbstractEntity $entity) : void
+    public function delete(AbstractEntity|int $id) : void
     {
-        
-        parent::delete($entity);
+        $entity = $id instanceof Image ? $id : $this->getById($id);
+        parent::delete($id);
         @unlink($entity->src);
     }
 

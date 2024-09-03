@@ -18,6 +18,7 @@ class BookController extends AbstractController
         $this->router->addRoute('/book/add/submit', [$this, 'add']);
         $this->router->addRoute('/book/edit/$', [$this, 'page_edit']);
         $this->router->addRoute('/book/edit/$/submit', [$this, 'edit']);
+        $this->router->addRoute('/book/delete/$', [$this, 'delete']);
     }
 
     public function provide_lasts()
@@ -84,6 +85,12 @@ class BookController extends AbstractController
         $user = \Manager\UserManager::getInstance()->get_connected_user();
         $this->manager->edit_book($id, $_POST['title'], $_POST['author'], $_POST['description'], $_POST['available'], $_FILES['photo'], $user);
         
+        $this->redirect('/user/');
+    }
+
+    public function delete($id)
+    {
+        $this->manager->delete($id);
         $this->redirect('/user/');
     }
 }

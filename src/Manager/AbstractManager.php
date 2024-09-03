@@ -242,9 +242,11 @@ abstract class AbstractManager
      *
      * @param int $id The id of the entity to delete.
      */
-    public function delete(AbstractEntity $entity): void
+    public function delete(AbstractEntity|int $id): void
     {
-        $id = $entity->id;
+        if($id instanceof AbstractEntity) {
+            $id = $id->id;
+        }
         $sql = "DELETE FROM $this->table WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $id]);

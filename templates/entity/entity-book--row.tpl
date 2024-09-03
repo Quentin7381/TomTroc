@@ -12,7 +12,7 @@
     </td>
     <td class="<?= $bem->e('action') ?>">
         <div class="container">
-            <a href="/book/edit/<?=$entity->id?>" class="edit">Éditer</a><a href="" class="delete">Supprimer</a>
+            <a href="/book/edit/<?=$entity->id?>" class="edit">Éditer</a><a href="/book/delete/<?=$entity->id?>" class="delete">Supprimer</a>
         </div>
     </td>
 </tr>
