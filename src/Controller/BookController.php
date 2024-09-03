@@ -19,6 +19,7 @@ class BookController extends AbstractController
         $this->router->addRoute('/book/edit/$', [$this, 'page_edit']);
         $this->router->addRoute('/book/edit/$/submit', [$this, 'edit']);
         $this->router->addRoute('/book/delete/$', [$this, 'delete']);
+        $this->router->addRoute('/book/list', [$this, 'page_list']);
     }
 
     public function provide_lasts()
@@ -92,5 +93,10 @@ class BookController extends AbstractController
     {
         $this->manager->delete($id);
         $this->redirect('/user/');
+    }
+
+    public function page_list()
+    {
+        echo Page::bookList();
     }
 }

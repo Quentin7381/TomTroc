@@ -13,5 +13,5 @@ use Entity\Image;
             <?= $book->render([], 'card') ?>
         <?php endforeach; ?>
     </div>
-    <button class="<?= $bem->e('cta') ?>">Voir tous les livres</button>
+    <a href="/book/list" class="<?= $bem->e('cta') ?> button">Voir tous les livres</a>
 </section>

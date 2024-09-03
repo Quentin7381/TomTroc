@@ -146,25 +146,35 @@ form
   gap: $spacer-s
   font-size: $size-s
 
-  label, .label
-    color: $color-text-light
+label, .label
+  color: $color-text-light
 
-  input, textarea, select
-    margin-bottom: $spacer-m
-    border-radius: 6px
-    background-color: $color-background-input
-    border: none
-    padding: $spacer-m
+input, textarea, select
+  margin-bottom: $spacer-m
+  border-radius: 6px
+  background-color: $color-background-input
+  border: none
+  padding: $spacer-m
 
-  fieldset
-    border: none
-    padding: 0
-    display: flex
-    flex-direction: column
-    gap: $spacer-s
+  &.search
+    padding-left: calc(#{$spacer-l} + 20px)
+    background-image: url('/assets/img/search.svg')
+    background-repeat: no-repeat
+    background-position: 10px center
+    background-size: 20px
+    width: 322px
+    background-color: $color-background-lightest
+    border: 1px solid $color-gray
 
-  textarea
-    resize: vertical
+fieldset
+  border: none
+  padding: 0
+  display: flex
+  flex-direction: column
+  gap: $spacer-s
+
+textarea
+  resize: vertical
 
 .bookCover
   aspect-ratio: 1/1

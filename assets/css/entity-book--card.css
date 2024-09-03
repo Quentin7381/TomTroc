@@ -8,6 +8,7 @@
   max-height: 320px;
   padding: 1rem;
   background: #FFF;
+  border-radius: 0 0 4px 4px;
 }
 .tpl-entity-book--card > * {
   width: 100%;

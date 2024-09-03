@@ -259,24 +259,38 @@ form {
   gap: 0.5rem;
   font-size: 0.875rem;
 }
-form label, form .label {
+
+label, .label {
   color: #A6A6A6;
 }
-form input, form textarea, form select {
+
+input, textarea, select {
   margin-bottom: 1rem;
   border-radius: 6px;
   background-color: #EDF2F6;
   border: none;
   padding: 1rem;
 }
-form fieldset {
+input.search, textarea.search, select.search {
+  padding-left: calc(1.5rem + 20px);
+  background-image: url("/assets/img/search.svg");
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-size: 20px;
+  width: 322px;
+  background-color: #FFF;
+  border: 1px solid #A6A6A6;
+}
+
+fieldset {
   border: none;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-form textarea {
+
+textarea {
   resize: vertical;
 }
 
