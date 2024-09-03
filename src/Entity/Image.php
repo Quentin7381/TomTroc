@@ -29,7 +29,13 @@ class Image extends AbstractEntity
     public function set_content($content)
     {
         $this->content = $content;
-        file_put_contents($this->get_src(), $content);
+        $src = $this->get_src();
+        // Remove the / at the beginning of the src if it's there
+        if (strpos($src, '/') === 0) {
+            $src = substr($src, 1);
+        }
+
+        file_put_contents($src, $content);
         return $this;
     }
 
@@ -43,6 +49,11 @@ class Image extends AbstractEntity
 
     public function set_src($src)
     {
+        // add / at the beginning of the src if it's not already there
+        if (strpos($src, '/') !== 0) {
+            $src = '/' . $src;
+        }
+
         $this->src = $src;
         return $this;
     }

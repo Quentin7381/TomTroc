@@ -15,6 +15,7 @@ class BookController extends AbstractController
     protected function initRoutes()
     {
         $this->router->addRoute('/book/add', [$this, 'page_add']);
+        $this->router->addRoute('/book/add/submit', [$this, 'add']);
     }
 
     public function provide_lasts()
@@ -39,5 +40,22 @@ class BookController extends AbstractController
         $userManager = \Manager\UserManager::getInstance();
         $user = $userManager->get_connected_user();
         echo Page::bookEdit(['user' => $user]);
+    }
+
+    public function add()
+    {
+        if(
+            empty($_POST['title']) ||
+            empty($_POST['author']) ||
+            empty($_POST['description']) ||
+            empty($_FILES['photo'])
+        ) {
+            $this->redirect('/error/?message=missing data');
+        }
+        
+        $user = \Manager\UserManager::getInstance()->get_connected_user();
+        $this->manager->add_book($_POST['title'], $_POST['author'], $_POST['description'], $_FILES['photo'], $user);
+        
+        $this->redirect('/user/');
     }
 }
