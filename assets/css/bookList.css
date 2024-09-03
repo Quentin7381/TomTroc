@@ -13,3 +13,16 @@
   justify-content: space-between;
   align-items: center;
 }
+.tpl-bookList .tpl-entity-book {
+  transition: all 0.3s ease;
+}
+.tpl-bookList .tpl-entity-book.--hidden {
+  visibility: hidden;
+  width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-right: -1rem;
+}
