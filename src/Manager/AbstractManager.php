@@ -9,6 +9,8 @@ use Entity\AbstractEntity;
 use Entity\LazyEntity;
 use ReflectionClass;
 use ReflectionProperty;
+use Utils\StatementGenerator;
+use Entity\Book;
 
 
 /**
@@ -368,6 +370,23 @@ abstract class AbstractManager
         }
 
         return $type;
+    }
+
+    public function getLasts(): StatementGenerator
+    {
+        $pdo = PDO::getInstance();
+        $sql = "SELECT * FROM book ORDER BY created DESC";
+        $stmt = $pdo->prepare($sql);
+
+        $generator = new StatementGenerator($stmt);
+
+        $generator->current_set_post_process(function ($data) {
+            $book = new Book();
+            $book->fromDb($data);
+            return $book;
+        });
+
+        return $generator;
     }
 
     public function fromDb(?AbstractEntity $entity, array $array) : AbstractEntity

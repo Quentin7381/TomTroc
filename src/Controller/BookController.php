@@ -25,19 +25,7 @@ class BookController extends AbstractController
 
     public function provide_lasts()
     {
-        $pdo = PDO::getInstance();
-        $sql = "SELECT * FROM book ORDER BY created DESC";
-        $stmt = $pdo->prepare($sql);
-
-        $generator = new StatementGenerator($stmt);
-
-        $generator->current_set_post_process(function ($data) {
-            $book = new Book();
-            $book->fromDb($data);
-            return $book;
-        });
-
-        return $generator;
+        return $this->manager->getLasts();
     }
 
     public function page_add()
