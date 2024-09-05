@@ -11,6 +11,7 @@ use Entity\Image;
 use Entity\User;
 use Entity\Book;
 use Entity\Picture;
+use Entity\Message;
 
 use Utils\Database;
 
@@ -33,6 +34,7 @@ $user = new User();
 $user->name = 'John Doe';
 $user->email = 'jhon.doe@mail.com';
 $user->password = 'Abcd.1234';
+var_dump($user->password);
 $user->persist();
 
 $book = new Book();
@@ -69,7 +71,22 @@ $picture->persist();
 
 // ----- UTILISATEURS DU SITE ----- //
 
-$user = new User();
-$user->name = 'John Doe';
-$user->email = 'jhon.doe@example.com';
-$user->password = 'Abcd.1234';
+$user2 = new User();
+$user2->name = 'Jane Doe';
+$user2->email = 'jane.doe@example.com';
+$user2->password = 'Abcd.1234';
+$user2->persist();
+
+// ----- MESSAGE DU SITE ----- //
+
+$message = new Message();
+$message->sender = $user;
+$message->receiver = $user2;
+$message->checked = false;
+
+for ($i = 0; $i < 10; $i++) {
+    $entity = clone $message;
+    $entity->date = time() - $i * 3600;
+    $entity->content = 'Hello World ' . $i;
+    $entity->persist();
+}

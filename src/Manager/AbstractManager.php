@@ -364,7 +364,7 @@ abstract class AbstractManager
         $type = $types[$type] ?? 'VARCHAR(255)';
 
         if (!$nullable) {
-            $type .= ' REQUIRED';
+            $type .= ' NOT NULL';
         }
 
         return $type;

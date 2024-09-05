@@ -1,0 +1,3 @@
+<section <?=$attributes?>>
+    Messages
+</section>
