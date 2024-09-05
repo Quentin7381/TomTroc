@@ -7,8 +7,11 @@
 ?>
 
 <nav <?= $attributes ?>>
-    <a href="/messagerie" class="<?=$boldMessages?>"><?= $v->image_get('ico-message') ?>Messagerie<span
-            class="<?= $bem->e('msgCount') ?>"><?= $v->message_count ?></span></a>
+    <a href="/messagerie" class="<?=$boldMessages?>"><?= $v->image_get('ico-message') ?>Messagerie
+        <?php if ($v->message_count > 0) : ?>
+            <span class="<?= $bem->e('msgCount') ?>"><?= $v->message_count ?></span>
+        <?php endif; ?>
+    </a>
     <a href="/user" class="<?=$boldUser?>"><?= $v->image_get('ico-message') ?>Mon compte</a>
     
     <?php if ($v->user_connected) : ?>

@@ -18,7 +18,9 @@ class MessageController extends AbstractController
 
     public function provide_count()
     {
-        return 3;
+        $userManager = UserManager::getInstance();
+        $user = $userManager->get_connected_user();
+        return $this->manager->countNewMessages($user);
     }
 
     public function provide_thread()

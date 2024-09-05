@@ -61,4 +61,16 @@ class MessageManager extends AbstractManager
         $query = $this->pdo->prepare($sql);
         $query->execute(['user' => $user, 'contact' => $contact]);
     }
+
+    public function countNewMessages(?User $user): int
+    {
+        if(empty($user)) {
+            return 0;
+        }
+        $sql = "SELECT COUNT(*) FROM message WHERE receiver = :user AND checked = 0";
+        $query = $this->pdo->prepare($sql);
+        $query->execute(['user' => $user->id]);
+
+        return $query->fetchColumn();
+    }
 }
