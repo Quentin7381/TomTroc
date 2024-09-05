@@ -4,17 +4,17 @@
 .tpl-messagerie
     display: grid
     grid-template-columns: auto 1fr
+    gap: $spacer-xl
 
     @extend .padding-container
 
     &__contacts
         background: $color-background-lightest
+        width: 300px
 
         h2
             text-align: left
 
         .selected
             background: $color-background-primary
-
-    &__messages
         

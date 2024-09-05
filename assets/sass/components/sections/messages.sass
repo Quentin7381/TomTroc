@@ -3,6 +3,15 @@
 .tpl-messages
     padding: $spacer-l
     background: $color-background-primary
+    max-height: 80vh
+
+    display: flex
+    flex-direction: column
+
+    &__thread
+        overflow-y: scroll
+        scrollbar-width: thin
+        padding: $spacer-l
 
     .tpl-entity-user--mini
         margin-bottom: $spacer-l

@@ -106,11 +106,11 @@ nav {
   align-items: center;
 }
 
-section, main {
+section {
   padding-top: 4rem;
   padding-bottom: 4rem;
 }
-section h2, main h2 {
+section h2 {
   text-align: center;
 }
 
@@ -339,9 +339,11 @@ table tr:nth-of-type(even) {
 .tpl-messagerie {
   display: grid;
   grid-template-columns: auto 1fr;
+  gap: 2rem;
 }
 .tpl-messagerie__contacts {
   background: #FFF;
+  width: 300px;
 }
 .tpl-messagerie__contacts h2 {
   text-align: left;
