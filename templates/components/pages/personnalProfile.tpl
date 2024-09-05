@@ -1,6 +1,7 @@
 <?php
     use View\Component;
     $style = $editable ? 'editable' : '';
+    $attributes->add('class', 'padding-container');
 ?>
 
 <main <?=$attributes?>>
