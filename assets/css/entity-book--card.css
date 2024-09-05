@@ -1,4 +1,7 @@
 .tpl-entity-book--card {
+  text-decoration: none;
+}
+.tpl-entity-book--card article {
   display: flex;
   flex-direction: column;
   --width: 200px;
@@ -10,7 +13,7 @@
   background: #FFF;
   border-radius: 0 0 4px 4px;
 }
-.tpl-entity-book--card > * {
+.tpl-entity-book--card article > * {
   width: 100%;
 }
 .tpl-entity-book--card__cover {

@@ -85,14 +85,14 @@ class View
 
     public function include($templateName, $variables = [], $style = null)
     {
+        $this->addCss($templateName, $style);
+        $this->addJs($templateName, $style);
+
         $fileName = $this->getTemplatePath($templateName, '.tpl', $style);
         if (!is_readable($fileName ?? '')) {
             user_error('File not found : ' . $templateName, E_USER_WARNING);
             return "";
         }
-        
-        $this->addCss($templateName, $style);
-        $this->addJs($templateName, $style);
 
         extract($variables);
 

@@ -1,0 +1,30 @@
+@import '../includes/variables'
+
+.tpl-entity-book
+    display: grid
+    grid-template-columns: 1fr 1fr
+    grid-gap: $spacer-xxl
+
+    h2
+        text-align: left
+    
+    &__cover
+        max-width: 720px
+
+    &__details
+        padding-top: $spacer-xxl
+
+    &__line
+        display: inline-block
+        width: 27px
+        height: 0px
+        border-top: 1px solid $color-gray
+        margin: $spacer-l 0
+
+    h3
+        font-family: $family-main
+        font-size: 8px
+        font-weight: $weight-semibold
+        margin-bottom: 2em
+        text-transform: uppercase
+        letter-spacing: 0.05em

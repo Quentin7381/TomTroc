@@ -1,0 +1,30 @@
+@import '../../includes/variables'
+@import '../../components/page'
+
+.tpl-bookFull
+    main
+        padding: 0
+
+    &__book
+        padding-top: 0
+        padding-bottom: 0
+
+    &__breadcrumb
+        background-color: $color-background-secondary
+        padding-top: $spacer-m
+        padding-bottom: $spacer-m
+
+        font-size: $size-xxs
+
+        p
+            margin: 0
+
+        a
+            margin: 0
+            text-decoration: none
+
+        span:not(:first-child)::before
+            @extend .link
+            content: ' > '
+            text-decoration: none !important
+            pointer-events: none

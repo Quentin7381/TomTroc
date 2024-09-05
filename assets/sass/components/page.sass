@@ -18,13 +18,16 @@ body
   display: flex
   flex-direction: column
 
-section, header, footer, main
+section, header, footer
   @include padding-container($container-xl)
 
 h1, h2, h3, h4
   font-family: $family-second
   font-weight: $weight-regular
   margin-bottom: 0.5em
+
+h1
+  font-size: $size-xxl
 
 h2
   font-size: $size-xl
@@ -33,10 +36,11 @@ p
   font-weight: $weight-light
   margin-bottom: 1em
 
-a
+a, .link, .text-light
   color: $color-text-light
-  &.bold
-    font-weight: $weight-semibold
+
+.bold
+  font-weight: $weight-semibold
 
 img
   width: 100%
@@ -117,6 +121,8 @@ section, main
   background-color: $color-background-secondary
   color: $color-text
 
+.no-padding
+  padding: 0
 
 .container
   @include container(#{var(--active-container)})

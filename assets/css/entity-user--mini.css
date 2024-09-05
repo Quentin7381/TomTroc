@@ -1,0 +1,11 @@
+.tpl-entity-user--mini {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.tpl-entity-user--mini__name {
+  margin: 0;
+  line-height: 1;
+  color: #292929;
+  font-size: 0.875rem;
+}
