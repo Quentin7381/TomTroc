@@ -7,7 +7,7 @@
 ?>
 
 <nav <?= $attributes ?>>
-    <a href="/user/messages" class="<?=$boldMessages?>"><?= $v->image_get('ico-message') ?>Messagerie<span
+    <a href="/messagerie" class="<?=$boldMessages?>"><?= $v->image_get('ico-message') ?>Messagerie<span
             class="<?= $bem->e('msgCount') ?>"><?= $v->message_count ?></span></a>
     <a href="/user" class="<?=$boldUser?>"><?= $v->image_get('ico-message') ?>Mon compte</a>
     

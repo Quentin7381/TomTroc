@@ -43,4 +43,8 @@ class Message extends AbstractEntity {
     public function get_hour() {
         return date('H:i', $this->date);
     }
+
+    public function get_full_date() {
+        return date('d.m H:i', $this->date);
+    }
 }

@@ -1,13 +1,19 @@
 @import '../includes/variables'
 
 .tpl-entity-user--contact
-    display: flex
-    align-items: center
-    flex-direction: row
-    gap: $spacer-l
 
     height: 84px
-    padding: $spacer-l
+
+    a
+        color: unset
+        text-decoration: none
+        width: 100%
+        height: 100%
+        padding: $spacer-l
+        display: flex
+        align-items: center
+        flex-direction: row
+        gap: $spacer-l
 
     &__infos
         font-size: $size-s

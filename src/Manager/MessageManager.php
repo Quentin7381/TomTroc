@@ -2,6 +2,7 @@
 
 namespace Manager;
 
+use Entity\LazyEntity;
 use Entity\Message;
 use Entity\User;
 use PDO;
@@ -28,7 +29,7 @@ class MessageManager extends AbstractManager
         return $contacts;
     }
 
-    public function getThread(User $user, User $contact): StatementGenerator
+    public function getThread(User|LazyEntity $user, User|LazyEntity $contact): StatementGenerator
     {
         $query = $this->pdo->prepare('SELECT * FROM message WHERE (sender = :user AND receiver = :contact) OR (sender = :contact AND receiver = :user)');
         @$query->bindParam(':user', $user->id, PDO::PARAM_INT);

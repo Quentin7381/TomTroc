@@ -127,12 +127,12 @@ section h2, main h2 {
   color: #000;
 }
 .alternate-bg > :nth-child(even) {
-  background-color: #FAF9F7;
+  background-color: #d1c7b4;
   color: #292929;
 }
 
 .bg-primary {
-  background-color: #FAF9F7;
+  background-color: #d1c7b4;
   color: #000;
 }
 
@@ -339,4 +339,26 @@ table tr:nth-of-type(even) {
 .tpl-messagerie {
   display: grid;
   grid-template-columns: auto 1fr;
+}
+.tpl-messagerie__contacts {
+  background: #FFF;
+}
+.tpl-messagerie__contacts h2 {
+  text-align: left;
+}
+.tpl-messagerie__contacts .selected {
+  background: #d1c7b4;
+}
+.tpl-messagerie__messages {
+  padding: 1.5rem;
+  background: #d1c7b4;
+}
+.tpl-messagerie__messages .tpl-entity-user--mini {
+  margin-bottom: 1.5rem;
+}
+.tpl-messagerie__messages .tpl-entity-user--mini__name {
+  font-weight: 600;
+}
+.tpl-messagerie__messages .tpl-entity-user--mini__message:first-of-type {
+  margin-top: auto;
 }

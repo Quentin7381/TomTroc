@@ -127,12 +127,12 @@ section h2, main h2 {
   color: #000;
 }
 .alternate-bg > :nth-child(even) {
-  background-color: #FAF9F7;
+  background-color: #d1c7b4;
   color: #292929;
 }
 
 .bg-primary {
-  background-color: #FAF9F7;
+  background-color: #d1c7b4;
   color: #000;
 }
 

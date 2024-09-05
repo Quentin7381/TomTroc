@@ -23,7 +23,7 @@ body {
   flex-direction: column;
 }
 
-section, header, footer, main {
+section, header, footer {
   padding-left: max((100% - 1140px) / 2, 1rem);
   padding-right: max((100% - 1140px) / 2, 1rem);
 }
@@ -32,6 +32,10 @@ h1, h2, h3, h4 {
   font-family: "Playfair Display", serif;
   font-weight: 400;
   margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: 3rem;
 }
 
 h2 {
@@ -43,10 +47,11 @@ p {
   margin-bottom: 1em;
 }
 
-a {
+a, .link, .text-light {
   color: #A6A6A6;
 }
-a.bold {
+
+.bold {
   font-weight: 600;
 }
 
@@ -122,18 +127,22 @@ section h2, main h2 {
   color: #000;
 }
 .alternate-bg > :nth-child(even) {
-  background-color: #FAF9F7;
+  background-color: #d1c7b4;
   color: #292929;
 }
 
 .bg-primary {
-  background-color: #FAF9F7;
+  background-color: #d1c7b4;
   color: #000;
 }
 
 .bg-secondary {
   background-color: #F5F3EF;
   color: #292929;
+}
+
+.no-padding {
+  padding: 0;
 }
 
 .container {

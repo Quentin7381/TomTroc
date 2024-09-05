@@ -97,7 +97,7 @@ class UserController extends AbstractController
 
     public function edit($id){
         $current_user = $this->manager->get_connected_user();
-        if ($current_user->id !== $id){
+        if ($current_user->id != $id){
             $this->redirect('/error/403?message=You are not allowed to edit another user');
         }
 

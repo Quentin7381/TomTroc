@@ -1,0 +1,21 @@
+.tpl-entity-message {
+  width: 100%;
+  font-size: 0.875rem;
+}
+.tpl-entity-message__header {
+  color: #A6A6A6;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tpl-entity-message__photo {
+  width: 24px;
+}
+.tpl-entity-message__content {
+  background: #FFF;
+  border-radius: 3px;
+  padding: 0.5rem;
+  width: fit-content;
+  min-width: 200px;
+  max-width: 80%;
+}

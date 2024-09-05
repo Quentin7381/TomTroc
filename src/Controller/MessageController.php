@@ -32,8 +32,8 @@ class MessageController extends AbstractController
         if(!$user){
             $this->redirect('/login');
         }
-
-        echo Page::messagerie(['user' => $user]);
+        $selectedId = $_GET['id'] ?? null;
+        echo Page::messagerie(['user' => $user, 'selectedId' => $selectedId]);
     }
 
     public function provide_contacts()
