@@ -10,8 +10,10 @@
                 <th>Titre</th>
                 <th>Auteur</th>
                 <th>Description</th>
+                <?php if($editable): ?>
                 <th>Disponibilité</th>
                 <th>Action</th>
+                <?php endif; ?>
             </tr>
         </thead>
         <tbody>

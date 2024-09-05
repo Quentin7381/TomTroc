@@ -1,25 +1,23 @@
 @import '../includes/variables'
 
 .tpl-entity-book--card
-    text-decoration: none
+    display: flex
+    flex-direction: column
+    --width: 200px
+    width: var(--width)
+    height: 320px
+    max-width: var(--width)
+    max-height: 320px
 
-    article
-        display: flex
-        flex-direction: column
-        --width: 200px
-        width: var(--width)
-        height: 320px
-        max-width: var(--width)
-        max-height: 320px
+    padding: $spacer-m
 
-        padding: $spacer-m
+    background: $color-white
 
-        background: $color-white
-
-        border-radius: 0 0 4px 4px
-        
-        &>*
-            width: 100%
+    border-radius: 0 0 4px 4px
+    
+    &>*
+        width: 100%
+        text-decoration: none
 
     &__cover
         height: calc(var(--width))

@@ -1,0 +1,15 @@
+.tpl-userProfile {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4rem;
+  background-color: #FAF9F7;
+}
+.tpl-userProfile__user {
+  padding-top: 1.5rem;
+  width: 340px;
+}
+.tpl-userProfile > * {
+  padding: 0;
+  background-color: #FFF;
+  border-radius: 20px;
+}

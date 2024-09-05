@@ -1,9 +1,12 @@
 @import '../includes/variables'
 
-.tpl-entity-user--editable
+.tpl-entity-user
     display: flex
     flex-direction: column
     align-items: center
+    
+    h1
+        font-size: $size-l
 
     &__photo
         width: 135px
@@ -31,4 +34,6 @@
         font-family: $family-main
         font-weight: semibold
         text-transform: uppercase
-    
+
+    &__message
+        margin-top: $spacer-xl
