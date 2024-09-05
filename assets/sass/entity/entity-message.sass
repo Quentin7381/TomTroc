@@ -1,9 +1,17 @@
 @import '../includes/variables'
     
 .tpl-entity-message
-    width: 100%
-
+    width: fit-content
     font-size: $size-s
+
+    &.sent
+        margin-left: auto
+
+        .tpl-entity-message__photo
+            display: none
+
+        .tpl-entity-message__header
+            justify-content: end
 
     &__header
         color: $color-text-light

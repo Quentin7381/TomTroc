@@ -1,6 +1,15 @@
 .tpl-entity-message {
-  width: 100%;
+  width: fit-content;
   font-size: 0.875rem;
+}
+.tpl-entity-message.sent {
+  margin-left: auto;
+}
+.tpl-entity-message.sent .tpl-entity-message__photo {
+  display: none;
+}
+.tpl-entity-message.sent .tpl-entity-message__header {
+  justify-content: end;
 }
 .tpl-entity-message__header {
   color: #A6A6A6;

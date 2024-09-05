@@ -77,6 +77,12 @@ $user2->email = 'jane.doe@example.com';
 $user2->password = 'Abcd.1234';
 $user2->persist();
 
+$user3 = new User();
+$user3->name = 'Alice Doe';
+$user3->email = 'alice.doe@example.com';
+$user3->password = 'Abcd.1234';
+$user3->persist();
+
 // ----- MESSAGE DU SITE ----- //
 
 $message = new Message();
@@ -88,5 +94,25 @@ for ($i = 0; $i < 10; $i++) {
     $entity = clone $message;
     $entity->date = time() - $i * 3600;
     $entity->content = 'Hello World ' . $i;
+
+    if ($i % 2 === 0) {
+        $entity->sender = $user2;
+        $entity->receiver = $user;
+    }
+
+    $entity->persist();
+}
+
+for ($i = 10; $i < 20; $i++) {
+    $entity = clone $message;
+    $entity->date = time() - $i * 3600;
+    $entity->content = 'Hello World ' . $i;
+    $entity->receiver = $user3;
+
+    if ($i % 2 === 0) {
+        $entity->sender = $user3;
+        $entity->receiver = $user;
+    }
+
     $entity->persist();
 }
