@@ -20,9 +20,9 @@ class MessageController extends AbstractController
         return 3;
     }
 
-    public function provide_list()
+    public function provide_thread()
     {
-        return [$this->manager, 'getByUser'];
+        return [$this->manager, 'getThread'];
     }
 
     public function page_messagerie(){

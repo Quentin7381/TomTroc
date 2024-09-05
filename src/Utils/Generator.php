@@ -46,7 +46,7 @@ class Generator implements \Iterator
         $this->callbacks['current_post_process'] = $callback;
     }
 
-    // ----- ----- ARRAY ACCESS ----- ----- //
+    // ----- ----- ITERATOR ----- ----- //
 
     public function current() : mixed
     {
@@ -112,5 +112,16 @@ class Generator implements \Iterator
         }
 
         return $nexts;
+    }
+
+    public function last() : mixed
+    {
+        $last = null;
+        while ($this->valid()) {
+            $last = $this->current();
+            $this->next();
+        }
+
+        return $last;
     }
 }

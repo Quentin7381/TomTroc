@@ -5,6 +5,7 @@ namespace Manager;
 use Entity\Message;
 use Entity\User;
 use PDO;
+use Utils\StatementGenerator;
 
 class MessageManager extends AbstractManager
 {
@@ -27,18 +28,20 @@ class MessageManager extends AbstractManager
         return $contacts;
     }
 
-    public function getChat(User $user, User $contact): array
+    public function getThread(User $user, User $contact): StatementGenerator
     {
         $query = $this->pdo->prepare('SELECT * FROM message WHERE (sender = :user AND receiver = :contact) OR (sender = :contact AND receiver = :user)');
-        $query->execute(['user' => $user->id, 'contact' => $contact->id]);
+        @$query->bindParam(':user', $user->id, PDO::PARAM_INT);
+        @$query->bindParam(':contact', $contact->id, PDO::PARAM_INT);
+        
+        $generator = new StatementGenerator($query);
 
-        $messages = [];
-        foreach ($query->fetchAll() as $message) {
-            $entity = new Message();
-            $entity->fromDb($message);
-            $messages[$entity->date] = $entity;
-        }
+        $generator->current_set_post_process(function ($data) {
+            $message = new Message();
+            $message->fromDb($data);
+            return $message;
+        });
 
-        return $messages;
+        return $generator;
     }
 }
