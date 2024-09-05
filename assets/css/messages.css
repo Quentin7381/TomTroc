@@ -1,0 +1,31 @@
+.tpl-messages {
+  padding: 1.5rem;
+  background: #d1c7b4;
+}
+.tpl-messages .tpl-entity-user--mini {
+  margin-bottom: 1.5rem;
+}
+.tpl-messages .tpl-entity-user--mini__name {
+  font-weight: 600;
+}
+.tpl-messages .tpl-entity-user--mini__message:first-of-type {
+  margin-top: auto;
+}
+.tpl-messages form {
+  flex-direction: row;
+  align-items: center;
+  max-width: 800px;
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+.tpl-messages form input {
+  flex: 1;
+  margin-right: 0.5rem;
+  margin: 0;
+}
+.tpl-messages form button {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

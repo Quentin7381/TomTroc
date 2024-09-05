@@ -45,4 +45,20 @@ class MessageManager extends AbstractManager
 
         return $generator;
     }
+
+    public function sendMessage(int $sender, int $receiver, string $content): void
+    {
+        $message = new Message();
+        $message->sender = $sender;
+        $message->receiver = $receiver;
+        $message->content = $content;
+        $message->persist();
+    }
+
+    public function setAsRead(int $user, int $contact): void
+    {
+        $sql = "UPDATE message SET checked = 1 WHERE sender = :contact AND receiver = :user";
+        $query = $this->pdo->prepare($sql);
+        $query->execute(['user' => $user, 'contact' => $contact]);
+    }
 }

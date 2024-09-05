@@ -14,7 +14,7 @@ class Message extends AbstractEntity {
         return time();
     }
 
-    public function checked_read() {
+    public function default_checked() {
         return false;
     }
 

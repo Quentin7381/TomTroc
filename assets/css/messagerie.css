@@ -349,16 +349,3 @@ table tr:nth-of-type(even) {
 .tpl-messagerie__contacts .selected {
   background: #d1c7b4;
 }
-.tpl-messagerie__messages {
-  padding: 1.5rem;
-  background: #d1c7b4;
-}
-.tpl-messagerie__messages .tpl-entity-user--mini {
-  margin-bottom: 1.5rem;
-}
-.tpl-messagerie__messages .tpl-entity-user--mini__name {
-  font-weight: 600;
-}
-.tpl-messagerie__messages .tpl-entity-user--mini__message:first-of-type {
-  margin-top: auto;
-}

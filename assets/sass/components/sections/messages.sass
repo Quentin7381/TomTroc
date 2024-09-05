@@ -1,0 +1,32 @@
+@import '../../includes/variables'
+
+.tpl-messages
+    padding: $spacer-l
+    background: $color-background-primary
+
+    .tpl-entity-user--mini
+        margin-bottom: $spacer-l
+
+        &__name
+            font-weight: $weight-semibold
+
+        &__message:first-of-type
+            margin-top: auto
+
+    form
+        flex-direction: row
+        align-items: center
+        max-width: 800px
+        gap: $spacer-l
+        margin-top: $spacer-xxl
+
+        input
+            flex: 1
+            margin-right: $spacer-s
+            margin: 0
+        
+        button
+            align-self: stretch
+            display: flex
+            align-items: center
+            justify-content: center
