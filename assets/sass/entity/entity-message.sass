@@ -3,6 +3,8 @@
 .tpl-entity-message
     width: fit-content
     font-size: $size-s
+    min-width: 200px
+    max-width: 80%
 
     &.sent
         margin-left: auto
@@ -12,6 +14,9 @@
 
         .tpl-entity-message__header
             justify-content: end
+
+        .tpl-entity-message__content
+            margin-left: auto
 
     &__header
         color: $color-text-light
@@ -28,4 +33,3 @@
         padding: $spacer-s
         width: fit-content
         min-width: 200px
-        max-width: 80%

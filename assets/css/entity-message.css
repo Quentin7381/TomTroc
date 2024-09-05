@@ -1,6 +1,8 @@
 .tpl-entity-message {
   width: fit-content;
   font-size: 0.875rem;
+  min-width: 200px;
+  max-width: 80%;
 }
 .tpl-entity-message.sent {
   margin-left: auto;
@@ -10,6 +12,9 @@
 }
 .tpl-entity-message.sent .tpl-entity-message__header {
   justify-content: end;
+}
+.tpl-entity-message.sent .tpl-entity-message__content {
+  margin-left: auto;
 }
 .tpl-entity-message__header {
   color: #A6A6A6;
@@ -26,5 +31,4 @@
   padding: 0.5rem;
   width: fit-content;
   min-width: 200px;
-  max-width: 80%;
 }

@@ -73,4 +73,8 @@ class MessageManager extends AbstractManager
 
         return $query->fetchColumn();
     }
+
+    public function typeof_content() {
+        return 'text';
+    }
 }
