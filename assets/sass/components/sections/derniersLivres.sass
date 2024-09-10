@@ -27,3 +27,17 @@
         &__cta
             display: none
             
+
+    @media (max-width: $breakpoint-m)
+
+        &__books
+            display: grid
+            grid-template-columns: 1fr 1fr
+            gap: $spacer-xl
+
+            article:nth-child(n+5)
+                display: none
+
+        &__cta
+            display: none !important
+                

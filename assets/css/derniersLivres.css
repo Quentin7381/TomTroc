@@ -24,3 +24,16 @@
     display: none;
   }
 }
+@media (max-width: 768px) {
+  .tpl-derniersLivres__books {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  .tpl-derniersLivres__books article:nth-child(n+5) {
+    display: none;
+  }
+  .tpl-derniersLivres__cta {
+    display: none !important;
+  }
+}
