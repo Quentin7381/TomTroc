@@ -17,7 +17,7 @@ class StatementGenerator extends Generator
         $this->next();
     }
 
-    public function current() : mixed
+    public function current(): mixed
     {
         $fetch = $this->fetch;
 
@@ -32,24 +32,24 @@ class StatementGenerator extends Generator
         return $fetch;
     }
 
-    public function valid() : bool
+    public function valid(): bool
     {
         return $this->fetch !== false;
     }
 
-    public function next() : void
+    public function next(): void
     {
         $this->fetch = $this->stmt->fetch(\PDO::FETCH_ASSOC);
         $this->position++;
     }
 
-    public function rewind() : void
+    public function rewind(): void
     {
         $this->stmt->execute();
         $this->fetch = $this->stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public function key() : int
+    public function key(): int
     {
         return $this->position;
     }

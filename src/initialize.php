@@ -25,7 +25,7 @@ $provider = Provider::I();
 // We fetch every controller in the src/Controller directory.
 foreach (glob("src/Controller/*.php") as $filename) {
     $controller = basename($filename, '.php');
-    if ($controller == 'AbstractController' || $controller == 'Exception') {
+    if ($controller === 'AbstractController' || $controller === 'Exception') {
         continue;
     }
     $controller = 'Controller\\' . $controller;

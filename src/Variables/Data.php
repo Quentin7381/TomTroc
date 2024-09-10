@@ -19,10 +19,10 @@ class Data extends Structure
         try {
             return parent::get($key);
         } catch (Exception $e) {
-            if ($e->getCode() == Exception::STRUCTURE_PATH_NOT_FOUND) {
+            if ($e->getCode() === Exception::STRUCTURE_PATH_NOT_FOUND) {
                 throw new Exception(Exception::DATA_NOT_FOUND, ['key' => $key], $e);
             }
-            
+
             throw $e;
         }
     }

@@ -86,7 +86,7 @@ abstract class AbstractController
     {
         foreach (glob("src/Controller/*.php") as $filename) {
             $controller = basename($filename, '.php');
-            if ($controller == 'AbstractController') {
+            if ($controller === 'AbstractController') {
                 continue;
             }
             $controller = 'Controller\\' . $controller;

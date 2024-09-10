@@ -40,7 +40,7 @@ class Attributes extends Renderable
 
     public function set(string $name, mixed $values): Attributes
     {
-        if(!is_array($values)){
+        if (!is_array($values)) {
             $values = [$values];
         }
         $this->data[$name] = $values;

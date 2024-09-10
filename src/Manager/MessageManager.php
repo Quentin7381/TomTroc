@@ -22,7 +22,7 @@ class MessageManager extends AbstractManager
             $entity = new Message();
             $entity->fromDb($message);
 
-            $contact = $entity->sender->id == $user->id ? $entity->receiver : $entity->sender;
+            $contact = (int) $entity->sender->id === (int) $user->id ? $entity->receiver : $entity->sender;
             $contacts[$contact->id] = $contact;
         }
 
@@ -34,7 +34,7 @@ class MessageManager extends AbstractManager
         $query = $this->pdo->prepare('SELECT * FROM message WHERE (sender = :user AND receiver = :contact) OR (sender = :contact AND receiver = :user)');
         @$query->bindParam(':user', $user->id, PDO::PARAM_INT);
         @$query->bindParam(':contact', $contact->id, PDO::PARAM_INT);
-        
+
         $generator = new StatementGenerator($query);
 
         $generator->current_set_post_process(function ($data) {
@@ -64,7 +64,7 @@ class MessageManager extends AbstractManager
 
     public function countNewMessages(?User $user): int
     {
-        if(empty($user)) {
+        if (empty($user)) {
             return 0;
         }
         $sql = "SELECT COUNT(*) FROM message WHERE receiver = :user AND checked = 0";
@@ -74,7 +74,8 @@ class MessageManager extends AbstractManager
         return $query->fetchColumn();
     }
 
-    public function typeof_content() {
+    public function typeof_content()
+    {
         return 'text';
     }
 }

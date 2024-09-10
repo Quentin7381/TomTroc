@@ -70,7 +70,7 @@ class Image extends AbstractEntity
         return pathinfo($src, PATHINFO_EXTENSION);
     }
 
-    public function render(array $variables = [], ?string $style = null) : string
+    public function render(array $variables = [], ?string $style = null): string
     {
         $this->get('attributes')->set('src', $this->get('src'));
         $this->get('attributes')->set('alt', $this->get('alt'));

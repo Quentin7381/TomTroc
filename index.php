@@ -24,7 +24,7 @@ $router = Router::getInstance();
 try {
     $router->route();
 } catch (RouterException $e) {
-    if($e->getCode() == RouterException::ROUTE_NOT_FOUND){
+    if ($e->getCode() === RouterException::ROUTE_NOT_FOUND) {
         $router->route('error/404');
     }
 }

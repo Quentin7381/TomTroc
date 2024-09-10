@@ -246,7 +246,7 @@ abstract class AbstractManager
      */
     public function delete(AbstractEntity|int $id): void
     {
-        if($id instanceof AbstractEntity) {
+        if ($id instanceof AbstractEntity) {
             $id = $id->id;
         }
         $sql = "DELETE FROM $this->table WHERE id = :id";
@@ -284,7 +284,7 @@ abstract class AbstractManager
                 $merge = $merge->toArray();
             }
             foreach ($merge as $field => $value) {
-                if(empty($value)) {
+                if (empty($value)) {
                     continue;
                 }
                 $entity->$field = $value;
@@ -298,7 +298,7 @@ abstract class AbstractManager
     {
 
         $identifiers = $this->database->getIdentifiers($this->table);
-        
+
         $sql = "SELECT * FROM $this->table WHERE ";
         foreach ($identifiers as $field) {
             $sql .= "$field = :$field OR ";
@@ -314,11 +314,11 @@ abstract class AbstractManager
         $stmt->execute($param);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if(count($result) > 1) {
+        if (count($result) > 1) {
             throw new Exception(Exception::ENTITY_UNIQUE_VALUES_COLLISION, ['search' => $entity->toDb(), 'found' => $result]);
         }
 
-        if(empty($result)) {
+        if (empty($result)) {
             return null;
         }
 
@@ -389,21 +389,21 @@ abstract class AbstractManager
         return $generator;
     }
 
-    public function fromDb(?AbstractEntity $entity, array $array) : AbstractEntity
+    public function fromDb(?AbstractEntity $entity, array $array): AbstractEntity
     {
-        if(empty($entity)) {
+        if (empty($entity)) {
             $entityClass = 'Entity\\' . $this->getEntityName();
             $entity = new $entityClass();
         }
-        
-        foreach($array as $field => $value) {
+
+        foreach ($array as $field => $value) {
             $entity->$field = $value;
         }
 
         return $entity;
     }
 
-    public function toDb(AbstractEntity $entity) : array
+    public function toDb(AbstractEntity $entity): array
     {
         $entityClass = get_class($entity);
 
@@ -427,7 +427,7 @@ abstract class AbstractManager
                 $value = $value->id;
             }
 
-            if(is_bool($value)) {
+            if (is_bool($value)) {
                 $value = $value ? 1 : 0;
             }
 
