@@ -136,19 +136,6 @@ section
   --page-height: calc(100vh - #{$header-height} - #{$footer-height})
 
 
-@each $size, $breakpoint, $container in ('xxl' $breakpoint-xxl $container-xxl), ('xl' $breakpoint-xl $container-xl), ('l' $breakpoint-l $container-l), ('m' $breakpoint-m $container-m), ('s' $breakpoint-s $container-s), ('xs' $breakpoint-xs $container-xs)
-
-  .container-#{$size}
-    @include container($container)
-
-  .padding-container-#{$size}
-    @include padding-container($container)
-
-  :root
-    @media (max-width: $breakpoint)
-      --active-container: #{$container}
-
-
 form
   display: flex
   flex-direction: column
@@ -171,7 +158,6 @@ input, textarea, select
     background-repeat: no-repeat
     background-position: 10px center
     background-size: 20px
-    width: 322px
     background-color: $color-background-lightest
     border: 1px solid $color-gray
 
@@ -239,3 +225,6 @@ main
 
   section
     padding: $spacer-l
+
+    @media (max-width: $breakpoint-m)
+      padding: 0

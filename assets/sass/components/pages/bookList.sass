@@ -4,16 +4,27 @@
     background: $color-background-primary
 
     &__list
-        padding: $spacer-m
         display: flex
         flex-wrap: wrap
         gap: $spacer-m
+        justify-content: center
 
     &__titleHold
         display: flex
         flex-wrap: wrap
         justify-content: space-between
         align-items: center
+        gap: $spacer-m
+
+        margin-bottom: $spacer-l
+
+        h1
+            margin-bottom: 0
+
+    &__search
+        width: 100%
+        max-width: 335px
+        margin: 0
 
     .tpl-entity-book
         transition: all 0.3s ease
@@ -27,4 +38,9 @@
             overflow: hidden
             opacity: 0
             margin-right: -#{$spacer-m}
+
+    @media (max-width: $breakpoint-m)
+        &__list
+            gap: $spacer-s
+            row-gap: $spacer-m
             

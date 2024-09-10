@@ -1,3 +1,118 @@
+:root {
+  --container-margin: 1.5rem;
+  --active-container: 1320px;
+  --page-height: calc(100vh - 80px - 60px);
+  --size-rem: 16px;
+}
+@media (max-width: 768px) {
+  :root {
+    --container-margin: 0.5rem;
+    --size-rem: 14px;
+  }
+}
+
+.container-xxl {
+  max-width: min(1320px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-xxl {
+  padding-left: max((100% - 1320px) / 2, var(--container-margin));
+  padding-right: max((100% - 1320px) / 2, var(--container-margin));
+}
+
+@media (max-width: 1400px) {
+  :root {
+    --active-container: 1320px;
+  }
+}
+
+.container-xl {
+  max-width: min(1140px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-xl {
+  padding-left: max((100% - 1140px) / 2, var(--container-margin));
+  padding-right: max((100% - 1140px) / 2, var(--container-margin));
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --active-container: 1140px;
+  }
+}
+
+.container-l {
+  max-width: min(960px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-l {
+  padding-left: max((100% - 960px) / 2, var(--container-margin));
+  padding-right: max((100% - 960px) / 2, var(--container-margin));
+}
+
+@media (max-width: 992px) {
+  :root {
+    --active-container: 960px;
+  }
+}
+
+.container-m {
+  max-width: min(720px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-m {
+  padding-left: max((100% - 720px) / 2, var(--container-margin));
+  padding-right: max((100% - 720px) / 2, var(--container-margin));
+}
+
+@media (max-width: 768px) {
+  :root {
+    --active-container: 720px;
+  }
+}
+
+.container-s {
+  max-width: min(540px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-s {
+  padding-left: max((100% - 540px) / 2, var(--container-margin));
+  padding-right: max((100% - 540px) / 2, var(--container-margin));
+}
+
+@media (max-width: 576px) {
+  :root {
+    --active-container: 540px;
+  }
+}
+
+.container-xs {
+  max-width: min(100%, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-xs {
+  padding-left: max((100% - 100%) / 2, var(--container-margin));
+  padding-right: max((100% - 100%) / 2, var(--container-margin));
+}
+
+@media (max-width: 0) {
+  :root {
+    --active-container: 100%;
+  }
+}
+
 .tpl-header {
   height: 80px;
   width: 100%;

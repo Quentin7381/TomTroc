@@ -1,3 +1,233 @@
+:root {
+  --container-margin: 1.5rem;
+  --active-container: 1320px;
+  --page-height: calc(100vh - 80px - 60px);
+  --size-rem: 16px;
+}
+@media (max-width: 768px) {
+  :root {
+    --container-margin: 0.5rem;
+    --size-rem: 14px;
+  }
+}
+
+.container-xxl {
+  max-width: min(1320px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-xxl {
+  padding-left: max((100% - 1320px) / 2, var(--container-margin));
+  padding-right: max((100% - 1320px) / 2, var(--container-margin));
+}
+
+@media (max-width: 1400px) {
+  :root {
+    --active-container: 1320px;
+  }
+}
+
+.container-xl {
+  max-width: min(1140px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-xl {
+  padding-left: max((100% - 1140px) / 2, var(--container-margin));
+  padding-right: max((100% - 1140px) / 2, var(--container-margin));
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --active-container: 1140px;
+  }
+}
+
+.container-l {
+  max-width: min(960px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-l {
+  padding-left: max((100% - 960px) / 2, var(--container-margin));
+  padding-right: max((100% - 960px) / 2, var(--container-margin));
+}
+
+@media (max-width: 992px) {
+  :root {
+    --active-container: 960px;
+  }
+}
+
+.container-m {
+  max-width: min(720px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-m {
+  padding-left: max((100% - 720px) / 2, var(--container-margin));
+  padding-right: max((100% - 720px) / 2, var(--container-margin));
+}
+
+@media (max-width: 768px) {
+  :root {
+    --active-container: 720px;
+  }
+}
+
+.container-s {
+  max-width: min(540px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-s {
+  padding-left: max((100% - 540px) / 2, var(--container-margin));
+  padding-right: max((100% - 540px) / 2, var(--container-margin));
+}
+
+@media (max-width: 576px) {
+  :root {
+    --active-container: 540px;
+  }
+}
+
+.container-xs {
+  max-width: min(100%, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-xs {
+  padding-left: max((100% - 100%) / 2, var(--container-margin));
+  padding-right: max((100% - 100%) / 2, var(--container-margin));
+}
+
+@media (max-width: 0) {
+  :root {
+    --active-container: 100%;
+  }
+}
+
+:root {
+  --container-margin: 1.5rem;
+  --active-container: 1320px;
+  --page-height: calc(100vh - 80px - 60px);
+  --size-rem: 16px;
+}
+@media (max-width: 768px) {
+  :root {
+    --container-margin: 0.5rem;
+    --size-rem: 14px;
+  }
+}
+
+.container-xxl {
+  max-width: min(1320px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-xxl {
+  padding-left: max((100% - 1320px) / 2, var(--container-margin));
+  padding-right: max((100% - 1320px) / 2, var(--container-margin));
+}
+
+@media (max-width: 1400px) {
+  :root {
+    --active-container: 1320px;
+  }
+}
+
+.container-xl {
+  max-width: min(1140px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-xl {
+  padding-left: max((100% - 1140px) / 2, var(--container-margin));
+  padding-right: max((100% - 1140px) / 2, var(--container-margin));
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --active-container: 1140px;
+  }
+}
+
+.container-l {
+  max-width: min(960px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-l {
+  padding-left: max((100% - 960px) / 2, var(--container-margin));
+  padding-right: max((100% - 960px) / 2, var(--container-margin));
+}
+
+@media (max-width: 992px) {
+  :root {
+    --active-container: 960px;
+  }
+}
+
+.container-m {
+  max-width: min(720px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-m {
+  padding-left: max((100% - 720px) / 2, var(--container-margin));
+  padding-right: max((100% - 720px) / 2, var(--container-margin));
+}
+
+@media (max-width: 768px) {
+  :root {
+    --active-container: 720px;
+  }
+}
+
+.container-s {
+  max-width: min(540px, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-s {
+  padding-left: max((100% - 540px) / 2, var(--container-margin));
+  padding-right: max((100% - 540px) / 2, var(--container-margin));
+}
+
+@media (max-width: 576px) {
+  :root {
+    --active-container: 540px;
+  }
+}
+
+.container-xs {
+  max-width: min(100%, 100vw - var(--container-margin) * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.padding-container-xs {
+  padding-left: max((100% - 100%) / 2, var(--container-margin));
+  padding-right: max((100% - 100%) / 2, var(--container-margin));
+}
+
+@media (max-width: 0) {
+  :root {
+    --active-container: 100%;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -24,8 +254,8 @@ body {
 }
 
 section, header, footer {
-  padding-left: max((100% - 1140px) / 2, 1.5rem);
-  padding-right: max((100% - 1140px) / 2, 1.5rem);
+  padding-left: max((100% - 1140px) / 2, var(--container-margin));
+  padding-right: max((100% - 1140px) / 2, var(--container-margin));
 }
 
 h1, h2, h3, h4 {
@@ -35,12 +265,12 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: calc(var(--size-rem) * 2.5);
   margin-bottom: 1em;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: calc(var(--size-rem) * 2);
 }
 
 p {
@@ -71,7 +301,7 @@ button, .button {
   border-radius: 10px;
   padding: 1.5em 2em;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: calc(var(--size-rem) * 1);
   text-decoration: none;
   cursor: pointer;
 }
@@ -118,7 +348,7 @@ section h2 {
 .credit {
   text-align: right;
   color: #A6A6A6;
-  font-size: 0.75rem;
+  font-size: calc(var(--size-rem) * 0.75);
   font-style: italic;
   margin: 1em;
 }
@@ -147,14 +377,14 @@ section h2 {
 }
 
 .container {
-  max-width: min(var(--active-container), 100vw - 3rem);
+  max-width: min(var(--active-container), 100vw - var(--container-margin) * 2);
   margin-left: auto;
   margin-right: auto;
 }
 
 .padding-container {
-  padding-left: max((100% - var(--active-container)) / 2, 1.5rem);
-  padding-right: max((100% - var(--active-container)) / 2, 1.5rem);
+  padding-left: max((100% - var(--active-container)) / 2, var(--container-margin));
+  padding-right: max((100% - var(--active-container)) / 2, var(--container-margin));
 }
 
 :root {
@@ -162,113 +392,11 @@ section h2 {
   --page-height: calc(100vh - 80px - 60px);
 }
 
-.container-xxl {
-  max-width: min(1320px, 100vw - 3rem);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.padding-container-xxl {
-  padding-left: max((100% - 1320px) / 2, 1.5rem);
-  padding-right: max((100% - 1320px) / 2, 1.5rem);
-}
-
-@media (max-width: 1400px) {
-  :root {
-    --active-container: 1320px;
-  }
-}
-
-.container-xl {
-  max-width: min(1140px, 100vw - 3rem);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.padding-container-xl {
-  padding-left: max((100% - 1140px) / 2, 1.5rem);
-  padding-right: max((100% - 1140px) / 2, 1.5rem);
-}
-
-@media (max-width: 1200px) {
-  :root {
-    --active-container: 1140px;
-  }
-}
-
-.container-l {
-  max-width: min(960px, 100vw - 3rem);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.padding-container-l {
-  padding-left: max((100% - 960px) / 2, 1.5rem);
-  padding-right: max((100% - 960px) / 2, 1.5rem);
-}
-
-@media (max-width: 992px) {
-  :root {
-    --active-container: 960px;
-  }
-}
-
-.container-m {
-  max-width: min(720px, 100vw - 3rem);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.padding-container-m {
-  padding-left: max((100% - 720px) / 2, 1.5rem);
-  padding-right: max((100% - 720px) / 2, 1.5rem);
-}
-
-@media (max-width: 768px) {
-  :root {
-    --active-container: 720px;
-  }
-}
-
-.container-s {
-  max-width: min(540px, 100vw - 3rem);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.padding-container-s {
-  padding-left: max((100% - 540px) / 2, 1.5rem);
-  padding-right: max((100% - 540px) / 2, 1.5rem);
-}
-
-@media (max-width: 576px) {
-  :root {
-    --active-container: 540px;
-  }
-}
-
-.container-xs {
-  max-width: min(100%, 100vw - 3rem);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.padding-container-xs {
-  padding-left: max((100% - 100%) / 2, 1.5rem);
-  padding-right: max((100% - 100%) / 2, 1.5rem);
-}
-
-@media (max-width: 0) {
-  :root {
-    --active-container: 100%;
-  }
-}
-
 form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  font-size: 0.875rem;
+  font-size: calc(var(--size-rem) * 0.875);
 }
 
 label, .label {
@@ -318,7 +446,7 @@ table thead tr {
   border-bottom: 1px solid #A6A6A6;
 }
 table th {
-  font-size: 0.75rem;
+  font-size: calc(var(--size-rem) * 0.75);
   font-weight: semibold;
   text-align: left;
   text-transform: uppercase;
@@ -339,8 +467,8 @@ table tr:nth-of-type(even) {
 }
 
 main {
-  padding-left: max((100% - var(--active-container)) / 2, 1.5rem);
-  padding-right: max((100% - var(--active-container)) / 2, 1.5rem);
+  padding-left: max((100% - var(--active-container)) / 2, var(--container-margin));
+  padding-right: max((100% - var(--active-container)) / 2, var(--container-margin));
   padding-top: 2rem;
   padding-bottom: 2rem;
   min-height: var(--page-height);
@@ -352,11 +480,16 @@ main.cols-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
-  padding-left: max((100% - var(--active-container)) / 2, 1.5rem);
-  padding-right: max((100% - var(--active-container)) / 2, 1.5rem);
+  padding-left: max((100% - var(--active-container)) / 2, var(--container-margin));
+  padding-right: max((100% - var(--active-container)) / 2, var(--container-margin));
 }
 main section {
   padding: 1.5rem;
+}
+@media (max-width: 768px) {
+  main section {
+    padding: 0;
+  }
 }
 
 .tpl-userBooks__add {

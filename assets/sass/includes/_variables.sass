@@ -1,3 +1,5 @@
+@import 'mixins'
+    
 // ----- COLORS ----- //
 
 // By color
@@ -49,13 +51,15 @@ $weight-semibold: 600
 $weight-bold: 700
 
 $size-rem: 16px
-$size-xxs: 0.625rem
-$size-xs: 0.75rem
-$size-s: 0.875rem
-$size-m: 1rem
-$size-l: 1.5rem
-$size-xl: 2rem
-$size-xxl: 2.5rem
+$size-rem-phone: 14px
+
+$size-xxs: calc(#{var(--size-rem)} * 0.625)
+$size-xs: calc(#{var(--size-rem)} * 0.75)
+$size-s: calc(#{var(--size-rem)} * 0.875)
+$size-m: calc(#{var(--size-rem)} * 1)
+$size-l: calc(#{var(--size-rem)} * 1.5)
+$size-xl: calc(#{var(--size-rem)} * 2)
+$size-xxl: calc(#{var(--size-rem)} * 2.5)
 
 // ----- STRUCTURE ----- //
 $spacer: 1rem
@@ -75,7 +79,6 @@ $breakpoint-xl: 1200px,
 $breakpoint-xxl: 1400px
 
 // ----- CONTAINERS ----- //
-$container-margin: $spacer-l
 $container-xs: 100%
 $container-s: 540px
 $container-m: 720px
@@ -83,6 +86,33 @@ $container-l: 960px
 $container-xl: 1140px
 $container-xxl: 1320px
 
+$container-margin: $spacer-l
+$container-margin-phone: $spacer-s
+
 // ----- SIZES ----- //
 $header-height: 80px
 $footer-height: 60px
+
+// ----- CSS VARIABLES ----- //
+
+:root
+    --container-margin: #{$container-margin}
+    --active-container: #{$container-xxl}
+    --page-height: calc(100vh - #{$header-height} - #{$footer-height})
+    --size-rem: #{$size-rem}
+
+    @media (max-width: $breakpoint-m)
+        --container-margin: #{$container-margin-phone}
+        --size-rem: #{$size-rem-phone}
+
+@each $size, $breakpoint, $container in ('xxl' $breakpoint-xxl $container-xxl), ('xl' $breakpoint-xl $container-xl), ('l' $breakpoint-l $container-l), ('m' $breakpoint-m $container-m), ('s' $breakpoint-s $container-s), ('xs' $breakpoint-xs $container-xs)
+
+  .container-#{$size}
+    @include container($container)
+
+  .padding-container-#{$size}
+    @include padding-container($container)
+
+  :root
+    @media (max-width: $breakpoint)
+      --active-container: #{$container}
