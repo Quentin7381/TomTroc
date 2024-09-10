@@ -339,8 +339,14 @@ table tr:nth-of-type(even) {
 }
 
 main {
+  padding-left: max((100% - var(--active-container)) / 2, 1rem);
+  padding-right: max((100% - var(--active-container)) / 2, 1rem);
   padding-top: 2rem;
   padding-bottom: 2rem;
+  min-height: var(--page-height);
+}
+main.no-container {
+  padding: 0;
 }
 main.cols-2 {
   display: grid;
@@ -348,4 +354,7 @@ main.cols-2 {
   gap: 1.5rem;
   padding-left: max((100% - var(--active-container)) / 2, 1rem);
   padding-right: max((100% - var(--active-container)) / 2, 1rem);
+}
+main section {
+  padding: 1.5rem;
 }

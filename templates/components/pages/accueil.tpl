@@ -1,7 +1,7 @@
 <?php
 use View\Component;
 
-$attributes->add('class', 'alternate-bg');
+$attributes->add('class', 'alternate-bg', 'no-container');
 ?>
 
 <main <?= $attributes ?>>

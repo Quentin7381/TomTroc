@@ -8,8 +8,11 @@
   padding-top: 1.5rem;
   width: 340px;
 }
-.tpl-userProfile > * {
-  padding: 0;
+.tpl-userProfile section {
   background-color: #FFF;
   border-radius: 20px;
+}
+.tpl-userProfile__books {
+  padding: 0;
+  padding-top: 1.5rem;
 }

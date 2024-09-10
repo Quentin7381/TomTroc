@@ -221,8 +221,14 @@ table
       
 
 main
+  @include padding-container(#{var(--active-container)})
   padding-top: $spacer-xl
   padding-bottom: $spacer-xl
+
+  min-height: var(--page-height)
+
+  &.no-container
+    padding: 0
 
   &.cols-2
     display: grid
@@ -230,3 +236,6 @@ main
     gap: $spacer-l
 
     @include padding-container(#{var(--active-container)})
+
+  section
+    padding: $spacer-l
