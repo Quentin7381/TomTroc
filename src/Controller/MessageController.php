@@ -29,11 +29,12 @@ class MessageController extends AbstractController
         return [$this->manager, 'getThread'];
     }
 
-    public function page_messagerie(){
+    public function page_messagerie()
+    {
         $userManager = UserManager::getInstance();
         $user = $userManager->get_connected_user();
 
-        if(!$user){
+        if (!$user) {
             $this->redirect('/login');
         }
         @$selectedId = $_GET['id'] ?? reset($this->manager->getContacts($user))->id;
@@ -43,7 +44,7 @@ class MessageController extends AbstractController
         $newContact = $_SESSION['newContact'] ?? null;
         unset($_SESSION['newContact']);
 
-        echo Page::messagerie(['user' => $user, 'selectedId' => $selectedId, 'newContact' => $newContact, 'activeLink' => '/messagerie']);
+        $this->view->print(Page::messagerie(['user' => $user, 'selectedId' => $selectedId, 'newContact' => $newContact, 'activeLink' => '/messagerie']));
     }
 
     public function provide_contacts()
@@ -51,20 +52,22 @@ class MessageController extends AbstractController
         return [$this->manager, 'getContacts'];
     }
 
-    public function send($sender, $receiver){
+    public function send($sender, $receiver)
+    {
         $userManager = UserManager::getInstance();
-        if($userManager->get_connected_user()->id != $sender){
+        if ($userManager->get_connected_user()->id != $sender) {
             $this->redirect('error/403?message=Vous n\'avez pas le droit d\'envoyer un message au nom de quelqu\'un d\'autre');
         }
 
         $content = $_POST['content'];
         $this->manager->sendMessage($sender, $receiver, $content);
-        $this->redirect('/messagerie?id='.$receiver);
+        $this->redirect('/messagerie?id=' . $receiver);
     }
 
-    public function init_thread($sender, $receiver){
+    public function init_thread($sender, $receiver)
+    {
         $userManager = UserManager::getInstance();
-        if($userManager->get_connected_user()->id != $sender){
+        if ($userManager->get_connected_user()->id != $sender) {
             $this->redirect('error/403?message=Vous n\'avez pas le droit d\'envoyer un message au nom de quelqu\'un d\'autre');
         }
 
@@ -72,6 +75,6 @@ class MessageController extends AbstractController
 
         $_SESSION['newContact'] = $user;
 
-        $this->redirect('/messagerie?id='.$receiver);
+        $this->redirect('/messagerie?id=' . $receiver);
     }
 }

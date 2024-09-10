@@ -26,6 +26,13 @@ class View
         return self::$instance;
     }
 
+    public function print($html)
+    {
+        $this->embedCss($html);
+        $this->embedJs($html);
+        echo $html;
+    }
+
     public function render($entity, $variables = [], $style = null)
     {
         $templateName = get_class($entity);

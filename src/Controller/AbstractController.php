@@ -5,6 +5,7 @@ namespace Controller;
 use Config\Config;
 use Router\Router;
 use Variables\Provider;
+use View\View;
 
 /**
  * AbstractController class
@@ -42,6 +43,7 @@ abstract class AbstractController
     protected Provider $provider;
     protected $controllerName;
     protected $manager;
+    protected $view;
 
     /**
      * Singleton constructor.
@@ -53,6 +55,7 @@ abstract class AbstractController
         $this->config = Config::getInstance();
         $this->router = Router::getInstance();
         $this->provider = Provider::getInstance();
+        $this->view = View::getInstance();
         $this->initRoutes();
         $this->initProviders();
         $this->initManager();

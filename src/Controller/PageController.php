@@ -21,13 +21,13 @@ class PageController extends AbstractController
 
     public function index()
     {
-        echo Page::accueil(['activeLink' => '/']);
+        $this->view->print(Page::accueil(['activeLink' => '/']));
     }
 
     public function error($code)
     {
         $message = $_GET['message'] ?? null;
-        echo Page::error(['code' => $code, 'message' => $message]);
+        $this->view->print(Page::error(['code' => $code, 'message' => $message]));
     }
 
     public function fillDb()

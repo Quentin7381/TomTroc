@@ -32,12 +32,12 @@ class BookController extends AbstractController
     {
         $userManager = \Manager\UserManager::getInstance();
         $user = $userManager->get_connected_user();
-        echo Page::bookEdit(['user' => $user, 'activeLink' => '/user']);
+        View::print(Page::bookEdit(['user' => $user, 'activeLink' => '/user']));
     }
 
     public function add()
     {
-        if(
+        if (
             !isset($_POST['title']) ||
             !isset($_POST['author']) ||
             !isset($_POST['description']) ||
@@ -46,10 +46,10 @@ class BookController extends AbstractController
         ) {
             $this->redirect('/error/?message=missing data');
         }
-        
+
         $user = \Manager\UserManager::getInstance()->get_connected_user();
-        $this->manager->add_book($_POST['title'], $_POST['author'], $_POST['description'],$_POST['available'], $_FILES['photo'], $user);
-        
+        $this->manager->add_book($_POST['title'], $_POST['author'], $_POST['description'], $_POST['available'], $_FILES['photo'], $user);
+
         $this->redirect('/user/');
     }
 
@@ -57,24 +57,25 @@ class BookController extends AbstractController
     {
         $userManager = \Manager\UserManager::getInstance();
         $user = $userManager->get_connected_user();
-        echo Page::bookEdit(['user' => $user, 'book' => $this->manager->getById($id), 'activeLink' => '/user']);
+        $this->view->print(Page::bookEdit(['user' => $user, 'book' => $this->manager->getById($id), 'activeLink' => '/user']));
     }
 
     public function edit($id)
     {
-        if(
+        if (
             !isset($_POST['title']) ||
             !isset($_POST['author']) ||
             !isset($_POST['description']) ||
             !isset($_POST['available'])
         ) {
-            var_dump($_POST); exit;
+            var_dump($_POST);
+            exit;
             $this->redirect('/error/?message=missing data');
         }
-        
+
         $user = \Manager\UserManager::getInstance()->get_connected_user();
         $this->manager->edit_book($id, $_POST['title'], $_POST['author'], $_POST['description'], $_POST['available'], $_FILES['photo'], $user);
-        
+
         $this->redirect('/user/');
     }
 
@@ -86,11 +87,11 @@ class BookController extends AbstractController
 
     public function page_list()
     {
-        echo Page::bookList(['activeLink' => '/book/list']);
+        $this->view->print(Page::bookList(['activeLink' => '/book/list']));
     }
 
     public function page_full($id)
     {
-        echo Page::bookFull(['book' => $this->manager->getById($id), 'activeLink' => '/book/list']);
+        $this->view->print(Page::bookFull(['book' => $this->manager->getById($id), 'activeLink' => '/book/list']));
     }
 }
