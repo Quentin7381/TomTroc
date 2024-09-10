@@ -25,4 +25,16 @@
         padding-right: calc($spacer-xxl*3)
 
     form
-        max-width: 322px
+        max-width: 355px
+
+    @media (max-width: $breakpoint-m)
+        
+        grid-template-columns: 1fr !important
+        gap: $spacer-m
+
+        &__image
+            height: auto
+
+        &__form
+            padding-right: 0
+

@@ -3,6 +3,7 @@
   --active-container: 1320px;
   --page-height: calc(100vh - 80px - 60px);
   --size-rem: 16px;
+  --container-padding: get-container-padding();
 }
 @media (max-width: 768px) {
   :root {
@@ -139,5 +140,17 @@
   padding-right: 12rem;
 }
 .tpl-userConnect form {
-  max-width: 322px;
+  max-width: 355px;
+}
+@media (max-width: 768px) {
+  .tpl-userConnect {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+  .tpl-userConnect__image {
+    height: auto;
+  }
+  .tpl-userConnect__form {
+    padding-right: 0;
+  }
 }

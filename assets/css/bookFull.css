@@ -3,6 +3,7 @@
   --active-container: 1320px;
   --page-height: calc(100vh - 80px - 60px);
   --size-rem: 16px;
+  --container-padding: get-container-padding();
 }
 @media (max-width: 768px) {
   :root {
@@ -118,6 +119,7 @@
   --active-container: 1320px;
   --page-height: calc(100vh - 80px - 60px);
   --size-rem: 16px;
+  --container-padding: get-container-padding();
 }
 @media (max-width: 768px) {
   :root {
@@ -416,7 +418,6 @@ input.search, textarea.search, select.search {
   background-repeat: no-repeat;
   background-position: 10px center;
   background-size: 20px;
-  width: 322px;
   background-color: #FFF;
   border: 1px solid #A6A6A6;
 }
@@ -496,11 +497,10 @@ main section {
   padding: 0;
 }
 .tpl-bookFull__book {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0;
 }
 .tpl-bookFull__breadcrumb {
-  background-color: #faf9f7;
+  background-color: #f5f3ef;
   padding-top: 1rem;
   padding-bottom: 1rem;
   font-size: calc(var(--size-rem) * 0.625);
@@ -516,4 +516,16 @@ main section {
   content: " > ";
   text-decoration: none !important;
   pointer-events: none;
+}
+.tpl-bookFull .tpl-entity-book__details {
+  padding: 1rem;
+}
+@media (max-width: 768px) {
+  .tpl-bookFull__book article {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .tpl-bookFull__book article > div {
+    padding: 0;
+  }
 }

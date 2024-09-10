@@ -6,11 +6,10 @@
         padding: 0
 
     &__book
-        padding-top: 0
-        padding-bottom: 0
+        padding: 0
 
     &__breadcrumb
-        background-color: $color-background-secondary
+        background-color: $color-background-primary
         padding-top: $spacer-m
         padding-bottom: $spacer-m
 
@@ -28,3 +27,15 @@
             content: ' > '
             text-decoration: none !important
             pointer-events: none
+
+    .tpl-entity-book
+        &__details
+            padding: $spacer-m
+
+    @media (max-width: $breakpoint-m)
+        &__book article
+            grid-template-columns: 1fr
+            gap: $spacer-m
+
+            >div
+                padding: 0
