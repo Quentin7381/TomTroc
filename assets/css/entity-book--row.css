@@ -6,6 +6,10 @@
   height: 78px;
   object-fit: cover;
 }
+.tpl-entity-book--row__title a {
+  color: #292929;
+  text-decoration: none;
+}
 .tpl-entity-book--row__description p {
   display: -webkit-box;
   -webkit-line-clamp: 4;
