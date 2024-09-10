@@ -3,7 +3,8 @@ $attributes->add('class', 'cols-2');
 ?>
 
 <main <?=$attributes?>>
-    <section>
+    <section class="<?=$bem->e('form')?>">
+        <h1>Connexion</h1>
         <form action="/user/request/login" method="post">
             <label for="email">Adresse email</label>
             <input type="email" name="email" id="email" required>

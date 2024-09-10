@@ -1,6 +1,8 @@
 @import '../../includes/variables'
 
 .tpl-userConnect
+    grid-template-columns: auto 1fr !important
+
     &__cta
         margin-top: $spacer-xl
         a
@@ -13,6 +15,14 @@
         display: flex
         justify-content: center
         align-items: center
+
+        img
+            max-width: 100%
+            max-height: 100%
+            object-fit: cover
+
+    &__form
+        padding-right: calc($spacer-xxl*3)
 
     form
         max-width: 322px

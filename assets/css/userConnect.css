@@ -1,3 +1,6 @@
+.tpl-userConnect {
+  grid-template-columns: auto 1fr !important;
+}
 .tpl-userConnect__cta {
   margin-top: 2rem;
 }
@@ -11,6 +14,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.tpl-userConnect__image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+.tpl-userConnect__form {
+  padding-right: 12rem;
 }
 .tpl-userConnect form {
   max-width: 322px;
