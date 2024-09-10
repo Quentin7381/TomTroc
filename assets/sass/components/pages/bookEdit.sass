@@ -14,8 +14,12 @@
     form
         display: grid
         grid-template-columns: 1fr 1fr
-        gap: $spacer-xxl
+        gap: calc($spacer-xxl*2)
         background-color: $color-background-lightest
+
+        textarea
+            height: 100%
+            
 
         button[type="submit"]
             max-width: 322px
@@ -30,6 +34,9 @@
     
     &__addPhoto
         cursor: pointer
+        color: $color-text
+        text-align: right
+        margin-top: $spacer-l
 
     &__back
         display: inline-block

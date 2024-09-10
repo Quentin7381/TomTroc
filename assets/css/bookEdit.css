@@ -12,8 +12,11 @@
 .tpl-bookEdit form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  gap: 8rem;
   background-color: #FFF;
+}
+.tpl-bookEdit form textarea {
+  height: 100%;
 }
 .tpl-bookEdit form button[type=submit] {
   max-width: 322px;
@@ -27,6 +30,9 @@
 }
 .tpl-bookEdit__addPhoto {
   cursor: pointer;
+  color: #292929;
+  text-align: right;
+  margin-top: 1.5rem;
 }
 .tpl-bookEdit__back {
   display: inline-block;
