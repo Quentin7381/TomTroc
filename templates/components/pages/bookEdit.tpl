@@ -20,7 +20,10 @@ $view->addJs('imagePreview');
             <fieldset>
                 <p class="label">Photo</p>
                 <?php if ($photo): ?>
-                    <?php $photo->addAttributes('class', 'bookCover'); ?>
+                    <?php
+                        $photo->addAttributes('class', 'bookCover');
+                        $photo->addAttributes('data-image-preview', $previewId);
+                    ?>
                     <?= $photo ?>
                 <?php else: ?>
                     <img src="" alt="" data-image-preview="<?= $previewId ?>"
