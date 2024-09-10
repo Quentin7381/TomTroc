@@ -97,7 +97,7 @@ class UserManager extends AbstractManager
     public function update_photo($user, $photo)
     {
         $extension = pathinfo($photo['name'], PATHINFO_EXTENSION);
-        $allowed = ['jpg', 'jpeg', 'png'];
+        $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         if (!in_array($extension, $allowed)) {
             throw new Exception(Exception::USER_INVALID_IMAGE_EXTENSION, [
                 'allowed' => $allowed,

@@ -9,7 +9,7 @@ class BookManager extends AbstractManager
     public function add_book($title, $author, $description, $available, $cover, $seller)
     {
         $extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
-        $allowed = ['jpg', 'jpeg', 'png'];
+        $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         if (!in_array($extension, $allowed)) {
             throw new Exception(Exception::USER_INVALID_IMAGE_EXTENSION, [
                 'allowed' => $allowed,
@@ -43,7 +43,7 @@ class BookManager extends AbstractManager
 
         if (!empty($cover['name'])) {
             $extension = pathinfo($cover['name'], PATHINFO_EXTENSION);
-            $allowed = ['jpg', 'jpeg', 'png'];
+            $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
             if (!in_array($extension, $allowed)) {
                 throw new Exception(Exception::USER_INVALID_IMAGE_EXTENSION, [
                     'allowed' => $allowed,
