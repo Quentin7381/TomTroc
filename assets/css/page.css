@@ -124,21 +124,21 @@ section h2 {
 }
 
 .alternate-bg > :nth-child(odd) {
-  background-color: #F5F3EF;
   color: #000;
+  background-color: #f5f3ef;
 }
 .alternate-bg > :nth-child(even) {
-  background-color: #e4dccd;
+  background-color: #faf9f7;
   color: #292929;
 }
 
 .bg-primary {
-  background-color: #e4dccd;
+  background-color: #f5f3ef;
   color: #000;
 }
 
 .bg-secondary {
-  background-color: #F5F3EF;
+  background-color: #faf9f7;
   color: #292929;
 }
 

@@ -6,11 +6,23 @@
     grid-template-columns: auto 1fr
     gap: $spacer-xl
 
+    padding-top: 0
+    padding-bottom: 0
+
+    background-color: $color-background-primary 
+
+    h2
+        font-size: $size-l
+
     @extend .padding-container
 
     &__contacts
-        background: $color-background-lightest
+        background: $color-background-secondary
         width: 300px
+        padding-top: $spacer-xl
+
+        article
+            margin: 0 -#{$spacer-l}
 
         h2
             text-align: left

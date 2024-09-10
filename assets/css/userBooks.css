@@ -124,21 +124,21 @@ section h2 {
 }
 
 .alternate-bg > :nth-child(odd) {
-  background-color: #F5F3EF;
+  background-color: #faf9f7;
   color: #000;
 }
 .alternate-bg > :nth-child(even) {
-  background-color: #e4dccd;
+  background-color: #f5f3ef;
   color: #292929;
 }
 
 .bg-primary {
-  background-color: #e4dccd;
+  background-color: #f5f3ef;
   color: #000;
 }
 
 .bg-secondary {
-  background-color: #F5F3EF;
+  background-color: #faf9f7;
   color: #292929;
 }
 
@@ -338,12 +338,25 @@ table tr:nth-of-type(even) {
   background-color: #EDF2F6;
 }
 
+main {
+  padding-left: max((100% - var(--active-container)) / 2, 1rem);
+  padding-right: max((100% - var(--active-container)) / 2, 1rem);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  min-height: var(--page-height);
+}
+main.no-container {
+  padding: 0;
+}
 main.cols-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   padding-left: max((100% - var(--active-container)) / 2, 1rem);
   padding-right: max((100% - var(--active-container)) / 2, 1rem);
+}
+main section {
+  padding: 1.5rem;
 }
 
 .tpl-userBooks__add {

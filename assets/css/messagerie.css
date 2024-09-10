@@ -124,21 +124,21 @@ section h2 {
 }
 
 .alternate-bg > :nth-child(odd) {
-  background-color: #F5F3EF;
   color: #000;
+  background-color: #f5f3ef;
 }
 .alternate-bg > :nth-child(even) {
-  background-color: #e4dccd;
+  background-color: #faf9f7;
   color: #292929;
 }
 
 .bg-primary {
-  background-color: #e4dccd;
+  background-color: #f5f3ef;
   color: #000;
 }
 
 .bg-secondary {
-  background-color: #F5F3EF;
+  background-color: #faf9f7;
   color: #292929;
 }
 
@@ -338,6 +338,16 @@ table tr:nth-of-type(even) {
   background-color: #EDF2F6;
 }
 
+main {
+  padding-left: max((100% - var(--active-container)) / 2, 1rem);
+  padding-right: max((100% - var(--active-container)) / 2, 1rem);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  min-height: var(--page-height);
+}
+main.no-container {
+  padding: 0;
+}
 main.cols-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -345,19 +355,32 @@ main.cols-2 {
   padding-left: max((100% - var(--active-container)) / 2, 1rem);
   padding-right: max((100% - var(--active-container)) / 2, 1rem);
 }
+main section {
+  padding: 1.5rem;
+}
 
 .tpl-messagerie {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 2rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: #f5f3ef;
+}
+.tpl-messagerie h2 {
+  font-size: 1.5rem;
 }
 .tpl-messagerie__contacts {
-  background: #FFF;
+  background: #faf9f7;
   width: 300px;
+  padding-top: 2rem;
+}
+.tpl-messagerie__contacts article {
+  margin: 0 -1.5rem;
 }
 .tpl-messagerie__contacts h2 {
   text-align: left;
 }
 .tpl-messagerie__contacts .selected {
-  background: #e4dccd;
+  background: #f5f3ef;
 }
