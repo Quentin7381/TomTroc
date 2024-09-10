@@ -338,6 +338,10 @@ table tr:nth-of-type(even) {
   background-color: #EDF2F6;
 }
 
+main {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
 main.cols-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
