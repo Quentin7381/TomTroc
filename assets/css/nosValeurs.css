@@ -5,7 +5,7 @@
   margin: 0 auto;
 }
 .tpl-nosValeurs__credit {
-  text-align: left;
+  text-align: left !important;
 }
 .tpl-nosValeurs__heart {
   width: 120px;
@@ -18,6 +18,7 @@
   .tpl-nosValeurs__heart {
     position: static;
     margin-left: 60%;
+    right: 0;
   }
   .tpl-nosValeurs__subContainer {
     position: static;
