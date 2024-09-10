@@ -14,6 +14,7 @@ class MessageController extends AbstractController
     {
         $this->router->addRoute('/messagerie/', [$this, 'page_messagerie']);
         $this->router->addRoute('/message/send/$/$', [$this, 'send']);
+        $this->router->addRoute('/message/new/$/$', [$this, 'init_thread']);
     }
 
     public function provide_count()
@@ -39,7 +40,10 @@ class MessageController extends AbstractController
 
         $this->manager->setAsRead($user->id, $selectedId);
 
-        echo Page::messagerie(['user' => $user, 'selectedId' => $selectedId]);
+        $newContact = $_SESSION['newContact'] ?? null;
+        unset($_SESSION['newContact']);
+
+        echo Page::messagerie(['user' => $user, 'selectedId' => $selectedId, 'newContact' => $newContact]);
     }
 
     public function provide_contacts()
@@ -55,6 +59,19 @@ class MessageController extends AbstractController
 
         $content = $_POST['content'];
         $this->manager->sendMessage($sender, $receiver, $content);
+        $this->redirect('/messagerie?id='.$receiver);
+    }
+
+    public function init_thread($sender, $receiver){
+        $userManager = UserManager::getInstance();
+        if($userManager->get_connected_user()->id != $sender){
+            $this->redirect('error/403?message=Vous n\'avez pas le droit d\'envoyer un message au nom de quelqu\'un d\'autre');
+        }
+
+        $user = $userManager->getById($receiver);
+
+        $_SESSION['newContact'] = $user;
+
         $this->redirect('/messagerie?id='.$receiver);
     }
 }

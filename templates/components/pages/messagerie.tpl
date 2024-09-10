@@ -5,7 +5,7 @@ if(empty($selectedId)) {
     @$selected = $selected ?? reset($v->message_contacts($user));
     $selectedId = $selected->id;
 } else {
-    $selected = $v->message_contacts($user)[$selectedId];
+    $selected = $newContact ?? $v->message_contacts($user)[$selectedId];
 }
 ?>
 
@@ -15,6 +15,9 @@ if(empty($selectedId)) {
         <?php foreach ($v->message_contacts($user) as $contact): ?>
             <?= $contact->render(['user' => $user, 'attributes' => ['class' => $selectedId === $contact->id ? 'selected' : '']], 'contact') ?>
         <?php endforeach; ?>
+        <?php if (isset($newContact)): ?>
+            <?= $newContact->render(['user' => $user, 'attributes' => ['class' => 'selected']], 'contact') ?>
+        <?php endif; ?>
     </section>
     <?=Component::messages(['user' => $user, 'contact' => $selected, 'attributes' => ['class' => $bem->e('messages')]])?>
 </main>

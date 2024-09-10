@@ -127,12 +127,12 @@ section h2 {
   color: #000;
 }
 .alternate-bg > :nth-child(even) {
-  background-color: #d1c7b4;
+  background-color: #e4dccd;
   color: #292929;
 }
 
 .bg-primary {
-  background-color: #d1c7b4;
+  background-color: #e4dccd;
   color: #000;
 }
 
@@ -349,5 +349,5 @@ table tr:nth-of-type(even) {
   text-align: left;
 }
 .tpl-messagerie__contacts .selected {
-  background: #d1c7b4;
+  background: #e4dccd;
 }

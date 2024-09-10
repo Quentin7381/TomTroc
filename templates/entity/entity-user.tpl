@@ -8,5 +8,5 @@
         <?= $v->image_get('ico-book')->addAttributes('class', $bem->e('bookIcon')) ?><?= $entity->library_size ?>
         livre<?= $entity->library_size > 1 ? 's' : '' ?>
     </p>
-    <a href="" class="button inverted <?=$bem->e('message')?>">Ecrire un message</a>
+    <a href="/message/new/<?=$v->user_current->id?>/<?=$entity->id?>" class="button inverted <?=$bem->e('message')?>">Ecrire un message</a>
 </section>

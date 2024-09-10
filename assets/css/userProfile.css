@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 4rem;
-  background-color: #d1c7b4;
+  background-color: #e4dccd;
 }
 .tpl-userProfile__user {
   padding-top: 1.5rem;

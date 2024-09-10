@@ -9,9 +9,9 @@ $message = $messages->last();
         <div class="<?= $bem->e('infos') ?>">
             <p class="<?= $bem->e('header') ?>">
                 <span class="<?= $bem->e('name') ?>"><?= $entity->name ?></span>
-                <span class="<?= $bem->e('hour') ?>"><?= $message->hour ?></span>
+                <span class="<?= $bem->e('hour') ?>"><?= $message->hour ?? null ?></span>
             </p>
-            <p class="<?= $bem->e('content') ?>"><?= $message->content ?></p>
+            <p class="<?= $bem->e('content') ?>"><?= $message->content ?? null ?></p>
         </div>
     </a>
 </article>
