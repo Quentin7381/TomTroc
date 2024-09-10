@@ -281,4 +281,18 @@ class Database
 
         return $identifiers;
     }
+
+    public function truncate(): void
+    {
+        $sql = "SHOW TABLES";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        $tables = $stmt->fetchAll();
+
+        foreach ($tables as $table) {
+            $sql = "TRUNCATE TABLE $table[0]";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+        }
+    }
 }
