@@ -1,6 +1,9 @@
 .tpl-bookList {
   background: #e4dccd;
 }
+.tpl-bookList h1 {
+  font-size: 2rem;
+}
 .tpl-bookList__list {
   padding: 1rem;
   display: flex;
