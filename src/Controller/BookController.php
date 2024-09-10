@@ -32,7 +32,7 @@ class BookController extends AbstractController
     {
         $userManager = \Manager\UserManager::getInstance();
         $user = $userManager->get_connected_user();
-        echo Page::bookEdit(['user' => $user]);
+        echo Page::bookEdit(['user' => $user, 'activeLink' => '/user']);
     }
 
     public function add()
@@ -57,7 +57,7 @@ class BookController extends AbstractController
     {
         $userManager = \Manager\UserManager::getInstance();
         $user = $userManager->get_connected_user();
-        echo Page::bookEdit(['user' => $user, 'book' => $this->manager->getById($id)]);
+        echo Page::bookEdit(['user' => $user, 'book' => $this->manager->getById($id), 'activeLink' => '/user']);
     }
 
     public function edit($id)
@@ -86,11 +86,11 @@ class BookController extends AbstractController
 
     public function page_list()
     {
-        echo Page::bookList();
+        echo Page::bookList(['activeLink' => '/book/list']);
     }
 
     public function page_full($id)
     {
-        echo Page::bookFull(['book' => $this->manager->getById($id)]);
+        echo Page::bookFull(['book' => $this->manager->getById($id), 'activeLink' => '/book/list']);
     }
 }

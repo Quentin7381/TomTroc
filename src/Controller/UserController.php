@@ -22,11 +22,11 @@ class UserController extends AbstractController
     }
 
     public function page_connect(){
-        echo Page::userConnect();
+        echo Page::userConnect(['activeLink' => '/user/connect']);
     }
 
     public function page_register(){
-        echo Page::userRegister();
+        echo Page::userRegister(['activeLink' => '/user/connect']);
     }
 
     public function page_profile($id = null){
@@ -36,7 +36,7 @@ class UserController extends AbstractController
 
         $editable = $this->manager->get_connected_user()->id === $id;
 
-        echo Page::personnalProfile(['editable' => $editable]);
+        echo Page::personnalProfile(['editable' => $editable, 'activeLink' => '/user']);
     }
 
     public function login(){
@@ -122,7 +122,7 @@ class UserController extends AbstractController
             $this->redirect('/error/404?message=No user with this id');
         }
 
-        echo Page::userProfile(['user' => $user]);
+        echo Page::userProfile(['user' => $user, 'activeLink' => '/book/list']);
     }
 
 }

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <?= View\Component::header() ?>
+    <?= View\Component::header(['activeLink' => $activeLink]) ?>
     <?= $body ?>
     <?= View\Component::footer() ?>
 </body>

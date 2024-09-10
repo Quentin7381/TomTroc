@@ -21,7 +21,7 @@ class PageController extends AbstractController
 
     public function index()
     {
-        echo Page::accueil();
+        echo Page::accueil(['activeLink' => '/']);
     }
 
     public function error($code)
