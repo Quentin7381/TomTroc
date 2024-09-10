@@ -32,7 +32,11 @@ class BookController extends AbstractController
     {
         $userManager = \Manager\UserManager::getInstance();
         $user = $userManager->get_connected_user();
-        View::print(Page::bookEdit(['user' => $user, 'activeLink' => '/user']));
+        $this->view->print(Page::bookEdit([
+            'user' => $user,
+            'activeLink' => '/user',
+            'title' => 'Ajouter un livre'
+        ]));
     }
 
     public function add()
@@ -57,7 +61,12 @@ class BookController extends AbstractController
     {
         $userManager = \Manager\UserManager::getInstance();
         $user = $userManager->get_connected_user();
-        $this->view->print(Page::bookEdit(['user' => $user, 'book' => $this->manager->getById($id), 'activeLink' => '/user']));
+        $this->view->print(Page::bookEdit([
+            'user' => $user,
+            'book' => $this->manager->getById($id),
+            'activeLink' => '/user',
+            'title' => 'Modifier un livre'
+        ]));
     }
 
     public function edit($id)
@@ -87,11 +96,15 @@ class BookController extends AbstractController
 
     public function page_list()
     {
-        $this->view->print(Page::bookList(['activeLink' => '/book/list']));
+        $this->view->print(Page::bookList([
+            'activeLink' => '/book/list',
+            'title' => 'Nos livres'
+        ]));
     }
 
     public function page_full($id)
     {
-        $this->view->print(Page::bookFull(['book' => $this->manager->getById($id), 'activeLink' => '/book/list']));
+        $book = $this->manager->getById($id);
+        $this->view->print(Page::bookFull(['book' => $book, 'activeLink' => '/book/list', 'title' => $book->title]));
     }
 }

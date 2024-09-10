@@ -24,12 +24,18 @@ class UserController extends AbstractController
 
     public function page_connect()
     {
-        $this->view->print(Page::userConnect(['activeLink' => '/user/connect']));
+        $this->view->print(Page::userConnect([
+            'activeLink' => '/user/connect',
+            'title' => 'Connexion'
+        ]));
     }
 
     public function page_register()
     {
-        $this->view->print(Page::userRegister(['activeLink' => '/user/connect']));
+        $this->view->print(Page::userRegister([
+            'activeLink' => '/user/connect',
+            'title' => 'Inscription'
+        ]));
     }
 
     public function page_profile($id = null)
@@ -40,7 +46,11 @@ class UserController extends AbstractController
 
         $editable = $this->manager->get_connected_user()->id === $id;
 
-        $this->view->print(Page::personnalProfile(['editable' => $editable, 'activeLink' => '/user']));
+        $this->view->print(Page::personnalProfile([
+            'editable' => $editable,
+            'activeLink' => '/user',
+            'title' => 'Mon compte',
+        ]));
     }
 
     public function login()
@@ -134,7 +144,11 @@ class UserController extends AbstractController
             $this->redirect('/error/404?message=No user with this id');
         }
 
-        $this->view->print(Page::userProfile(['user' => $user, 'activeLink' => '/book/list']));
+        $this->view->print(Page::userProfile([
+            'user' => $user,
+            'activeLink' => '/book/list',
+            'title' => $user->name
+        ]));
     }
 
 }

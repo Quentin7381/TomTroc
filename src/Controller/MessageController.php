@@ -44,7 +44,13 @@ class MessageController extends AbstractController
         $newContact = $_SESSION['newContact'] ?? null;
         unset($_SESSION['newContact']);
 
-        $this->view->print(Page::messagerie(['user' => $user, 'selectedId' => $selectedId, 'newContact' => $newContact, 'activeLink' => '/messagerie']));
+        $this->view->print(Page::messagerie([
+            'user' => $user,
+            'selectedId' => $selectedId,
+            'newContact' => $newContact,
+            'activeLink' => '/messagerie',
+            'title' => 'Messagerie'
+        ]));
     }
 
     public function provide_contacts()
