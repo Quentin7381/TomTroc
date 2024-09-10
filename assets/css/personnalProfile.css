@@ -134,3 +134,17 @@
   padding-top: 1rem;
   overflow: hidden;
 }
+@media (max-width: 768px) {
+  .tpl-personnalProfile {
+    grid-template-columns: 1fr;
+  }
+  .tpl-personnalProfile h1 {
+    grid-column: 1/2;
+  }
+  .tpl-personnalProfile .tpl-userBooks {
+    grid-column: 1/2;
+  }
+  .tpl-personnalProfile form button {
+    width: 100%;
+  }
+}

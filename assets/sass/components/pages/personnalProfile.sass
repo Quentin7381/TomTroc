@@ -21,3 +21,16 @@
         padding: 0
         padding-top: $spacer-m
         overflow: hidden
+
+    @media (max-width: $breakpoint-m)
+        grid-template-columns: 1fr
+
+        h1
+            grid-column: 1 / 2
+
+        .tpl-userBooks
+            grid-column: 1 / 2
+
+        form
+            button
+                width: 100%
