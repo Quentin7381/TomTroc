@@ -4,7 +4,7 @@
             <span class="<?= $bem->e('msgCount') ?>"><?= $v->message_count ?></span>
         <?php endif; ?>
     </a>
-    <a href="/user"><?= $v->image_get('ico-message') ?>Mon compte</a>
+    <a href="/user"><?= $v->image_get('ico-account') ?>Mon compte</a>
     
     <?php if ($v->user_connected) : ?>
         <a href="/user/disconnect">Déconnexion</a>
