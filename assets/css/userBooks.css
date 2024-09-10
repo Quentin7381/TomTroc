@@ -336,6 +336,14 @@ table tr:nth-of-type(even) {
   background-color: #EDF2F6;
 }
 
+main.cols-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding-left: max((100% - var(--active-container)) / 2, 1rem);
+  padding-right: max((100% - var(--active-container)) / 2, 1rem);
+}
+
 .tpl-userBooks__add {
   display: flex;
   align-items: center;

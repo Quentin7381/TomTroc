@@ -132,6 +132,8 @@ section
 
 :root
   --active-container: #{$container-xxl}
+  --page-height: calc(100vh - #{$header-height} - #{$footer-height})
+
 
 @each $size, $breakpoint, $container in ('xxl' $breakpoint-xxl $container-xxl), ('xl' $breakpoint-xl $container-xl), ('l' $breakpoint-l $container-l), ('m' $breakpoint-m $container-m), ('s' $breakpoint-s $container-s), ('xs' $breakpoint-xs $container-xs)
 
@@ -216,3 +218,11 @@ table
     &:nth-of-type(even)
       background-color: $color-background-input
       
+
+main
+  &.cols-2
+    display: grid
+    grid-template-columns: 1fr 1fr
+    gap: $spacer-l
+
+    @include padding-container(#{var(--active-container)})

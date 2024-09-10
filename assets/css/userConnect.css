@@ -1,0 +1,17 @@
+.tpl-userConnect__cta {
+  margin-top: 2rem;
+}
+.tpl-userConnect__cta a {
+  color: #292929;
+}
+.tpl-userConnect__image {
+  padding-bottom: unset;
+  padding-top: unset;
+  height: var(--page-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tpl-userConnect form {
+  max-width: 322px;
+}

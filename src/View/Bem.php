@@ -28,6 +28,10 @@ class Bem {
         $this->template = $template;
     }
 
+    public function changeTemplate($template){
+        $this->template = $template;
+    }
+
     public function elementClass($element){
         return 'tpl-' . $this->template . '__' . $element;
     }
