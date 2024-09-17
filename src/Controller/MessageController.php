@@ -39,6 +39,8 @@ class MessageController extends AbstractController
         }
         @$selectedId = $_GET['id'] ?? reset($this->manager->getContacts($user))->id;
 
+        $phoneSelected = !empty($_GET['id']);
+
         $this->manager->setAsRead($user->id, $selectedId);
 
         $newContact = $_SESSION['newContact'] ?? null;
@@ -47,6 +49,7 @@ class MessageController extends AbstractController
         $this->view->print(Page::messagerie([
             'user' => $user,
             'selectedId' => $selectedId,
+            'phoneSelected' => $phoneSelected,
             'newContact' => $newContact,
             'activeLink' => '/messagerie',
             'title' => 'Messagerie'

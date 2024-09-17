@@ -148,3 +148,11 @@
   width: fit-content;
   min-width: 200px;
 }
+@media (max-width: 768px) {
+  .tpl-entity-message__content {
+    background: #FFF;
+  }
+  .tpl-entity-message.sent .tpl-entity-message__content {
+    background: #EDF2F6;
+  }
+}

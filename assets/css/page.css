@@ -207,6 +207,17 @@ button.error, .button.error {
 button.success, .button.success {
   background-color: #6DC5A1;
 }
+button.textOnly, .button.textOnly {
+  background: transparent;
+  color: var(--color-bg);
+  border: none;
+  padding: 0;
+  margin-bottom: 1em;
+  font-weight: normal;
+  display: inline;
+  color: #A6A6A6;
+  text-align: left;
+}
 button.thin, .button.thin {
   padding: 0.5em 1em;
 }
@@ -215,6 +226,11 @@ button.thin, .button.thin {
     width: 100%;
     text-align: center;
     margin: 0 auto;
+  }
+  button.cross, .button.cross {
+    width: fit-content;
+    margin: 0;
+    padding: 0;
   }
 }
 

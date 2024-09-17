@@ -121,12 +121,19 @@
   display: flex;
   flex-direction: column;
 }
+.tpl-messages__back {
+  color: #A6A6A6;
+  display: none !important;
+}
 .tpl-messages__thread {
   overflow-y: scroll;
   scrollbar-width: thin;
   padding: 1.5rem;
 }
-.tpl-messages .tpl-entity-user--mini {
+.tpl-messages__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1.5rem;
 }
 .tpl-messages .tpl-entity-user--mini__name {
@@ -152,4 +159,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+@media (max-width: 768px) {
+  .tpl-messages {
+    display: none;
+    background: #faf9f7;
+  }
+  .tpl-messages__back {
+    display: block !important;
+  }
+  .tpl-messages form {
+    flex-direction: column;
+  }
+  .tpl-messages form input {
+    width: 100%;
+  }
+  .tpl-messages form button {
+    padding: 1rem;
+  }
+  .tpl-messages.--selected {
+    display: flex;
+  }
 }

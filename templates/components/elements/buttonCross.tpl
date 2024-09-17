@@ -1,1 +1,1 @@
-<button <?= $attributes->add('class', 'clear') ?>>╳</button>
+<button <?= $attributes->add('class', 'clear', 'cross') ?>>╳</button>

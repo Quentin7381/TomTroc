@@ -23,10 +23,34 @@
 
         article
             margin: 0 -#{$spacer-l}
+            padding: 0 $spacer-l
 
         h2
             text-align: left
 
         .selected
             background: $color-background-primary
-        
+
+    @media (max-width: $breakpoint-m)
+        grid-template-columns: 1fr
+        gap: 0
+        position: relative
+
+        &__messages
+            position: absolute
+            max-height: unset !important
+            top: 0
+            left: 0
+            right: 0
+            bottom: 0
+
+        &__contacts
+            width: 100%
+            background: $color-background-primary
+            
+            article
+                padding: 0
+                margin: 0
+
+                a
+                    padding: 0

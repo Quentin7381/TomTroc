@@ -33,3 +33,11 @@
         padding: $spacer-s
         width: fit-content
         min-width: 200px
+
+    @media (max-width: $breakpoint-m)
+        &__content
+            background: $color-background-lightest
+
+        &.sent
+            .tpl-entity-message__content
+                background: $color-background-input

@@ -8,14 +8,22 @@
     display: flex
     flex-direction: column
 
+    &__back
+        color: $color-text-light
+        display: none !important
+
     &__thread
         overflow-y: scroll
         scrollbar-width: thin
         padding: $spacer-l
 
-    .tpl-entity-user--mini
+    &__header
+        display: flex
+        justify-content: space-between
+        align-items: center
         margin-bottom: $spacer-l
 
+    .tpl-entity-user--mini
         &__name
             font-weight: $weight-semibold
 
@@ -39,3 +47,28 @@
             display: flex
             align-items: center
             justify-content: center
+
+    @media (max-width: $breakpoint-m)
+        display: none
+        background: $color-background-secondary
+
+        &__back
+            display: block !important
+
+        form
+            flex-direction: column
+
+            input
+                width: 100%
+
+            button
+                padding: $spacer-m
+
+        &.--selected
+            display: flex
+
+        
+
+        
+
+    

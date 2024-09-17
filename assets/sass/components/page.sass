@@ -80,6 +80,17 @@ button, .button
   &.success
     background-color: $color-success
 
+  &.textOnly
+    background: transparent
+    color: #{var(--color-bg)}
+    border: none
+    padding: 0
+    margin-bottom: 1em
+    font-weight: normal
+    display: inline
+    color: $color-text-light
+    text-align: left
+
   &.thin
     padding: 0.5em 1em
 
@@ -87,6 +98,11 @@ button, .button
     width: 100%
     text-align: center
     margin: 0 auto
+
+    &.cross
+      width: fit-content
+      margin: 0
+      padding: 0
     
 nav
   display: flex
