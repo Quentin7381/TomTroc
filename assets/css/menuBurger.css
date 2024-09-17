@@ -129,7 +129,7 @@
   gap: 4rem;
   background-color: #faf9f7;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   transform: translateX(0);
 }
 .tpl-menuBurger__logo {
@@ -151,4 +151,5 @@
 }
 .tpl-menuBurger.--hidden {
   transform: translateX(-100%);
+  box-shadow: none;
 }
