@@ -44,6 +44,10 @@ class UserController extends AbstractController
             $id = $this->manager->get_connected_user()->id;
         }
 
+        if(empty($id)) {
+            $this->redirect('/user/connect');
+        }
+
         $editable = $this->manager->get_connected_user()->id === $id;
 
         $this->view->print(Page::personnalProfile([

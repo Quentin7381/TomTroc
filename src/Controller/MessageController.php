@@ -34,9 +34,10 @@ class MessageController extends AbstractController
         $userManager = UserManager::getInstance();
         $user = $userManager->get_connected_user();
 
-        if (!$user) {
-            $this->redirect('/login');
+        if (empty($user)) {
+            $this->redirect('/user/connect');
         }
+
         @$selectedId = $_GET['id'] ?? reset($this->manager->getContacts($user))->id;
 
         $phoneSelected = !empty($_GET['id']);
