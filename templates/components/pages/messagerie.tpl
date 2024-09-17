@@ -14,6 +14,7 @@ $selectedId = $selected->id ?? null;
             <?= $newContact->render(['user' => $user, 'attributes' => ['class' => 'selected']], 'contact') ?>
         <?php endif; ?>
     </section>
+    <?php if(!empty($selected)): ?>        
     <?= Component::messages(
         [
             'user' => $user,
@@ -26,4 +27,9 @@ $selectedId = $selected->id ?? null;
             ]
         ]
     ) ?>
+    <?php else: ?>
+        <section class="<?= $bem->e('messages') ?> --selected">
+            <h2>Aucun contact pour le moment</h2>
+        </section>
+    <?php endif; ?>
 </main>

@@ -7,6 +7,7 @@ use Entity\Message;
 use Entity\User;
 use PDO;
 use Utils\StatementGenerator;
+use View\Page;
 
 class MessageManager extends AbstractManager
 {
@@ -77,5 +78,80 @@ class MessageManager extends AbstractManager
     public function typeof_content()
     {
         return 'text';
+    }
+
+    public function get_messagerie_view($user)
+    {
+        // Recuperation des contacts
+        $userManager = UserManager::getInstance();
+        $contacts = $this->getContacts($user);
+
+        // Gestions nouveau contact
+        $newContact = $_SESSION['newContact'] ?? null;
+        unset($_SESSION['newContact']);
+        if(!$this->new_contact_is_valid($newContact)){
+            $newContact = null;
+        }
+
+        // Gestion messagerie vide
+        if(empty($contacts) && empty($newContact)) {
+            return Page::messagerie([
+                'user' => $user,
+                'selected' => null,
+                'phoneSelected' => false,
+                'newContact' => null,
+                'activeLink' => '/messagerie',
+                'title' => 'Messagerie'
+            ]);
+            return;
+        }
+
+        // Selection du contact
+        $firstContact = reset($contacts) ?? null;
+        $phoneSelected = (!empty($_GET['id']) || !empty($newContact));
+        $selectedId = $newContact->id ?? $_GET['id'] ?? reset($contacts)->id;
+
+        // Gestions selection innexistante
+        $selected = $userManager->getById($selectedId);
+        if (empty($selected)) {
+            $selectedId = $firstContact->id ?? null;
+            $selected = $userManager->getById($selectedId);
+            $phoneSelected = false;
+        }
+
+        // Renvoi de la vue
+        $this->setAsRead($user->id, $selectedId);
+        return Page::messagerie([
+            'user' => $user,
+            'selected' => $selected,
+            'phoneSelected' => $phoneSelected,
+            'newContact' => $newContact,
+            'activeLink' => '/messagerie',
+            'title' => 'Messagerie'
+        ]);
+    }
+
+    public function new_contact_is_valid($newContact){
+        $userManager = UserManager::getInstance();
+        $user = $userManager->get_connected_user();
+        $contacts = $this->getContacts($user);
+
+        // New contact is not valid if it is empty
+        if(empty($newContact)){
+            return false;
+        }
+
+        // New contact is not valid if it is the user itself
+        if($newContact->id == $user->id){
+            return false;
+        }
+
+        // New contact is not valid if it already exists
+        foreach ($contacts as $contact) {
+            if ($contact->id == $newContact->id) {
+                return false;
+            }
+        }
+        return true;
     }
 }

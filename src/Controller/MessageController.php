@@ -31,59 +31,16 @@ class MessageController extends AbstractController
 
     public function page_messagerie()
     {
+        // Recuperation de l'utilisateur connecte
         $userManager = UserManager::getInstance();
         $user = $userManager->get_connected_user();
-        $contacts = $this->manager->getContacts($user);
-        $firstContact = reset($contacts) ?? null;
-
         if (empty($user)) {
             $this->redirect('/user/connect');
         }
 
-        $newContact = $_SESSION['newContact'] ?? null;
-        unset($_SESSION['newContact']);
-
-        // Avoid creating a new contact if it already exists
-        if (!empty($newContact)) {
-            foreach ($contacts as $contact) {
-                if ($contact->id == $newContact->id) {
-                    $newContact = null;
-                    $selectedId = $contact->id;
-                    break;
-                }
-            }
-        }
-
-
-        $phoneSelected = (!empty($_GET['id']) || !empty($newContact));
-        @$selectedId = $newContact->id ?? $_GET['id'] ?? reset($contacts)->id;
-
-        // Avoid sending a message to oneself
-        if($selectedId == $user->id) {
-            $selectedId = $firstContact->id ?? null;
-            $phoneSelected = false;
-            $newContact = null;
-        }
-
-        // Avoid selecting an inexistant user
-        $manager = UserManager::getInstance();
-        $selected = $manager->getById($selectedId);
-        if (empty($selected)) {
-            $selectedId = $firstContact->id ?? null;
-            $selected = $manager->getById($selectedId);
-            $phoneSelected = false;
-        }
-
-        $this->manager->setAsRead($user->id, $selectedId);
-
-        $this->view->print(Page::messagerie([
-            'user' => $user,
-            'selected' => $selected,
-            'phoneSelected' => $phoneSelected,
-            'newContact' => $newContact,
-            'activeLink' => '/messagerie',
-            'title' => 'Messagerie'
-        ]));
+        // Affichage de la messagerie
+        $view = $this->manager->get_messagerie_view($user);
+        $this->view->print($view);
     }
 
     public function provide_contacts()
