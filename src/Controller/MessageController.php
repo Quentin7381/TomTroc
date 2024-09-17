@@ -47,6 +47,17 @@ class MessageController extends AbstractController
         $newContact = $_SESSION['newContact'] ?? null;
         unset($_SESSION['newContact']);
 
+        // Avoid creating a new contact if it already exists
+        if($newContact) {
+            $contacts = $this->manager->getContacts($user);
+            foreach ($contacts as $contact) {
+                if ($contact->id == $newContact->id) {
+                    $newContact = null;
+                    $selectedId = $contact->id;
+                }
+            }
+        }
+
         $this->view->print(Page::messagerie([
             'user' => $user,
             'selectedId' => $selectedId,
