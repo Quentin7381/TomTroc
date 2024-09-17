@@ -34,6 +34,7 @@ class MessageController extends AbstractController
         $userManager = UserManager::getInstance();
         $user = $userManager->get_connected_user();
         $contacts = $this->manager->getContacts($user);
+        $firstContact = reset($contacts) ?? null;
 
         if (empty($user)) {
             $this->redirect('/user/connect');
@@ -59,15 +60,21 @@ class MessageController extends AbstractController
 
         // Avoid sending a message to oneself
         if($selectedId == $user->id) {
-            $selectedId = reset($contacts)->id;
+            $selectedId = $firstContact->id ?? null;
             $phoneSelected = false;
             $newContact = null;
         }
 
-        $this->manager->setAsRead($user->id, $selectedId);
-
+        // Avoid selecting an inexistant user
         $manager = UserManager::getInstance();
         $selected = $manager->getById($selectedId);
+        if (empty($selected)) {
+            $selectedId = $firstContact->id ?? null;
+            $selected = $manager->getById($selectedId);
+            $phoneSelected = false;
+        }
+
+        $this->manager->setAsRead($user->id, $selectedId);
 
         $this->view->print(Page::messagerie([
             'user' => $user,
