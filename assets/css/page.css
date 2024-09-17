@@ -389,8 +389,3 @@ main.cols-2 {
 main section {
   padding: 1.5rem;
 }
-@media (max-width: 768px) {
-  main section {
-    padding: 0;
-  }
-}

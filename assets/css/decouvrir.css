@@ -147,7 +147,7 @@
   }
   .tpl-decouvrir__image {
     grid-row: 1;
-    margin: 0 -var(--container-margin);
+    margin: 0 calc(-1 * var(--container-margin));
     width: calc(100% + var(--container-margin) * 2);
   }
 }
