@@ -33,34 +33,45 @@ class MessageController extends AbstractController
     {
         $userManager = UserManager::getInstance();
         $user = $userManager->get_connected_user();
+        $contacts = $this->manager->getContacts($user);
 
         if (empty($user)) {
             $this->redirect('/user/connect');
         }
 
-        @$selectedId = $_GET['id'] ?? reset($this->manager->getContacts($user))->id;
-
-        $phoneSelected = !empty($_GET['id']);
-
-        $this->manager->setAsRead($user->id, $selectedId);
-
         $newContact = $_SESSION['newContact'] ?? null;
         unset($_SESSION['newContact']);
 
         // Avoid creating a new contact if it already exists
-        if($newContact) {
-            $contacts = $this->manager->getContacts($user);
+        if (!empty($newContact)) {
             foreach ($contacts as $contact) {
                 if ($contact->id == $newContact->id) {
                     $newContact = null;
                     $selectedId = $contact->id;
+                    break;
                 }
             }
         }
 
+
+        $phoneSelected = (!empty($_GET['id']) || !empty($newContact));
+        @$selectedId = $newContact->id ?? $_GET['id'] ?? reset($contacts)->id;
+
+        // Avoid sending a message to oneself
+        if($selectedId == $user->id) {
+            $selectedId = reset($contacts)->id;
+            $phoneSelected = false;
+            $newContact = null;
+        }
+
+        $this->manager->setAsRead($user->id, $selectedId);
+
+        $manager = UserManager::getInstance();
+        $selected = $manager->getById($selectedId);
+
         $this->view->print(Page::messagerie([
             'user' => $user,
-            'selectedId' => $selectedId,
+            'selected' => $selected,
             'phoneSelected' => $phoneSelected,
             'newContact' => $newContact,
             'activeLink' => '/messagerie',

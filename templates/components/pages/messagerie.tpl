@@ -1,12 +1,7 @@
 <?php
 use View\Component;
-
-if (empty($selectedId)) {
-    @$selected = $selected ?? reset($v->message_contacts($user));
-    $selectedId = $selected->id;
-} else {
-    $selected = $newContact ?? $v->message_contacts($user)[$selectedId];
-}
+$selectedId = $selected->id ?? null;
+// }
 ?>
 
 <main <?= $attributes ?>>
