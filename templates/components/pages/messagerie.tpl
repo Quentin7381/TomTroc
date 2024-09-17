@@ -10,7 +10,7 @@ if (empty($selectedId)) {
 ?>
 
 <main <?= $attributes ?>>
-    <section class="<?= $bem->e('contacts') ?>">
+    <section class="<?= $bem->e('contacts') ?> <?=$phoneSelected ? '--hidden' : '' ?>">
         <h2>Messagerie</h2>
         <?php foreach ($v->message_contacts($user) as $contact): ?>
             <?= $contact->render(['user' => $user, 'attributes' => ['class' => $selectedId === $contact->id ? 'selected' : '']], 'contact') ?>

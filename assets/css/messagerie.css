@@ -541,19 +541,17 @@ main section {
   .tpl-messagerie {
     grid-template-columns: 1fr;
     gap: 0;
-    position: relative;
   }
   .tpl-messagerie__messages {
-    position: absolute;
-    max-height: unset !important;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    max-height: 60vh;
+    margin: 0 -2rem;
   }
   .tpl-messagerie__contacts {
     width: 100%;
     background: #f5f3ef;
+  }
+  .tpl-messagerie__contacts.--hidden {
+    display: none;
   }
   .tpl-messagerie__contacts article {
     padding: 0;

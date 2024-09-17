@@ -34,19 +34,17 @@
     @media (max-width: $breakpoint-m)
         grid-template-columns: 1fr
         gap: 0
-        position: relative
 
         &__messages
-            position: absolute
-            max-height: unset !important
-            top: 0
-            left: 0
-            right: 0
-            bottom: 0
+            max-height: 60vh
+            margin: 0 -#{$spacer-xl}
 
         &__contacts
             width: 100%
             background: $color-background-primary
+
+            &.--hidden
+                display: none
             
             article
                 padding: 0
