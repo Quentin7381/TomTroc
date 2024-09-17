@@ -7,7 +7,7 @@
 }
 @media (max-width: 768px) {
   :root {
-    --container-margin: 0.5rem;
+    --container-margin: 2rem;
     --size-rem: 14px;
   }
 }

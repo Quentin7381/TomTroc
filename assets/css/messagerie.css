@@ -7,7 +7,7 @@
 }
 @media (max-width: 768px) {
   :root {
-    --container-margin: 0.5rem;
+    --container-margin: 2rem;
     --size-rem: 14px;
   }
 }
@@ -123,7 +123,7 @@
 }
 @media (max-width: 768px) {
   :root {
-    --container-margin: 0.5rem;
+    --container-margin: 2rem;
     --size-rem: 14px;
   }
 }
@@ -329,6 +329,8 @@ button.thin, .button.thin {
 @media (max-width: 576px) {
   button, .button {
     width: 100%;
+    text-align: center;
+    margin: 0 auto;
   }
 }
 
