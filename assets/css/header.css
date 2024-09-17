@@ -139,7 +139,12 @@
   margin-left: auto;
 }
 @media (min-width: 992px) {
-  .tpl-header .tpl-buttonBurger {
+  .tpl-header .tpl-buttonBurger .tpl-buttonBurger {
     display: none;
+  }
+}
+@media (max-width: 768px) {
+  .tpl-header {
+    padding: 1.5rem;
   }
 }
