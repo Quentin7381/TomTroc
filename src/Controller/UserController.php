@@ -24,6 +24,10 @@ class UserController extends AbstractController
 
     public function page_connect()
     {
+        if($this->manager->get_connected_user()) {
+            $this->redirect('/user/profile');
+        }
+
         $this->view->print(Page::userConnect([
             'activeLink' => '/user/connect',
             'title' => 'Connexion'
@@ -32,6 +36,10 @@ class UserController extends AbstractController
 
     public function page_register()
     {
+        if($this->manager->get_connected_user()) {
+            $this->redirect('/user/profile');
+        }
+        
         $this->view->print(Page::userRegister([
             'activeLink' => '/user/connect',
             'title' => 'Inscription'
