@@ -47,6 +47,7 @@ $view->addJs('imagePreview');
                 <textarea name="description" id="description" required><?= $description ?></textarea>
                 <label for="available">Disponibilité</label>
                 <select name="available" id="available" required>
+                    <option value="">--Choisissez--</option>
                     <option value="1" <?= $available ? "selected" : "" ?>>Disponible</option>
                     <option value="0" <?= $available ? "" : "selected" ?>>Indisponible</option>
                 </select>
