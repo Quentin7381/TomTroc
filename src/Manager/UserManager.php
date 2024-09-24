@@ -165,4 +165,14 @@ class UserManager extends AbstractManager
     {
         $_SESSION['user'] = $user;
     }
+
+    public function typeof_photo()
+    {
+        return 'INT(6) NOT NULL';
+    }
+
+    public function typeof_created_at()
+    {
+        return 'INT(11) NOT NULL';
+    }
 }

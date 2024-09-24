@@ -154,4 +154,19 @@ class MessageManager extends AbstractManager
         }
         return true;
     }
+
+    public function typeof_sender() : string
+    {
+        return 'INT(6) NOT NULL';
+    }
+
+    public function typeof_receiver() : string
+    {
+        return 'INT(6) NOT NULL';
+    }
+
+    public function typeof_date() : string
+    {
+        return 'INT(11) NOT NULL';
+    }
 }
