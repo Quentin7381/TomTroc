@@ -13,7 +13,7 @@ $view->addJs('imagePreview');
 ?>
 
 <main <?= $attributes ?>>
-    <p class="<?= $bem->e('back') ?>"><a href="">← retour</a></p>
+    <p class="<?= $bem->e('back') ?>"><a href="/user">← retour</a></p>
     <h1><?= $isAdding ? "Ajouter un livre" : "Modifier les informations" ?></h1>
     <section>
         <form action="<?= $action ?>" method="post" enctype="multipart/form-data">
