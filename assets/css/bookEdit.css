@@ -144,10 +144,26 @@
 .tpl-bookEdit__photo.--hidden, .tpl-bookEdit__preview.--hidden {
   display: none;
 }
+.tpl-bookEdit__photoInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.tpl-bookEdit__photoInput:focus + .tpl-bookEdit__addPhoto {
+  outline: 2px solid blue;
+  border-radius: 20px;
+  padding: 4px;
+}
 .tpl-bookEdit__addPhoto {
+  display: block;
   cursor: pointer;
   color: #292929;
-  text-align: right;
+  margin-left: auto;
   margin-top: 1.5rem;
 }
 .tpl-bookEdit__back {

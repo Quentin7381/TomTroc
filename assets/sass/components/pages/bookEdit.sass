@@ -31,11 +31,31 @@
 
         &.--hidden
             display: none
+
+    
+
+    &__photoInput
+        position: absolute
+        width: 1px
+        height: 1px
+        margin: -1px
+        padding: 0
+        overflow: hidden
+        clip: rect(0, 0, 0, 0)
+        border: 0
+
+        &:focus + .tpl-bookEdit__addPhoto
+            outline: 2px solid blue
+            border-radius: 20px
+            padding: 4px
+            // margin: -4px
+    
     
     &__addPhoto
+        display: block
         cursor: pointer
         color: $color-text
-        text-align: right
+        margin-left: auto
         margin-top: $spacer-l
 
     &__back

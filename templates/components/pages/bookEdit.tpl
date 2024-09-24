@@ -29,6 +29,7 @@ $view->addJs('imagePreview');
                     <img src="" alt="" data-image-preview="<?= $previewId ?>"
                         class="<?= $bem->e('preview') ?> bookCover --hidden">
                 <?php endif ?>
+                <input type="file" name="photo" id="photo" data-image-preview-input="<?= $previewId ?>" <?= $isAdding ? "required" : "" ?> class="<?= $bem->e("photoInput") ?>">
                 <label for="photo" class="<?= $bem->e("addPhoto") ?>">
                     <?=
                         $photo ?
@@ -36,7 +37,6 @@ $view->addJs('imagePreview');
                         "Ajouter une photo"
                         ?>
                 </label>
-                <input type="file" name="photo" id="photo" hidden data-image-preview-input="<?= $previewId ?>" <?= $isAdding ? "required" : "" ?>>
             </fieldset>
             <fieldset>
                 <label for="title">Titre</label>
