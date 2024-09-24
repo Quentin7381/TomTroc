@@ -1,5 +1,12 @@
 # TomTroc
 
+## Note to the corrector
+
+I must warn you that some elements withing the evaluation grid are not validated. Here are the points and the reasons why they are not validated:
+- "Les tables de la base de données possèdent des relations entres elles qui garantissent l’intégrité de la base de données (ex. : au niveau de la BDD, il est impossible de créer un post sans utilisateur valide)."
+    => The database is dynamicly created to match the php entities. This feature is still semi-experimental, and going into the database configuration to add constraints would be quite some more work.
+- "La partie admin n’est pas accessible aux utilisateurs lamba." => there was no role management in the project, neither a specified admin account. This validation point may be obsolete.
+
 ## Project Description
 
 TomTroc is a simple book trading platform that allows users to trade books with other users. Users can create an account, list books they own, and send messages to other users to propose trades.
