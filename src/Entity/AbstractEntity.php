@@ -57,6 +57,17 @@ abstract class AbstractEntity extends Renderable
         return $value;
     }
 
+    public function set(string $key, mixed $value): self
+    {
+        if(is_string($value)) {
+            $value = trim($value);
+            $value = strip_tags($value);
+        }
+
+        parent::set($key, $value);
+        return $this;
+    }
+
     /**
      * Get the manager for the entity.
      *
