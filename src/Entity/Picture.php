@@ -5,6 +5,7 @@ namespace Entity;
 use Entity\AbstractEntity;
 use Entity\Image;
 use Variables\Variables;
+use View\Attributes;
 
 class Picture extends AbstractEntity
 {

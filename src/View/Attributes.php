@@ -27,6 +27,11 @@ class Attributes extends Renderable
     public function remove(string $name, mixed ...$values): Attributes
     {
         if (isset($this->data[$name])) {
+            if(empty($values)) {
+                unset($this->data[$name]);
+                return $this;
+            }
+
             foreach ($values as $value) {
                 $key = array_search($value, $this->data[$name]);
                 if ($key !== false) {

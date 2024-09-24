@@ -7,8 +7,8 @@
         <p>Notre association a été fondée avec une conviction profonde : chaque livre mérite d'être lu et partagé.</p>
         <p>Nous sommes passionnés par la création d'une plateforme conviviale qui permet aux lecteurs de se connecter,
             de partager leurs découvertes littéraires et d'échanger des livres qui attendent patiemment sur les
-            étagères.</p>
-        </br>
+            étagères.
+        </p>
         <p class="credit <?= $bem->e('credit') ?>">L'équipe Tom Troc</p>
         <?= $v->image_get('heart')->addAttributes('class', $bem->e('heart')) ?>
     </div>
