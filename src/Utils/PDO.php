@@ -10,11 +10,24 @@ class PDO extends \PDO{
     protected function __construct(){
         self::$instance = $this;
         $config = Config::getInstance();
-        parent::__construct(
-            'mysql:host=' . $config->DB_HOST . ';dbname=' . $config->DB_NAME,
-            $config->DB_USER,
-            $config->DB_PASSWORD
-        );
+
+        try {
+            parent::__construct(
+                'mysql:host=' . $config->DB_HOST . ';dbname=' . $config->DB_NAME,
+                $config->DB_USER,
+                $config->DB_PASSWORD
+            );
+        } catch (\PDOException $e) {
+            if ($e->getCode() === 1049) {
+                self::resetDatabase();
+            }
+
+            parent::__construct(
+                'mysql:host=' . $config->DB_HOST . ';dbname=' . $config->DB_NAME,
+                $config->DB_USER,
+                $config->DB_PASSWORD
+            );
+        }
     }
 
     public static function getInstance(){

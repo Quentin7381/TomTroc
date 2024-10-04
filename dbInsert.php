@@ -1,6 +1,6 @@
 <?php
 
-require 'src/initialize.php';
+require 'vendor/autoload.php';
 
 use Variables\Provider;
 use Config\Config;
@@ -11,6 +11,15 @@ use Entity\Book;
 use Entity\Picture;
 use Entity\Message;
 use Utils\Database;
+use Utils\PDO;
+
+$config = Config::I();
+$config->load(__DIR__ . '/');
+$pdo = PDO::getInstance();
+$sql = file_get_contents('./tomtroc.sql');
+$pdo->exec($sql);
+
+require 'src/initialize.php';
 
 $provider = Provider::I();
 
@@ -18,7 +27,6 @@ $config = Config::getInstance();
 $config->load(__DIR__);
 
 $db = Database::getInstance();
-$db->truncate();
 
 // ----- IMAGES ----- //
 
@@ -46,7 +54,6 @@ $user = new User();
 $user->name = 'John Doe';
 $user->email = 'jhon.doe@example.com';
 $user->password = 'Abcd.1234';
-var_dump($user->password);
 $user->persist();
 
 $user2 = new User();

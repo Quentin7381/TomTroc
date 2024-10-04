@@ -2,11 +2,9 @@
 
 ## Note to the corrector
 
-I must warn you that some elements withing the evaluation grid are not validated. Here are the points and the reasons why they are not validated:
-- **"Les tables de la base de données possèdent des relations entres elles qui garantissent l’intégrité de la base de données (ex. : au niveau de la BDD, il est impossible de créer un post sans utilisateur valide)."**
-    => *The database is dynamicly created to match the php entities. This feature is still semi-experimental, and going into the database configuration to add constraints would be quite some more work.*
-- **"La partie admin n’est pas accessible aux utilisateurs lamba."** => *there was no role management in the project, neither a specified admin account. This validation point may be obsolete.*
-- **"Le site passe le test sur WCAG niveau 2 (warnings autorisés)."** => *I knew that colors would be a problem, but I consider them to be a discussion point with my client, and not something i would change without his consent. Colors are stored in variables, so they can be changed easily. I also don't know the details of WCAG on every page, because the free version of the tool only allows 3 tests per day.*
+Database creation using dbInsert.php has been updated so constraints are now correctly set.
+The webpage /dev/fill-db has been removed because it couldn't work with this update.
+To rebuild and fill the database you need to use "php dbInsert.php" from the project web container root.
 
 ## Project Description
 

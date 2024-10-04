@@ -89,12 +89,12 @@ class MessageManager extends AbstractManager
         // Gestions nouveau contact
         $newContact = $_SESSION['newContact'] ?? null;
         unset($_SESSION['newContact']);
-        if(!$this->new_contact_is_valid($newContact)){
+        if (!$this->new_contact_is_valid($newContact)) {
             $newContact = null;
         }
 
         // Gestion messagerie vide
-        if(empty($contacts) && empty($newContact)) {
+        if (empty($contacts) && empty($newContact)) {
             return Page::messagerie([
                 'user' => $user,
                 'selected' => null,
@@ -131,18 +131,19 @@ class MessageManager extends AbstractManager
         ]);
     }
 
-    public function new_contact_is_valid($newContact){
+    public function new_contact_is_valid($newContact)
+    {
         $userManager = UserManager::getInstance();
         $user = $userManager->get_connected_user();
         $contacts = $this->getContacts($user);
 
         // New contact is not valid if it is empty
-        if(empty($newContact)){
+        if (empty($newContact)) {
             return false;
         }
 
         // New contact is not valid if it is the user itself
-        if($newContact->id == $user->id){
+        if ($newContact->id == $user->id) {
             return false;
         }
 
@@ -155,18 +156,18 @@ class MessageManager extends AbstractManager
         return true;
     }
 
-    public function typeof_sender() : string
+    public function typeof_sender(): string
     {
-        return 'INT(6) NOT NULL';
+        return 'INT(6) UNSIGNED NOT NULL';
     }
 
-    public function typeof_receiver() : string
+    public function typeof_receiver(): string
     {
-        return 'INT(6) NOT NULL';
+        return 'INT(6) UNSIGNED NOT NULL';
     }
 
-    public function typeof_date() : string
+    public function typeof_date(): string
     {
-        return 'INT(11) NOT NULL';
+        return 'INT(6) UNSIGNED NOT NULL';
     }
 }

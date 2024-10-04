@@ -61,13 +61,13 @@ class BookManager extends AbstractManager
         $book->update();
     }
 
-    public function typeof_cover() : string
+    public function typeof_cover(): string
     {
-        return 'INT(6) NOT NULL';
+        return 'INT(6) UNSIGNED NOT NULL';
     }
 
-    public function typeof_seller() : string
+    public function typeof_seller(): string
     {
-        return 'INT(6) NOT NULL';
+        return 'INT(6) UNSIGNED NOT NULL';
     }
 }

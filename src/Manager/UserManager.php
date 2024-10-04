@@ -129,7 +129,7 @@ class UserManager extends AbstractManager
         // var_dump($user); exit;
         $user->persist();
     }
-    
+
     public function merge(AbstractEntity|array ...$entities): AbstractEntity
     {
         $entity = array_shift($entities);
@@ -145,11 +145,11 @@ class UserManager extends AbstractManager
                 $merge = $merge->toArray();
             }
             foreach ($merge as $field => $value) {
-                if(empty($value)) {
+                if (empty($value)) {
                     continue;
                 }
 
-                if($field === 'password') {
+                if ($field === 'password') {
                     $entity->set_password_hash($value);
                     continue;
                 }
@@ -168,7 +168,7 @@ class UserManager extends AbstractManager
 
     public function typeof_photo()
     {
-        return 'INT(6) NOT NULL';
+        return 'INT(6) UNSIGNED NOT NULL';
     }
 
     public function typeof_created_at()

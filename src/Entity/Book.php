@@ -16,31 +16,31 @@ class Book extends AbstractEntity
     protected null|string|Image|LazyEntity $cover = null;
     protected null|int|User|LazyEntity $seller = null;
 
-    public function fromDb(array $array) : void
+    public function fromDb(array $array): void
     {
         parent::fromDb($array);
         $this->cover = new LazyEntity(Image::class, $array['cover']);
         $this->seller = new LazyEntity(User::class, $array['seller']);
     }
 
-    public function get_created() : int
+    public function get_created(): int
     {
         return $this->created ?? time();
     }
 
-    public static function typeof_cover() : string
+    public static function typeof_cover(): string
     {
         return 'varchar(255) NOT NULL';
     }
 
-    public static function typeof_seller() : string
+    public static function typeof_seller(): string
     {
-        return 'int(6) NOT NULL';
+        return 'INT(6) UNSIGNED NOT NULL';
     }
 
-    public static function typeof_created() : string
+    public static function typeof_created(): string
     {
-        return 'int(11) NOT NULL';
+        return 'INT(6) UNSIGNED NOT NULL';
     }
 
     public function toDb(): array

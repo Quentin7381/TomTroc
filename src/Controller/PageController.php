@@ -11,7 +11,6 @@ class PageController extends AbstractController
     {
         $this->router->addRoute('', [$this, 'index']);
         $this->router->addRoute('error/$', [$this, 'error']);
-        $this->router->addRoute('dev/fill-db', [$this, 'fillDb']);
     }
 
     public function get($name)
@@ -28,10 +27,5 @@ class PageController extends AbstractController
     {
         $message = $_GET['message'] ?? null;
         $this->view->print(Page::error(['code' => $code, 'message' => $message]));
-    }
-
-    public function fillDb()
-    {
-        require_once __DIR__ . '../../../dbInsert.php';
     }
 }

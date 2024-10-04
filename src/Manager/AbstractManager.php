@@ -486,6 +486,6 @@ abstract class AbstractManager
 
     public static function typeof_id(): string
     {
-        return 'int(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY';
+        return 'INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY';
     }
 }

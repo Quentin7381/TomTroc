@@ -16,3 +16,6 @@ assets/figma/*
 # Public
 public/*
 Test/public/*
+
+# Docker
+data/*
